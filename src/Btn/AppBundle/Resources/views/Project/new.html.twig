@@ -1,0 +1,21 @@
+{% extends 'BtnAppBundle::layout.html.twig' %}
+
+{% form_theme form 'BtnCrudBundle:Form:fields.html.twig' %}
+
+{% block content %}
+
+    <form action="{{ path('project_create') }}" method="post" {{ form_enctype(form) }} class="well form-horizontal">
+          <fieldset>
+              <legend>Project creation</legend>
+              {{ form_widget(form) }}
+              <p>
+                  <button type="submit" class="btn btn-success">{% trans %}crud.create{% endtrans %}</button>
+              </p>
+        </fieldset>
+    </form>
+
+            <a href="{{ path('project') }}" class="btn">
+        &laquo; {% trans %}crud.back{% endtrans %}
+    </a>
+
+{% endblock %}

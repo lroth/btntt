@@ -1,0 +1,31 @@
+{% extends "BtnUserBundle::layout.html.twig" %}
+{% block body %}
+
+
+  <div class="container">
+    <div class="content">
+      <div class="row">
+        <div class="login-form">
+          <h2>Login</h2>
+          {% if error %}
+              <p class="msg_error">{{ error|trans({}, 'FOSUserBundle') }}</p>
+          {% endif %}
+
+           <form action="{{ path("fos_user_security_check") }}" class="form_default form_horizontal" method="post" novalidate>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+            <fieldset>
+              <div class="clearfix">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="email"/>
+              </div>
+              <div class="clearfix">
+                <input type="password" id="password" name="_password" placeholder="Password"/>
+              </div>
+              <button class="btn primary" id="_submit" name="_submit" type="submit">Sign in</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /container -->
+{% endblock body %}

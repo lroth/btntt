@@ -1,0 +1,39 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+
+{% include 'BtnUserBundle:User:_financeMenu.html.twig' with {current: 'invoices' } %}
+
+<h3>Lista faktur</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Numer faktury</th>
+      <th>Data wystawienia</th>
+      <th>Termin płatności</th>
+      <th>Kwota faktury</th>
+      <th>Podgląd</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for invoice in invoices %}
+    <tr>
+        <td>{{ invoice.formatNumber }}</td>
+        <td>{{ invoice.issueDate|date('d-m-Y') }}</td>
+        <td>{{ invoice.dueDate|date('d-m-Y') }}</td>
+        <td>{{ invoice.gross|number_format(2, ',', ' ') }} zł</td>
+        <td><a href="{{ path('invoice_download', { id: invoice.id }) }}">pobierz</a></td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="5">Brak faktur</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'finance' } %}
+{% endblock %}

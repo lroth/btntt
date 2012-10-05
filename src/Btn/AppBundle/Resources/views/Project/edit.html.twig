@@ -1,0 +1,25 @@
+{% extends 'BtnAppBundle::layout.html.twig' %}
+
+{% form_theme edit_form 'BtnCrudBundle:Form:fields.html.twig' %}
+
+{% block content %}
+
+    <form action="{{ path('project_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="well form-horizontal">
+        <fieldset>
+            <legend>Project edit</legend>
+            {{ form_widget(edit_form) }}
+            <p>
+                <button type="submit" class="btn btn-success">{% trans %}crud.save{% endtrans %}</button>
+            </p>
+        </fieldset>
+    </form>
+
+            <form action="{{ path('project_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <a href="{{ path('project') }}" class="btn">
+            &laquo; {% trans %}crud.back{% endtrans %}
+        </a>
+        <button type="submit" class="btn btn-danger">{% trans %}crud.delete{% endtrans %}</button>
+    </form>
+
+{% endblock %}

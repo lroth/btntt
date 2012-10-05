@@ -1,0 +1,16 @@
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form_default form_horizontal">
+    <fieldset>
+         <div class="line">
+        {% if invalid_username is defined %}
+            <p class="msg_error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+        {% endif %}
+        <label for="username">Adres email:</label>
+        <div class="field">
+            <input type="text" id="username" name="username" />
+        </div>
+    </div>
+    </fieldset>
+    <div class="navi_btns">
+        <input type="submit" value="Skasuj hasło" class="btn btn_submit"></a>
+    </div>
+</form>

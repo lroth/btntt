@@ -1,0 +1,38 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+      <nav>
+        <ul class="tabs">
+          <li><a href="{{ path('edit_profile') }}">Dane osobowe</a></li>
+          <li><a href="{{ path('edit_address') }}" class="active">Dane adresowe</a></li>
+          <li><a href="{{ path('edit_bank') }}">Dane bankowe</a></li>
+        </ul>
+      </nav>
+      <form action="{{ path('edit_address') }}" class="form_default" method="post" novalidate>
+        <h3>Dane do wysyłki</h3>
+        <fieldset>
+          <div class="form_container">
+            {{ form_widget(addressForm) }}
+
+            <p class="navi_btns">
+              <input type="submit" value="Zapisz zmiany" title="Zapisz zmiany" class="btn btn_default" />
+            </p>
+          </div>
+        </fieldset>
+      </form>
+      <form action="{{ path('edit_address') }}" class="form_default" method="post" novalidate>
+        <h3>Dane do faktury</h3>
+        <fieldset>
+          <div class="form_container">
+            {{ form_widget(invoiceForm) }}
+            <p class="navi_btns">
+              <input type="submit" value="Zapisz zmiany" title="Zapisz zmiany" class="btn btn_default" />
+            </p>
+          </div>
+        </fieldset>
+      </form>
+{% endblock content %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'edit' } %}
+{% endblock %}

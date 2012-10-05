@@ -1,0 +1,15 @@
+{% macro breadcrumb(items) %}
+    {% if items|length > 0 %}
+        <ul class="breadcrumb">
+            {% for url, name in items %}
+                {% if loop.last is defined and loop.index == loop.last %}
+                    <li class="active">{{ name|trans }}</li>
+                {% else %}
+                    <li>
+                        <a href="{{ path(url) }}">{{ name|trans }}</a> <span class="divider">/</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}

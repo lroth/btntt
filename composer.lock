@@ -1,5 +1,5 @@
 {
-    "hash": "a66beea53cd7173df5f74f0697ce23cf",
+    "hash": "edfdbaacd25c5b95317a5c3c8c5e0943",
     "packages": [
         {
             "package": "doctrine/common",
@@ -10,8 +10,8 @@
         {
             "package": "doctrine/dbal",
             "version": "2.3.x-dev",
-            "source-reference": "fdc866a37959e43620e4f7ec519dc7dd8e30fc5b",
-            "commit-date": "1348120597"
+            "source-reference": "e00ce93926c37d7cab0368694715ff913804780c",
+            "commit-date": "1349466076"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -22,14 +22,26 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "d3c930599723c8343472a5791b0f5909a4111a73",
-            "commit-date": "1347289964"
+            "source-reference": "e69a6fd75fa3979e35b7004e6da6e9aea3765997",
+            "commit-date": "1349273376"
         },
         {
             "package": "doctrine/orm",
             "version": "2.3.x-dev",
-            "source-reference": "ea2b28857830720460a345c80c6e7d3f6adae93a",
-            "commit-date": "1348121015"
+            "source-reference": "825a68bcba44bd0f59499225b3903a977b3091f0",
+            "commit-date": "1349461531"
+        },
+        {
+            "package": "friendsofsymfony/user-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "2.0.x-dev",
+            "alias-version": "2.0.9999999.9999999-dev"
+        },
+        {
+            "package": "friendsofsymfony/user-bundle",
+            "version": "dev-master",
+            "source-reference": "570a24893a65e6e90a649d55f384be810202b6f0",
+            "commit-date": "1348823929"
         },
         {
             "package": "jms/aop-bundle",
@@ -56,6 +68,18 @@
             "commit-date": "1346947943"
         },
         {
+            "package": "knplabs/knp-components",
+            "version": "dev-master",
+            "source-reference": "99ea408dc2a7c3616e688ffe67e3248ece69ff0e",
+            "commit-date": "1339767068"
+        },
+        {
+            "package": "knplabs/knp-paginator-bundle",
+            "version": "dev-master",
+            "source-reference": "de439d2816fe984dbe0c438fd4d0d7c67748c5ff",
+            "commit-date": "1343676956"
+        },
+        {
             "package": "kriswallsmith/assetic",
             "version": "dev-master",
             "alias-pretty-version": "1.1.x-dev",
@@ -64,14 +88,14 @@
         {
             "package": "kriswallsmith/assetic",
             "version": "dev-master",
-            "source-reference": "a6baab9b4c4361aca51bf90ee47c1586dff3cb0c",
-            "commit-date": "1347622188"
+            "source-reference": "e22c5e07e672bb0cf43127e97e9368b53abf4aa8",
+            "commit-date": "1349004759"
         },
         {
             "package": "leafo/lessphp",
             "version": "dev-master",
-            "source-reference": "330402e2713773bba8515525ec55bb0fd4445f49",
-            "commit-date": "1347545089"
+            "source-reference": "4ce20058d651a73702bb9be5d299d0e2eb0687f0",
+            "commit-date": "1348713472"
         },
         {
             "package": "monolog/monolog",
@@ -86,6 +110,18 @@
             "commit-date": "1347983448"
         },
         {
+            "package": "raulfraile/ladybug",
+            "version": "dev-master",
+            "source-reference": "9d03eab167c1b9f84f9a832c2e26140a780f6100",
+            "commit-date": "1342109959"
+        },
+        {
+            "package": "raulfraile/ladybug-bundle",
+            "version": "dev-master",
+            "source-reference": "a2aa7a445d575dc34cc500076b5f7acd24a2c2a6",
+            "commit-date": "1343206620"
+        },
+        {
             "package": "sensio/distribution-bundle",
             "version": "2.1.x-dev",
             "source-reference": "v2.1.1",
@@ -94,8 +130,8 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "2.1.x-dev",
-            "source-reference": "86a68df44eb50a64042d05a3f09548d2c21d4456",
-            "commit-date": "1348064274"
+            "source-reference": "bf2ea090d602e02b975d1bf1d8ffca8f02ef8bdb",
+            "commit-date": "1349361259"
         },
         {
             "package": "sensio/generator-bundle",
@@ -112,8 +148,8 @@
         {
             "package": "swiftmailer/swiftmailer",
             "version": "dev-master",
-            "source-reference": "1e5482485f30a2431f9b8eb19a091eef4b57008c",
-            "commit-date": "1347542176"
+            "source-reference": "22731e907f5ca288c9bfde6b54f3611ace0a6c39",
+            "commit-date": "1349196829"
         },
         {
             "package": "symfony/assetic-bundle",
@@ -124,8 +160,8 @@
         {
             "package": "symfony/assetic-bundle",
             "version": "dev-master",
-            "source-reference": "64345e86761444c35679e1aed424e1ed2370f0de",
-            "commit-date": "1347626244"
+            "source-reference": "5ebcf72d9b2d7028ca8c9b71b464ccc81d4795d2",
+            "commit-date": "1348938560"
         },
         {
             "package": "symfony/monolog-bundle",
@@ -154,8 +190,8 @@
         {
             "package": "symfony/symfony",
             "version": "2.1.x-dev",
-            "source-reference": "7273311e1fb663ae7f5501f57a52ba9bd4db2ec3",
-            "commit-date": "1348414301"
+            "source-reference": "8062031a0a5143086f2ff864925dada9614f2ead",
+            "commit-date": "1349381694"
         },
         {
             "package": "twig/extensions",
@@ -178,8 +214,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "b4d1d62b82e83c6fd3d5a6cd46a186de64275bb4",
-            "commit-date": "1347961095"
+            "source-reference": "7dd2f1764681df2635c127e45cc3acb43e5d0194",
+            "commit-date": "1349449745"
         },
         {
             "package": "twitter/bootstrap",
@@ -192,7 +228,8 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "raulfraile/ladybug-bundle": 20,
+        "knplabs/knp-paginator-bundle": 20
+    }
 }

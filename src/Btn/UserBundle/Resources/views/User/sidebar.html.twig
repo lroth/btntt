@@ -1,0 +1,18 @@
+<nav id="menu">
+
+  <h2>Moje konto</h2>
+
+  <ul>
+      <li><a href="{{ path('edit_profile') }}" {% if current == 'edit' %}class="active"{% endif %}>Moje dane</a></li>
+      <li><a href="{{ path('orders') }}" {% if current == 'orders' %}class="active"{% endif %}>Moje zamówienia</a></li>
+      <li><a href="{{ path('profile') }}" {% if current == 'profile' %}class="active"{% endif %}>Mój profil publiczny</a></li>
+      <li><a href="{{ path('user_finance_invoices') }}" {% if current == 'finance' %}class="active"{% endif %}>Moje finanse</a></li>
+      <li><a href="{{ path('edit_allegro') }}" {% if current == 'edit_allegro' %}class="active"{% endif %}>Konfiguracja Allegro</a></li>
+      <li><a href="{{ path('edit_messages') }}" {% if current == 'edit_messages' %}class="active"{% endif %}>Konfiguracja komunikatów</a></li>
+      <li><a href="{{ path('my_ads') }}" {% if current == 'my_ads' %}class="active"{% endif %}>Moje ogłoszenia</a></li>
+
+      {% if is_granted("ROLE_ADMIN") %}
+          <li><a href="{{ path('dashboard') }}">Administracja</a></li>
+      {% endif %}
+  </ul>
+</nav>

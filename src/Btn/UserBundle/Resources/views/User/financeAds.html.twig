@@ -1,0 +1,32 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+
+{% include 'BtnUserBundle:User:_financeMenu.html.twig' with {current: 'ads' } %}
+
+<h3>Lista zleceń</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Podgląd zlecenia</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for ad in ads %}
+    <tr>
+        <td></td>
+
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="5">Brak faktur</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'finance' } %}
+{% endblock %}

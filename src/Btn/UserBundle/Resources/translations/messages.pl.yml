@@ -1,0 +1,22 @@
+change_password.flash.success: Hasło zostało zmienione
+profile:
+    firstname:        Imię
+    lastname:         Nazwisko
+    screenname:       Nazwa użytkownika
+    phone:            Nr telefonu
+    street:           Ulica i numer
+    city:             Miejscowość
+    postcode:         Kod pocztowy
+    invoice_name:     Nazwa firmy
+    invoice_street:   Ulica
+    invoice_city:     Miejscowość
+    invoice_postcode: Kod pocztowy
+    account_nb:       Nr konta bankowego
+    nip:              NIP
+    allegro_name:     Nazwa użytkownika serwisu allegro
+    allegro_password: Hasłu użytkownika serwisu allegro
+    allegro_key:      Klucz api użytkownika serwisu allegro
+    message_from_me:  'Treść komunikatu, ktróry otrzyma zwycięzca.'
+    message_to_owner:  'Treść komunikatu, ktróry otrzyma założyciel ( jeśli zwyciężysz ).'
+    flash.success:    Dane zostały zmienione
+    region:           Region

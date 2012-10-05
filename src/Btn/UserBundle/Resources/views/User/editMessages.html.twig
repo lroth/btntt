@@ -1,0 +1,20 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+    <form action="{{ path('edit_messages') }}" class="form_default" method="post" novalidate>
+        <h3>Konfiguracja komunikatów</h3>
+        <fieldset>
+          <div class="form_container">
+            {{ form_widget(messagesForm) }}
+
+            <p class="navi_btns">
+              <input type="submit" value="Zapisz zmiany" title="Zapisz zmiany" class="btn btn_default" />
+            </p>
+          </div>
+        </fieldset>
+      </form>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with { current: 'edit_messages' } %}
+{% endblock %}

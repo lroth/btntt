@@ -1,0 +1,76 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+<nav>
+  <ul class="tabs">
+    <li><a href="#" class="active">Twoje zamówienia</a></li>
+    <li><a href="#">Archiwum zamówień</a></li>
+  </ul>
+</nav>
+
+<h3>Lista zamówień ze sklepu z ostatnich 30 dni</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Wartość</th>
+      <th>Dane wysyłki</th>
+      <th>Status</th>
+      <th>Podgląd</th>
+      <th>Faktura</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>11.12.2011</td>
+      <td>2019.23 zł</td>
+      <td>
+        <address>
+          Marcin Adamczyk<br />
+          Olechowska 16<br />
+          11-123 Wrocław
+        </address>
+      </td>
+      <td><span class="color">Zrealizowane</span></td>
+      <td><a href="#">Zobacz</a></td>
+      <td><a href="#">Zobacz</a></td>
+    </tr>
+
+    <tr>
+      <td>11.12.2011</td>
+      <td>2019.23 zł</td>
+      <td>
+        <address>
+          Marcin Adamczyk<br />
+          Olechowska 16<br />
+          11-123 Wrocław
+        </address>
+      </td>
+      <td><span class="color">Zrealizowane</span></td>
+      <td><a href="#">Zobacz</a></td>
+      <td><a href="#">Zobacz</a></td>
+    </tr>
+
+    <tr>
+      <td>11.12.2011</td>
+      <td>2019.23 zł</td>
+      <td>
+        <address>
+          Marcin Adamczyk<br />
+          Olechowska 16<br />
+          11-123 Wrocław
+        </address>
+      </td>
+      <td><span class="color">Zrealizowane</span></td>
+      <td><a href="#">Zobacz</a></td>
+      <td><a href="#">Zobacz</a></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'orders' } %}
+{% endblock %}

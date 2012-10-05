@@ -1,0 +1,22 @@
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="form_default form_horizontal">
+  <fieldset>
+      {{ form_errors(form.new) }}
+      <div class="line">
+        <label>Nowe hasło</label>
+        <div class="field">
+          {{ form_widget(form.new.first, { 'attr' : attr|default({}) }) }}
+        </div>
+      </div>
+
+      <div class="line">
+        <label>Powtórz hasło</label>
+        <div class="field">
+          {{ form_widget(form.new.second, { 'attr' : attr|default({}) }) }}
+        </div>
+      </div>
+  </fieldset>
+      {{ form_rest(form)}}
+    <div class="navi_btns">
+        <input type="submit" class="btn btn_submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
+    </div>
+</form>

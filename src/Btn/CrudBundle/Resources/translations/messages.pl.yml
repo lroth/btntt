@@ -1,0 +1,20 @@
+pagination:
+    previous:   Poprzednia
+    next:       Następna
+crud:
+    actions:    Akcje
+    create_new: Dodaj
+    back:       Wróć do listy
+    delete:     Usuń
+    save:       Zapisz
+    create:     Dodaj nowy
+    show:       Zobacz
+    edit:       Edytuj
+    flash:
+        saved:   Zapisano zmiany!
+        deleted: Usunięto rekord!
+    breadcrumb:
+        list:    Lista rekordów
+        edit:    Edycja rekordu
+        new:     Dodanie rekordu
+        show:    Widok rekordu

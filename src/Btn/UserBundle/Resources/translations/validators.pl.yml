@@ -1,0 +1,27 @@
+'This value should be the user current password': 'Obecne hasło musi być poprawne.'
+
+fos_user:
+    username:
+        already_used: Ten adres email jest już zajęty
+        blank: Adres email jest wymagany
+
+register:
+    firstname:
+        required: 'Proszę podaj swoje imię.'
+    lastname:
+        required: 'Proszę podaj swoje nazwisko.'
+    terms:
+        required: 'Akceptacja regulaminu jest wymagana.'
+
+profile:
+    allegro_name:
+        required: 'Proszę podaj nazwę użytkownika serwisu allegro.'
+    allegro_password:
+        required: 'Proszę podaj hasło użytkownika serwisu allegro.'
+    allegro_key:
+        required: 'Proszę podaj klucz api użytkownika serwisu allegro.'
+        min_length: 'Klucz api powinien zawierać co najmniej jeden znak. | Klucz api powinien zawierać co najmniej {{ limit }} znaki.'
+    message_from_me:
+        required: 'Proszę podaj treść wiadomości.'
+    message_to_owner:
+        required: 'Proszę podaj treść wiadomości.'

@@ -1,0 +1,67 @@
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+    <h3>Dodaj nowe zdjęcia do udostępnienia <a href="{{ path('public_profile', {id: app.user.id}) }}">Podgląd profilu</a></h3>
+    <form action="{{ path('profile') }}" class="form_default form_vertical" {{ form_enctype(form) }} method="POST" novalidate>
+      <fieldset>
+        <label for="photos_name">Nazwa zdjęcia</label>
+        <div class="line">
+          <div class="field">
+            {{ form_widget(form.name, { 'attr': { 'title': 'Podaj nazwę zdjęcia' } }) }}
+          </div>
+        </div>
+        <div class="line">
+          <label for="www">Adres www zdjęcia</label>
+            {{ form_errors(form.src) }}
+            {{ form_errors(form.file) }}
+          <div class="field">
+              {{ form_widget(form.src, { 'attr': { 'title': 'Podaj adres www zdjęcia' } }) }}
+              <span class="sep">lub</span>
+              {{ form_widget(form.file, { 'attr': { 'title': 'Załaduj zdjęcie', 'class': 'btn btn_default' } }) }}
+          </div>
+        </div>
+        <input type="submit" value="Dodaj" title="Dodaj zdjęcie" class="btn btn_submit" />
+        {{ form_rest(form) }}
+      </fieldset>
+    </form>
+    <h3>Udostępniane zdjęcia</h3>
+    <ul class="sharing_photo_list">
+      <li>
+        <ul>
+          {% for image in images %}
+            {% if loop.index is divisibleby(5) %}</ul><ul>{% endif %}
+            <li>
+              <img src="{{ (image.uploadDirPath ~ image.src)| apply_filter('user_image') }}" alt="" />
+              <p>{{ image.name }}</p>
+              <p class="text_right"><a data-widget="modal.confirm" href="{{ url('remove_image', {id: image.id}) }}">Usuń</a></p>
+            </li>
+          {% else %}
+            <p>Brak zdjęć</p>
+
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+    <h3>Udostępniane projekty</h3>
+    <ul class="sharing_photo_list">
+      <li>
+        <ul>
+          {% for item in jewelery %}
+            {% if loop.index is divisibleby(5) %}</ul><ul>{% endif %}
+            <li>
+              <img src="{{ asset(item.file) }}" alt="" />
+              <p>{{ item.id }}</p>
+              <p class="text_right"><a href="{{ path('remove_image', {id: item.id}) }}">Usuń</a></p>
+            </li>
+          {% else %}
+            <p>Brak projektów</p>
+
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'profile' } %}
+{% endblock %}

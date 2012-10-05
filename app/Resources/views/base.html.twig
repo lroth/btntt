@@ -18,7 +18,9 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% include '::navbar.html.twig' %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          {% include '::navbar.html.twig' %}
+        {% endif %}
 
         {% block body %}
             <div class="container">

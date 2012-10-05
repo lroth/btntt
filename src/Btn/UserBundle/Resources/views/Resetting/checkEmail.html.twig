@@ -1,0 +1,8 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div id="message">
+        <h2>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</h2>
+        <a href="{{ path('homepage') }}" class="btn btn_no_icon btn_big"><span>Strona główna</span></a>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+# Form field labels
+form:
+    group_name: "Nazwa grupy:"
+    username: "Nazwa użytkownika:"
+    firstname: "Imię:"
+    lastname: "Nazwisko:"
+    email: "Adres e-mail:"
+    current_password: "Obecne hasło:"
+    password: "Hasło:"
+    password_confirmation: "Powtórz hasło:"
+    new_password: "Nowe hasło:"
+    new_password_confirmation: "Powtórz hasło:"

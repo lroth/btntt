@@ -1,0 +1,112 @@
+{% extends 'BtnUserBundle::layout.html.twig' %}
+
+{% block body %}
+    {% include 'MiAppBundle::_contentHeader.html.twig' %}
+    <div class="view" data-view="switch.user.profile">
+        <h2>Profil użytkownika: {{ user.name }}</h2>
+        <ul class="panel_user">
+            <li>
+                <h3>Użytkownik</h3>
+                <p class="name"><a href="#" class="online">{{ user.name }}</a></p>
+                <p class="text_center"><a id="chat_invite" data-user-id="{{ user.id }}" href="#" title="Zaproś do czatu" class="btn btn_default">Zaproś do czatu</a></p>
+            </li>
+
+            <li>
+                <h3>Oceny użytkownika</h3>
+                <dl>
+                    <dt>Pozytywne:</dt>
+                    <dd class="positive">{{ data.positive }}</dd>
+
+                    <dt>Neutralne:</dt>
+                    <dd class="neutral">{{ data.neutral }}</dd>
+
+                    <dt>Negatywne:</dt>
+                    <dd class="negative">{{ data.negative }}</dd>
+                </dl>
+            </li>
+
+            <li>
+                <h3>Oferty użytkownika</h3>
+                <p><a href="#">W kategorii Wykonam ({{ data.search }})</a></p>
+                <p><a href="#">W kategorii Zlecę wykonanie ({{ data.make }})</a></p>
+            </li>
+        </ul>
+
+        <nav>
+            <ul class="tabs">
+                <li><a href="#" id="switch_gallery" class="switch_content">Galeria</a></li>
+                <li><a href="#" id="switch_comments" class="switch_content active">Oceny i komentarze</a></li>
+            </ul>
+        </nav>
+
+    <h3>Lista ocen i komentarzy ofert użytkownika</h3>
+
+    <table class="tab_comments_list">
+            <thead>
+                <tr>
+                    <th>Komentarz i ocena</th>
+                    <th>Zdjęcie oferty</th>
+                    <th>Realizacja</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for ad in userAds %}
+                    <tr>
+                        <td>
+                          <h4><a href="#">{{ ad.title }}</a></h4>
+                          <p>Ocena: <span class="
+                              {% if ad.rating == 0 %}positive">Pozytywna{% endif %}
+                              {% if ad.rating == 1 %}neutral">Neutralna{% endif %}
+                              {% if ad.rating == 2 %}negative">Negatywna{% endif %}
+                              </span>
+                          </p>
+                          <p class="comment">Komentarz:</p>
+                          <p class="opinion">{{ ad.ratingComment }}</p>
+                        </td>
+                        <td>
+                          {% if ad.image is not null %}
+                              <figure><img src="{{ asset(ad.imagePath()) }}" alt="{{ ad.title }}" /></figure>
+                          {% else %}
+                              <figure>Brak zdjęcia</figure>
+                          {% endif %}
+                        </td>
+                        <td>
+                          <figure><img src="{{ asset('img/pic/120x120/realizacja.jpg') }}" alt="{{ ad.title }}" /></figure>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                          <h4>Brak ocen</h4>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+      <div class="user_profile_photos">
+        <ul class="sharing_photo_list">
+            <li>
+              <ul>
+                {% for image in images %}
+                  {% if loop.index is divisibleby(6) %}</ul><ul>{% endif %}
+                  <li>
+                    <img src="{{ (image.uploadDirPath ~ image.src)| apply_filter('user_image') }}" alt="" />
+                    <p>{{ image.name }}</p>
+                  </li>
+                {% else %}
+                  <p>Brak zdjęć</p>
+
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+{% endblock %}

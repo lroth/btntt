@@ -1,0 +1,101 @@
+{% extends 'BtnUserBundle::layout.html.twig' %}
+
+{% block body %}
+    <h2>Powiadomienia</h2>
+
+    <h3>Filtruj listę</h3>
+
+    <form class="filters_list">
+      <fieldset>
+        <label for="">Wybierz okres:</label>
+        <input type="text" id="" name="" />
+        <input type="text" id="" name="" />
+
+        <label for="type">Wybierz typ:</label>
+        <select id="type">
+          <option>Wszystkie</option>
+        </select>
+        <input type="submit" id="" name="" value="Filtruj listę" class="btn btn_default" />
+      </fieldset>
+    </form>
+
+    <ul class="sorting_list">
+      <li>
+        <ul class="sorting" style="display: none;">
+          <li>Sortuj wg:</li>
+          <li><a href="#" class="up up_active">Nazwa</a></li>
+          <li><a href="#" class="down">Cena</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <ul class="pages">
+          <li><a href="#" class="active">9</a></li>
+          <li><a href="#">18</a></li>
+          <li><a href="#">36</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <ul class="pagination">
+          <li><a href="#" title="Poprzedia strona" class="prev">Poprzednia</a></li>
+          <li><a href="#" class="active">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><input type="text" id="" name="" /></li>
+          <li><a href="#" title="Następna strona" class="next">Następna</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Lista powiadomień</h3>
+
+        <table class="tab_notification_list">
+            <thead>
+                <tr>
+                    <th>Typ</th>
+                    <th>Data</th>
+                    <th>Opis</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><a href="#" class="color">Dodane ogłoszenie</a></td>
+                    <td>12.11.2011 12:23:34</td>
+                    <td>Twoje <a href="#">ogłoszenie</a> zostało dodane.</td>
+                </tr>
+
+                <tr>
+                    <td><a href="#" class="color">Odwołanie Twojej oferty</a></td>
+                    <td>12.11.2011 12:23:34</td>
+                    <td>Twoja oferta w <a href="#">ogłoszeniu</a> została odwołana</td>
+                </tr>
+
+                <tr>
+                    <td><a href="#" class="color">Odwołanie licytacji</a></td>
+                    <td>12.11.2011 12:23:34</td>
+                    <td>Twoje <a href="#">ogłoszenie</a> została przez Ciebie odwołane</td>
+                </tr>
+
+                <tr>
+                    <td><a href="#" class="color">Złożona oferta</a></td>
+                    <td>12.11.2011 12:23:34</td>
+                    <td>Została złożona oferta w Twoim <a href="#">ogłoszeniu</a> przez <a href="#">użytkownika</a> na kwotę 150 zł</td>
+                </tr>
+            </tbody>
+      </table>
+
+    <ul class="sorting_list no_border">
+      <li>
+        <ul class="pagination">
+          <li><a href="#" title="Poprzedia strona" class="prev">Poprzednia</a></li>
+          <li><a href="#" class="active">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><input type="text" id="" name="" /></li>
+          <li><a href="#" title="Następna strona" class="next">Następna</a></li>
+        </ul>
+      </li>
+    </ul>
+{% endblock %}

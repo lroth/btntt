@@ -1,0 +1,21 @@
+services:
+    btn_user.btn_user_provider:
+        class: Btn\UserBundle\Security\BtnUserProvider
+        public: false
+        arguments: ["@fos_user.user_manager"]
+
+    btn_user.registration.form.type:
+        class: Btn\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: btn_user_registration }
+
+    btn.filter_user_manager:
+        class: Btn\UserBundle\Model\FilterManager
+        scope: request
+        arguments:
+            em:          '@doctrine.orm.entity_manager'
+            paginator:   '@knp_paginator'
+            request:     '@request'
+            twig:        '@twig'
+            formFactory: '@form.factory'

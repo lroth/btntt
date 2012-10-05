@@ -16,6 +16,16 @@ framework:
     default_locale:  %locale%
     trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
     session:         ~
+    translator:      { fallback: en }
+
+
+fos_user:
+    db_driver:     orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class:    Btn\UserBundle\Entity\User
+    from_email:
+        address:        noreply@bitnoise.pl
+        sender_name:    Btn App
 
 # Twig Configuration
 twig:
@@ -26,7 +36,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ BtnCrudBundle ]
     #java: /usr/bin/java
     filters:
         lessphp:
@@ -60,3 +70,14 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+services:
+    btn.time_manager:
+        class: Btn\AppBundle\Model\TimeManager
+        scope: request
+        arguments:
+            em:          '@doctrine.orm.entity_manager'
+            paginator:   '@knp_paginator'
+            request:     '@request'
+            twig:        '@twig'
+            formFactory: '@form.factory'

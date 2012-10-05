@@ -1,0 +1,62 @@
+{{ "{% from 'BtnCrudBundle::breadcrumb.html.twig' import breadcrumb %}" }}
+{{ "{% extends 'BtnCrudBundle::base.html.twig' %}" }}
+
+{{ "{% block content %}" }}
+    <h2>{{ entity }} list</h2>
+
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <tr>
+            {%- for field, metadata in fields %}
+
+                <th>{{ field|capitalize }}</th>
+
+            {%- endfor %}
+
+                <th>{{ '{% trans %}' }}crud.actions{{ '{% endtrans %}' }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{ '{% for entity in pagination %}' }}
+            <tr>
+
+        {%- for field, metadata in fields %}
+            {%- if loop.first and ('show' in actions) %}
+
+                <td>{{ '{{ entity.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+            {%- elseif metadata.type in ['date', 'datetime'] %}
+
+                <td>{{ '{% if entity.'~ field|replace({'_': ''}) ~' %}{{ entity.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+            {%- else %}
+
+                <td>{{ '{{ entity.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+            {%- endif %}
+
+            {%- if loop.last %}
+
+                <td>
+                    {%- include "views/others/actions.html.twig" %}
+                </td>
+
+            {%- endif %}
+        {%- endfor %}
+
+            </tr>
+        {{ '{% endfor %}' }}
+        </tbody>
+    </table>
+
+    {{ '{{ pagination.render()|raw }}' }}
+
+    {% if 'new' in actions %}
+        <a href="{{ "{{ path('"~ route_name_prefix ~"_new') }}" }}" class="btn btn-primary">{{ '{% trans %}' }}crud.create_new{{ '{% endtrans %}' }}</a>
+    {% endif %}
+
+{{ "{% endblock %}" }}
+
+{{ "{% block breadcrumb %}" }}
+    {{ "{{ breadcrumb({'"~ route_name_prefix ~"': 'crud.breadcrumb.list'}) }}" }}
+{{ "{% endblock %}" }}

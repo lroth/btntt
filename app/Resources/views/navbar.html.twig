@@ -10,15 +10,23 @@
       <a class="brand" href="#">TimeTracker</a>
 
       <div class="btn-group pull-right">
-        <a class="btn btn-warning btn-mini" href="#">
-          Wyloguj się
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="{{ path('fos_user_security_logout') }}">
+          <i class="icon-user"></i> {{ app.user.screenName }}
+          <span class="caret"></span>
         </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ path('homepage') }}">Homepage</a></li>
+          <li><a href="{{ path('edit_profile')  }}">Profile</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+        </ul>
       </div>
+
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active"><a href="#">Dashboard</a></li>
-          <li class=""><a href="#">Projects</a></li>
+          <li class="active"><a href="{{ path('homepage') }}">Dashboard</a></li>
+          <li class=""><a href="{{ path('project') }}">Projects</a></li>
           <li class=""><a href="#">Members</a></li>
           <li class=""><a href="#">Reports</a></li>
         </ul>

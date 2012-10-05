@@ -8,21 +8,34 @@
     <button class="btn"><i class="icon-calendar"></i> Calendar</button>
 </div>
 <br/><br/>
-<form class="form-inline">
+<form action="{{ path('homepage') }}" class="form-inline">
     <div class="input-append">
-        <input type="text" class="input-small" placeholder="Time"><span class="add-on">h</span>
+        {{ form_widget(form.time) }}<span class="add-on">h</span>
     </div>
     <div class="input-prepend">
-        <span class="add-on">@</span><input type="text" class="input-small" placeholder="Project">
+        <span class="add-on">@</span>{{ form_widget(form.project) }}<!-- <input type="text" class="input-small" placeholder="Project"> -->
     </div>
-  <input type="text" class="input-xxlarge" placeholder="Description">
+    {{ form_widget(form.description) }}
   <button type="submit" class="btn btn-primary">Log it</button>
+  {{ form_widget(form._token) }}
 </form>
 
 <h4>Your Recent Entries</h4>
 <table class="table table-striped">
     <tbody>
-        <tr>
+        {% for time in pagination %}
+            <tr>
+                <td>{{ time.createdAt|date('M d') }}</td>
+                <td>{{ time.time }}h</td>
+                <td>{{ time.project.name }} {% if time.billable %}<span class="label label-warning">billable</span>{% else %}<span class="label">unbillable</span>{% endif %}</td>
+                <td>{{ time.description|nl2br }}</td>
+                <td style="text-align: right">
+                    <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
+                    <a class="btn btn-small btn-danger" href="{{ path('delete_time', { 'id': time.id }) }}"><i class="icon-trash icon-white"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+<!--         <tr>
             <td>Sep 12</td>
             <td>2h</td>
             <td>Furnesh <span class="label">unbillable</span></td>
@@ -51,7 +64,7 @@
                 <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
                 <a class="btn btn-small btn-danger" href="#"><i class="icon-trash icon-white"></i></a>
             </td>
-        </tr>
+        </tr> -->
     </tbody>
 </table>
 

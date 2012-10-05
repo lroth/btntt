@@ -1,0 +1,6 @@
+<nav>
+  <ul class="tabs">
+    <li><a href="{{ path('user_finance_invoices') }}"{% if current == 'invoices' %}class="active"{% endif %}>Lista faktur</a></li>
+    <li><a href="{{ path('user_finance_ads') }}"{% if current == 'ads' %}class="active"{% endif %}>Lista zleceń</a></li>
+  </ul>
+</nav>

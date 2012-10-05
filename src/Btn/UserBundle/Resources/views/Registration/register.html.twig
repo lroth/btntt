@@ -1,0 +1,36 @@
+{% extends "BtnUserBundle::layout.html.twig" %}
+{% block body %}
+    <h2>Rejestracja</h2>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+
+    <h3>Formularz rejestracji <span class="req">* Wszystkie pola są wymagane</span></h3>
+    {{ form_errors(form) }}
+    <form action="{{ path('fos_user_registration_register') }}" class="form_default form_horizontal" method="post" novalidate>
+        <fieldset>
+            {{ form_row(form.firstname, { 'attr': {'placeholder': 'Wprowadź swoje imię' }}) }}
+            {{ form_row(form.lastname, { 'attr': {'placeholder': 'Wprowadź swoje nazwisko' }}) }}
+            {{ form_row(form.email, { 'attr': {'placeholder': 'Wprowadź poprawny adres e-mail' }}) }}
+        </fieldset>
+        <fieldset>
+            {{ form_row(form.plainPassword.first, { 'attr': {'placeholder': 'Hasło' }}) }}
+            {{ form_row(form.plainPassword.second, { 'attr': {'placeholder': 'Powtórz hasło' }}) }}
+        </fieldset>
+        {{ form_errors(form.acceptTerms) }}
+        <fieldset class="list_checkbox no_style">
+            <ul>
+                <li>
+                    <label>{{ form_widget(form.acceptTerms) }} Akceptacja</label> <a href="#" title="Przeczytaj regulamin">regulaminu</a>
+                </li>
+                <li>
+                    <label>{{ form_widget(form.acceptNewsletter) }} Zgoda na wykorzystywanie adresu e-mail do celów marketingowych</label>
+                </li>
+            </ul>
+
+            <div class="navi_btns">
+                <input type="submit" value="Załóż konto" title="Załóż konto" class="btn btn_submit" />
+            </div>
+        </fieldset>
+        {{ form_rest(form) }}
+    </form>
+{% endblock body %}

@@ -1,0 +1,13 @@
+{% if ('delete' in actions) and (not hide_delete) %}
+    <form action="{{ "{{ path('"~ route_name_prefix ~"_delete', { 'id': entity.id }) }}" }}" method="post">
+        {{ '{{ form_widget(delete_form) }}' }}
+        <a href="{{ "{{ path('"~ route_name_prefix ~"') }}" }}" class="btn">
+            &laquo; {{ '{% trans %}' }}crud.back{{ '{% endtrans %}' }}
+        </a>
+        <button type="submit" class="btn btn-danger">{{ '{% trans %}' }}crud.delete{{ '{% endtrans %}' }}</button>
+    </form>
+{% else %}
+    <a href="{{ "{{ path('"~ route_name_prefix ~"') }}" }}" class="btn">
+        &laquo; {{ '{% trans %}' }}crud.back{{ '{% endtrans %}' }}
+    </a>
+{% endif %}

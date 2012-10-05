@@ -1,0 +1,48 @@
+{% form_theme passwordForm ':Form:fields_vertical.html.twig' %}
+{% form_theme profileForm  ':Form:fields_vertical.html.twig' %}
+
+{% extends "BtnUserBundle::layout_sidebar.html.twig" %}
+
+{% block content %}
+      <nav>
+        <ul class="tabs">
+          <li><a href="{{ path('edit_profile') }}" class="active">Dane osobowe</a></li>
+          <li><a href="{{ path('edit_address') }}">Dane adresowe</a></li>
+          <li><a href="{{ path('edit_bank') }}">Dane bankowe</a></li>
+        </ul>
+      </nav>
+
+      <form action="{{ path('edit_profile') }}" class="form_default" method="post" novalidate>
+        <h3>Dane osobowe</h3>
+        <fieldset>
+          <div class="form_container">
+            {{ form_widget(profileForm) }}
+
+            <p class="navi_btns">
+              <input type="submit" value="Zapisz zmiany" title="Zapisz zmiany" class="btn btn_default" />
+            </p>
+          </div>
+        </fieldset>
+      </form>
+
+      <form action="{{ path('edit_profile') }}" class="form_default" method="post" novalidate>
+        <h3>Zmiana hasła</h3>
+        <fieldset>
+          <div class="form_container">
+            {{ form_widget(passwordForm) }}
+
+            <p class="navi_btns">
+              <input type="submit" value="Zapisz zmiany" title="Zapisz zmiany" class="btn btn_default" />
+            </p>
+          </div>
+        </fieldset>
+      </form>
+
+      //ZMIANA ADRESU EMAIL powinna być osobno z potwierdzeniem mailem nowej wartości!
+
+
+{% endblock content %}
+
+{% block sidebar %}
+    {% include 'BtnUserBundle:User:sidebar.html.twig' with {current: 'edit' } %}
+{% endblock %}
