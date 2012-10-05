@@ -1,0 +1,17 @@
+Time tracking:
+!! https://www.toggl.com/track
+https://bitnoise.harvestapp.com/daily
+http://bitnoise.letsfreckle.com/time/dashboard
+
+Project managment:
+!! Trello
+Pivotal tracker
+
+Bug tracker:
+!! https://sifterapp.com/
+http://www.bugherd.com/
+redmine
+
+Crm:
+Trello
+Highrise

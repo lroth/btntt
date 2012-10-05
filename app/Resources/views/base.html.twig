@@ -1,0 +1,53 @@
+{% from '::flash.html.twig' import session_flash %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% stylesheets output='css/bootstrap.css'
+            '../vendor/twitter/bootstrap/less/bootstrap.less'
+        %}
+            <link href="{{ asset_url }}" rel="stylesheet" media="screen" />
+        {% endstylesheets %}
+        <style type="text/css">
+          body {
+            padding-top: 60px;
+          }
+        </style>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% include '::navbar.html.twig' %}
+
+        {% block body %}
+            <div class="container">
+              {% if app.session.flashbag.peekAll|length > 0 %}
+                <div class="row-fluid">
+                    <div class="span12">
+                    {{ session_flash() }}
+                    </div>
+                </div>
+              {% endif %}
+
+              <div class="row-fluid">
+
+                <div class="span12">
+
+                  {% block content %}
+                      content
+                  {% endblock %}
+                </div><!--/span-->
+              </div><!--/row-->
+              <hr>
+
+              <footer>
+                <p>&copy; Bitnoise</p>
+              </footer>
+            </div>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+
+
