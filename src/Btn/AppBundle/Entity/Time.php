@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="time")
  * @ORM\Entity(repositoryClass="Btn\AppBundle\Entity\TimeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Time
 {
@@ -257,5 +258,15 @@ class Time
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+    * Set createdAt rePersist
+    *
+    * @ORM\PrePersist
+    */
+    public function setCreatedAtValue()
+    {
+        $this->setCreatedAt(new \DateTime());
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Btn\AppBundle\Entity\Project
  *
  * @ORM\Table(name="project")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Btn\AppBundle\Repository\ProjectRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Project
@@ -136,6 +136,7 @@ class Project
     {
         $this->setCreatedAt(new \DateTime());
     }
+
     /**
      * Constructor
      */

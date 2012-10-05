@@ -5,11 +5,23 @@ namespace Btn\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Btn\AppBundle\Form\DataTransformer\ProjectToNameTransformer;
+use Doctrine\ORM\EntityManager;
 
 class TimeType extends AbstractType
 {
+
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transformer   = new ProjectToNameTransformer($this->em);
+
         $builder
             ->add('time', 'text', array('attr' =>
                 array(
@@ -23,12 +35,14 @@ class TimeType extends AbstractType
                     'placeholder' => 'Description'
                 )
             ))
-            ->add('project', 'text', array('attr' =>
+            ->add(
+                $builder->create('project', 'text', array('attr' =>
                 array(
                     'class'       => 'input-small',
                     'placeholder' => 'Project'
-                )
-            ))
+                )))
+                ->prependNormTransformer($transformer)
+            )
         ;
     }
 

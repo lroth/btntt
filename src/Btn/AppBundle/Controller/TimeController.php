@@ -31,7 +31,8 @@ class TimeController extends BaseController
         //setup form
         $time = new Time();
         $time->setUser($this->getUser());
-        $form = $this->createForm(new TimeType(), $time);
+        $time->setBillable(true);
+        $form = $this->createForm(new TimeType($this->getDoctrine()->getEntityManager()), $time);
 
         //add some post save here
         $form->bind($request);
