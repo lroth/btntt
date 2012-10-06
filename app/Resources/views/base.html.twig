@@ -48,7 +48,11 @@
               </footer>
             </div>
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+          {% javascripts "@app_js" %}
+              <script src="{{ asset_url }}"></script>
+          {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>
 

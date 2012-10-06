@@ -1,0 +1,13 @@
+<div style="display: none;" class="modal" id="modal-<%= modalId %>" tabindex="-1" >
+    <div class="modal-header">
+        <button data-type="close" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel"><%= title %></h3>
+    </div>
+    <div class="modal-body">
+        <%= body %>
+    </div>
+    <div class="modal-footer">
+        <button data-type="cancel" class="btn cancel"><%= buttons.cancel.label %></button>
+        <button data-type="submit" class="btn submit"><%= buttons.submit.label %></button>
+    </div>
+</div>

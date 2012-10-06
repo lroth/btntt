@@ -26,14 +26,13 @@ class TimeController extends BaseController
             ->setNs('time')
             ->fetchQuery($this->getRepository('BtnAppBundle:Time')->getQueryForUser($this->getUser()))
             ->setPaginationTpl('BtnAppBundle:Time:pagination.html.twig')
-            ->paginate(1)
+            ->paginate(10)
         ;
 
-        //setup form
+        //setup form for current user
         $time = new Time();
         $time->setUser($this->getUser());
-        $time->setBillable(true);
-        $form = $this->createForm(new TimeType($this->getDoctrine()->getEntityManager()), $time);
+        $form = $this->createForm(new TimeType($this->getManager()), $time);
 
         //add some post save here
         $this->processForm($request, $form, $time);
@@ -43,6 +42,7 @@ class TimeController extends BaseController
             'form'       => $form->createView()
         );
     }
+
 
     private function processForm($request, $form, $time)
     {
@@ -54,6 +54,8 @@ class TimeController extends BaseController
             //resolve if time is billable or not
             if (substr($time->getDescription(), 0, 1) == $this->container->getParameter('unbillable_char')) {
                 $time->setBillable(false);
+            } else {
+                $time->setBillable(true);
             }
 
             $em->persist($time);

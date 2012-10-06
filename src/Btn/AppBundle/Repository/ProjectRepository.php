@@ -12,4 +12,30 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+
+    /**
+     * Find project suggestions
+     *
+     * @param  string $query
+     * @return array $projects
+     **/
+    public function findSuggestions($query)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $projects = $qb->add('select',  'p')
+           ->add('where',   'p.name LIKE :query')
+           ->add('orderBy', 'p.name ASC')
+           ->setParameter(':query', $query . '%')
+           ->getQuery()
+           ->getResult()
+        ;
+
+        $results = array();
+        foreach ($projects as $project) {
+            $results[] = $project->getName();
+        }
+
+        return $results;
+    }
 }

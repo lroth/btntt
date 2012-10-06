@@ -38,8 +38,9 @@ class TimeType extends AbstractType
             ->add(
                 $builder->create('project', 'text', array('attr' =>
                 array(
-                    'class'       => 'input-small',
-                    'placeholder' => 'Project'
+                    'class'       => 'input-small autocomplete',
+                    'placeholder' => 'Project',
+                    'data-widget' => 'autocomplete'
                 )))
                 ->prependNormTransformer($transformer)
             )

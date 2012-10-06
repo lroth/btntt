@@ -72,19 +72,8 @@
         </div><!--/.fluid-container-->
       {% endblock %}
 
- {% javascripts output='js/bootstrap.js'
-    'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-transition.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-alert.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-modal.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-dropdown.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-tooltip.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-scrollspy.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-popover.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-tab.js'
-    '../vendor/twitter/bootstrap/js/bootstrap-collapse.js'
-   %}
-   <script src="{{ asset_url }}"></script>
- {% endjavascripts %}
+      {% javascripts "@app_js" %}
+          <script src="{{ asset_url }}"></script>
+      {% endjavascripts %}
   </body>
 </html>

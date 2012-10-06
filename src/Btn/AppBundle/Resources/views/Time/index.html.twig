@@ -8,7 +8,7 @@
     <button class="btn"><i class="icon-calendar"></i> Calendar</button>
 </div>
 <br/><br/>
-<form action="{{ path('homepage') }}" class="form-inline">
+<form action="{{ path('homepage') }}" class="form-inline" autocomplete="off">
     <div class="input-append">
         {{ form_widget(form.time) }}<span class="add-on">h</span>
     </div>
@@ -31,7 +31,7 @@
                 <td>{{ time.description|nl2br }}</td>
                 <td style="text-align: right">
                     <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
-                    <a class="btn btn-small btn-danger" href="{{ path('delete_time', { 'id': time.id }) }}"><i class="icon-trash icon-white"></i></a>
+                    <a data-widget="modal.confirm" class="btn btn-small btn-danger" href="{{ path('delete_time', { 'id': time.id }) }}"><i class="icon-trash icon-white"></i></a>
                 </td>
             </tr>
         {% endfor %}
