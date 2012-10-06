@@ -5,6 +5,7 @@ namespace Btn\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Btn\AppBundle\Form\DataTransformer\StringToDateTimeTransformer;
 use Btn\AppBundle\Form\DataTransformer\ProjectToNameTransformer;
 use Doctrine\ORM\EntityManager;
 
@@ -20,9 +21,19 @@ class TimeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer   = new ProjectToNameTransformer($this->em);
+        $transformer = new ProjectToNameTransformer($this->em);
+        $dateTransformer = new StringToDateTimeTransformer();
 
         $builder
+            ->add(
+                $builder->create('created_at', 'text', array(
+                    'required' => false,
+                    'attr' => array(
+                        'class'       => 'timeContainer',
+                    )
+                ))
+                ->prependNormTransformer($dateTransformer)
+            )
             ->add('time', 'text', array('attr' =>
                 array(
                     'class'       => 'input-small',

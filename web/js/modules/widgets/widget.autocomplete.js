@@ -18,8 +18,7 @@ define('widgets/widget.autocomplete', ['bootstrap-typeahead', 'widgets/widget'],
         activate : function() {
             $(this.selector).typeahead({
                 source: function(query, process) {
-                    var url     = 'http://localhost/btntt/web/project/autocomplete?query=' + query;
-                    miApp.request({type: 'GET', url: url}, _.bind(process));
+                    miApp.request({type: 'GET', url: this.$element.attr('data-source')}, _.bind(process));
                 }
             });
 
