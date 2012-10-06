@@ -35,46 +35,9 @@
                 </td>
             </tr>
         {% endfor %}
-<!--         <tr>
-            <td>Sep 12</td>
-            <td>2h</td>
-            <td>Furnesh <span class="label">unbillable</span></td>
-            <td>Meeting with client</td>
-            <td style="text-align: right">
-                <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
-                <a class="btn btn-small btn-danger" href="#"><i class="icon-trash icon-white"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Sep 12</td>
-            <td>2h</td>
-            <td>Furnesh <span class="label label-warning">billable</span></td>
-            <td>Fixing bugs #123 #234</td>
-            <td style="text-align: right">
-                <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
-                <a class="btn btn-small btn-danger" href="#"><i class="icon-trash icon-white"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Sep 12</td>
-            <td>2h</td>
-            <td>Furnesh <span class="label label-warning">billable</span></td>
-            <td>Fixing bugs #123 #234</td>
-            <td style="text-align: right">
-                <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
-                <a class="btn btn-small btn-danger" href="#"><i class="icon-trash icon-white"></i></a>
-            </td>
-        </tr> -->
     </tbody>
 </table>
 
-<ul class="pager">
-  <li class="previous">
-    <a href="#">&larr; Older</a>
-  </li>
-  <li class="next">
-    <a href="#">Newer &rarr;</a>
-  </li>
-</ul>
+{{ pagination.render()|raw }}
 
 {% endblock %}

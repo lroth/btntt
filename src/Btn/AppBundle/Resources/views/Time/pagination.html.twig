@@ -1,0 +1,12 @@
+{% if pageCount > 1 %}
+  <ul class="pager">
+    <li class="next {{ (previous is not defined) ? 'disabled': ''}}">
+        <a href="{{ previous is defined ? path(route, query|merge({'page': previous})) :'#' }}">{% trans %}Newer{% endtrans %} &#8594;</a>
+    </li>
+
+    <li class="previous {{ (next is not defined) ? 'disabled': ''}}">
+        <a href="{{ (next is defined) ? path(route, query|merge({'page': next})) :'#' }}">&#8592; {% trans %}Older{% endtrans %}</a>
+    </li>
+
+  </ul>
+{% endif %}

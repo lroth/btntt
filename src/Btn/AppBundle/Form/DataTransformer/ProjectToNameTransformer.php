@@ -56,10 +56,14 @@ class ProjectToNameTransformer implements DataTransformerInterface
 
         if (null === $project) {
             //@todo: create new project?
-            throw new TransformationFailedException(sprintf(
-                'An project with name "%s" does not exist!',
-                $name
-            ));
+            $project = new Project();
+            $project->setName($name);
+            $this->om->persist($project);
+            $this->om->flush();
+            // throw new TransformationFailedException(sprintf(
+            //     'An project with name "%s" does not exist!',
+            //     $name
+            // ));
         }
 
         return $project;
