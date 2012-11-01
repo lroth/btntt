@@ -12,6 +12,7 @@ class ProjectType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('budget')
             ->add('is_active')
         ;
     }

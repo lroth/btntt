@@ -44,6 +44,13 @@ class Project
     private $is_active = true;
 
     /**
+     * @var string $budget
+     *
+     * @ORM\Column(name="budget", type="string", length=255)
+     */
+    private $budget;
+
+    /**
      * @ORM\OneToMany(targetEntity="Btn\AppBundle\Entity\Time", mappedBy="project")
      **/
     private $times;
@@ -186,5 +193,28 @@ class Project
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param string $budget
+     * @return Project
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return string 
+     */
+    public function getBudget()
+    {
+        return $this->budget;
     }
 }

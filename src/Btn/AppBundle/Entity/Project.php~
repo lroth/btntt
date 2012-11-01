@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Btn\AppBundle\Entity\Project
  *
  * @ORM\Table(name="project")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Btn\AppBundle\Repository\ProjectRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Project
@@ -42,6 +42,13 @@ class Project
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $is_active = true;
+
+    /**
+     * @var string $budget
+     *
+     * @ORM\Column(name="budget", type="string", length=255)
+     */
+    private $budget;
 
     /**
      * @ORM\OneToMany(targetEntity="Btn\AppBundle\Entity\Time", mappedBy="project")
@@ -135,5 +142,56 @@ class Project
     public function setCreatedAtValue()
     {
         $this->setCreatedAt(new \DateTime());
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->times = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add times
+     *
+     * @param Btn\AppBundle\Entity\Time $times
+     * @return Project
+     */
+    public function addTime(\Btn\AppBundle\Entity\Time $times)
+    {
+        $this->times[] = $times;
+
+        return $this;
+    }
+
+    /**
+     * Remove times
+     *
+     * @param Btn\AppBundle\Entity\Time $times
+     */
+    public function removeTime(\Btn\AppBundle\Entity\Time $times)
+    {
+        $this->times->removeElement($times);
+    }
+
+    /**
+     * Get times
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTimes()
+    {
+        return $this->times;
+    }
+
+    /**
+     * Default to string
+     *
+     * @return string
+     **/
+    public function __toString()
+    {
+        return $this->name;
     }
 }

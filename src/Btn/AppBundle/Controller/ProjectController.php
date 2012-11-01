@@ -17,6 +17,11 @@ use Btn\AppBundle\Form\ProjectType;
  */
 class ProjectController extends BaseController
 {
+    public function preExecute()
+    {
+       $this->getRequest()->request->set('control_nav', 'project');
+    }
+
     /**
      * Get all projects as json response with query
      *

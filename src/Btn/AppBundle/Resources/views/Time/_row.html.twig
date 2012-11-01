@@ -1,0 +1,10 @@
+<tr id="time_{{ time.id }}" rel="{{ time.id }}">
+    <td>{{ time.createdAt|date('M d') }}</td>
+    <td>{{ time.time }}h</td>
+    <td>{{ time.project.name }} {% if time.billable %}<span class="label label-warning">billable</span>{% else %}<span class="label">unbillable</span>{% endif %}</td>
+    <td>{{ time.description|nl2br }}</td>
+    <td style="text-align: right">
+        <a class="btn btn-small edit_time" data-href="{{ path('edit_time', { 'id': time.id }) }}"><i class="icon-pencil"></i> edit</a>
+        <a {#data-widget="modal.confirm"#} class="btn btn-small btn-danger delete_time" data-href="{{ path('delete_time', { 'id': time.id }) }}"><i class="icon-trash icon-white"></i></a>
+    </td>
+</tr>

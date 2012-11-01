@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Btn\AppBundle\Entity\Time
  *
- * @ORM\Table()
+ * @ORM\Table(name="time")
  * @ORM\Entity(repositoryClass="Btn\AppBundle\Entity\TimeRepository")
  */
 class Time
@@ -53,7 +53,7 @@ class Time
     /**
      * @var \DateTime $created_at
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $created_at;
 
@@ -63,7 +63,6 @@ class Time
      * @ORM\Column(name="billable", type="boolean")
      */
     private $billable;
-
 
     /**
      * Get id
@@ -211,5 +210,51 @@ class Time
     public function getBillable()
     {
         return $this->billable;
+    }
+
+    /**
+     * Set project
+     *
+     * @param Btn\AppBundle\Entity\Project $project
+     * @return Time
+     */
+    public function setProject(\Btn\AppBundle\Entity\Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return Btn\AppBundle\Entity\Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Btn\UserBundle\Entity\User $user
+     * @return Time
+     */
+    public function setUser(\Btn\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Btn\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

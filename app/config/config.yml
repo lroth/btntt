@@ -86,3 +86,7 @@ services:
             request:     '@request'
             twig:        '@twig'
             formFactory: '@form.factory'
+    btn.listener.preexecute:
+        class: Btn\AppBundle\Listener\PreExecute
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

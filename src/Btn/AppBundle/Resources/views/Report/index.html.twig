@@ -1,0 +1,42 @@
+{% extends 'BtnAppBundle::layout.html.twig' %}
+
+{% block content %}
+    <h4>Time report</h4>
+
+    <form action="{{ path('report') }}" method="post" {{ form_enctype(form) }} class="form_default" id="filter">
+        <fieldset>
+          <div class="line">
+              <div class="field">
+               {{ form_row(form.user) }}
+              </div>
+          </div>
+          <div class="line">
+              <div class="field">
+               {{ form_row(form.project) }}
+              </div>
+          </div>
+
+          <div class="navi_btns">
+                <input type="submit" id="_submit" name="_submit" value="Filter" class="btn btn_submit" />
+                <a href="{{ path('report', {'remove': 1}) }}" title="Remove filters" style="float: left;">Cancel</a>
+          </div>
+        </fieldset>
+    </form>
+
+    <table class="table table-striped">
+        <tbody>
+            {% for time in pagination %}
+                <tr id="time_{{ time.id }}" rel="{{ time.id }}">
+                    <td>{{ time.createdAt|date('M d') }}</td>
+                    <td>{{ time.time }}h</td>
+                    <td>{{ time.project.name }} {% if time.billable %}<span class="label label-warning">billable</span>{% else %}<span class="label">unbillable</span>{% endif %}</td>
+                    <td>{{ time.user.username }}</td>
+                    <td>{{ time.description|nl2br }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ pagination.render()|raw }}
+
+{% endblock %}

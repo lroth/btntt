@@ -3,6 +3,7 @@
 namespace Btn\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Btn\AppBundle\Controller\Controller as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,6 +15,11 @@ use Btn\AppBundle\Form\TimeType;
 
 class TimeController extends BaseController
 {
+    public function preExecute()
+    {
+       $this->getRequest()->request->set('control_nav', 'time');
+    }
+
     /**
      * @Route("/", name="homepage")
      * @Template()
@@ -32,6 +38,7 @@ class TimeController extends BaseController
         //setup form for current user
         $time = new Time();
         $time->setUser($this->getUser());
+
         $form = $this->createForm(new TimeType($this->getManager()), $time);
 
         //add some post save here
@@ -66,6 +73,52 @@ class TimeController extends BaseController
 
             return $this->redirect($this->generateUrl('homepage'));
         }
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit_time")
+     * @ParamConverter("time", class="BtnAppBundle:Time")
+     * @Template()
+     *
+     * @return void
+     **/
+    public function editAction(Time $time)
+    {
+        $form = $this->createForm(new TimeType($this->getManager()), $time);
+
+        return array(
+            'time' => $time,
+            'form' => $form->createView()
+        );
+    }
+
+    /**
+     *
+     * @Route("/update/{id}", name="update_time")
+     * @Method("POST")
+     * @ParamConverter("time", class="BtnAppBundle:Time")
+     * @Template("BtnAppBundle:Time:edit.html.twig")
+     */
+    public function updateAction(Time $time)
+    {
+        $form = $this->createForm(new TimeType($this->getManager()), $time);
+        $form->bind($this->getRequest());
+
+        if ($form->isValid()) {
+            $this->getManager()->persist($time);
+            $this->getManager()->flush();
+
+            $msg = $this->get('translator')->trans('crud.flash.saved');
+            $this->getRequest()->getSession()->setFlash('success', $msg);
+
+            //render current row and return it
+            return new Response($this->renderView('BtnAppBundle:Time:_row.html.twig', array('time' => $time)));
+        }
+
+        return array(
+            'time'   => $time,
+            'form'   => $form->createView()
+        );
     }
 
     /**

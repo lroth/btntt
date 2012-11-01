@@ -17,6 +17,9 @@ class StringToDateTimeTransformer implements DataTransformerInterface
         if (null === $datetime) {
             return "";
         }
+        if (!($datetime instanceof \DateTime)) {
+            $datetime = new \DateTime($datetime);
+        }
 
         return $datetime->format('d-m-Y');
     }

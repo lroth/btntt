@@ -1,16 +1,16 @@
 {% extends 'BtnAppBundle::layout.html.twig' %}
 
 {% block content %}
-<div class="view" data-view="timetable">
+<div class="view" data-view="timetable" style="position: relative">
     <div class="btn-group">
         <button class="select_date btn" data-value="- 2 days">{{ "-2 days"|date("d M") }}</button>
         <button class="select_date btn" data-value="- 1 day">{{ "-1 day"|date("d M") }}</button>
         <button class="select_date btn active" data-value="today">Today</button>
         <button class="select_calendar btn" data-value="10-10-2012"><i class="icon-calendar"></i> Calendar</button>
     </div>
-    <br/><br/>
-    <form action="{{ path('homepage') }}" class="form-inline" autocomplete="off">
-        <div>{{ form_widget(form.created_at) }}</div>
+
+    <form action="{{ path('homepage') }}" class="form-inline" id="addTime" autocomplete="off" novalidate="novalidate" method="post">
+        <div style="position:absolute; top: 0; left: 240px; opacity: 0">{{ form_widget(form.created_at) }}</div>
         <div class="input-append">
             {{ form_widget(form.time) }}<span class="add-on">h</span>
         </div>
@@ -26,16 +26,7 @@
     <table class="table table-striped">
         <tbody>
             {% for time in pagination %}
-                <tr>
-                    <td>{{ time.createdAt|date('M d') }}</td>
-                    <td>{{ time.time }}h</td>
-                    <td>{{ time.project.name }} {% if time.billable %}<span class="label label-warning">billable</span>{% else %}<span class="label">unbillable</span>{% endif %}</td>
-                    <td>{{ time.description|nl2br }}</td>
-                    <td style="text-align: right">
-                        <a class="btn btn-small" href="#"><i class="icon-pencil"></i> edit</a>
-                        <a data-widget="modal.confirm" class="btn btn-small btn-danger" href="{{ path('delete_time', { 'id': time.id }) }}"><i class="icon-trash icon-white"></i></a>
-                    </td>
-                </tr>
+                {% include 'BtnAppBundle:Time:_row.html.twig' %}
             {% endfor %}
         </tbody>
     </table>

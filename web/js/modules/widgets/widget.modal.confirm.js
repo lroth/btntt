@@ -21,11 +21,12 @@ define('widgets/widget.modal.confirm', ['abstract/Modal', 'widgets/widget'], fun
     };
 
     ModalConfirm.prototype.setUrl = function() {
-        this.actionUrl = ($(this.target).attr('data-action') || $(this.target).attr('href'));
+        this.actionUrl = ($(this.target).attr('data-href') || $(this.target).attr('href'));
     };
 
     ModalConfirm.prototype.makeAction = function() {
-        // miApp.request({url: this.actionUrl, type: 'GET'}, function() { location.reload() });
+        // return true;
+        // miApp.request({url: this.actionUrl, type: 'GET'});
         window.location.href = this.actionUrl;
     };
 

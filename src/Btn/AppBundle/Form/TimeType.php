@@ -21,13 +21,14 @@ class TimeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new ProjectToNameTransformer($this->em);
+        $transformer     = new ProjectToNameTransformer($this->em);
         $dateTransformer = new StringToDateTimeTransformer();
 
         $builder
             ->add(
                 $builder->create('created_at', 'text', array(
                     'required' => false,
+                    'data' => 'today',
                     'attr' => array(
                         'class'       => 'timeContainer',
                     )
@@ -40,7 +41,7 @@ class TimeType extends AbstractType
                     'placeholder' => 'Time',
                 )
             ))
-            ->add('description', 'text', array('attr' =>
+            ->add('description', 'textarea', array('attr' =>
                 array(
                     'class'       => 'input-xxlarge',
                     'placeholder' => 'Description'

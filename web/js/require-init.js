@@ -12,6 +12,7 @@ var requireConfig = {
         'underscore'          : '../vendors/underscore-min',
         'bootstrap-modal'     : '../vendors/twitter-bootstrap/bootstrap-modal',
         'bootstrap-typeahead' : '../vendors/twitter-bootstrap/bootstrap-typeahead',
+        'datepicker'          : '../vendors/datepicker/js/bootstrap-datepicker',
     },
 
     initConfig : function () {

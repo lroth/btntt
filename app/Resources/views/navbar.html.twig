@@ -25,10 +25,10 @@
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active"><a href="{{ path('homepage') }}">Dashboard</a></li>
-          <li class=""><a href="{{ path('project') }}">Projects</a></li>
+          <li {% if app.request.get('control_nav') == 'time' %} class="active" {% endif %}><a href="{{ path('homepage') }}">Time</a></li>
+          <li {% if app.request.get('control_nav') == 'project' %} class="active" {% endif %}><a href="{{ path('project') }}">Projects</a></li>
           <li class=""><a href="#">Members</a></li>
-          <li class=""><a href="#">Reports</a></li>
+          <li {% if app.request.get('control_nav') == 'report' %} class="active" {% endif %}><a href="{{ path('report') }}">Reports</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
