@@ -1,0 +1,15 @@
+<form action="{{ path(route) }}" method="post" {{ form_enctype(form) }} class="form_default" id="filter">
+    <fieldset>
+      <div class="line">
+          <div class="field">
+           {{ form_row(form.keyword) }}
+          </div>
+      </div>
+
+      <div class="navi_btns">
+            <input type="submit" id="_submit" name="_submit" value="Szukaj" class="btn btn_submit" />
+            <a href="{{ path(route, {'remove': 1}) }}" title="Remove filters" style="float: left;">Anuluj filtrowanie</a>
+      </div>
+    </fieldset>
+</form>
+

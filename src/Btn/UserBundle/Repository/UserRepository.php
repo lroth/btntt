@@ -21,8 +21,8 @@ class UserRepository extends EntityRepository
      **/
     public function getSearchQuery($conditions)
     {
-        $qb = $this->createQueryBuilder('a')
-            ->select('a')
+        $qb = $this->createQueryBuilder('e')
+            ->select('e')
         ;
 
         if (!empty($conditions) && is_array($conditions)) {

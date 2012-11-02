@@ -10,8 +10,8 @@
         {
             "package": "doctrine/dbal",
             "version": "2.3.x-dev",
-            "source-reference": "e00ce93926c37d7cab0368694715ff913804780c",
-            "commit-date": "1349466076"
+            "source-reference": "219d96a1592e9e23087eb6861b4f8233d06c6463",
+            "commit-date": "1349518912"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -28,8 +28,8 @@
         {
             "package": "doctrine/orm",
             "version": "2.3.x-dev",
-            "source-reference": "825a68bcba44bd0f59499225b3903a977b3091f0",
-            "commit-date": "1349461531"
+            "source-reference": "564ec1ee2a6a439312ee9105a2a076af7c992e5b",
+            "commit-date": "1349472005"
         },
         {
             "package": "friendsofsymfony/user-bundle",
@@ -40,8 +40,8 @@
         {
             "package": "friendsofsymfony/user-bundle",
             "version": "dev-master",
-            "source-reference": "570a24893a65e6e90a649d55f384be810202b6f0",
-            "commit-date": "1348823929"
+            "source-reference": "51b0fa8fbb637940ebc9060386d95a75fd5ac51a",
+            "commit-date": "1349476472"
         },
         {
             "package": "jms/aop-bundle",
@@ -190,8 +190,8 @@
         {
             "package": "symfony/symfony",
             "version": "2.1.x-dev",
-            "source-reference": "8062031a0a5143086f2ff864925dada9614f2ead",
-            "commit-date": "1349381694"
+            "source-reference": "f152170899634d9ee66292dac177186cf4696408",
+            "commit-date": "1349553363"
         },
         {
             "package": "twig/extensions",
@@ -214,8 +214,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "7dd2f1764681df2635c127e45cc3acb43e5d0194",
-            "commit-date": "1349449745"
+            "source-reference": "5d7baaf767ec3b8f6599738e7c98bde6c25cf7c1",
+            "commit-date": "1349508092"
         },
         {
             "package": "twitter/bootstrap",

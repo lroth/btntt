@@ -13,6 +13,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Btn\AppBundle\Entity\Time;
 use Btn\AppBundle\Form\TimeType;
 
+/**
+ * User controller.
+ *
+ * @Route("/time")
+ */
 class TimeController extends BaseController
 {
     public function preExecute()
@@ -21,11 +26,37 @@ class TimeController extends BaseController
     }
 
     /**
-     * @Route("/", name="homepage")
+     * Get all projects as json response with query
+     *
+     * @Route("/autocomplete", name="projects_autocomplete")
+     * @return json
+     **/
+    public function autocompleteAction(Request $request)
+    {
+        $projects = $this->getRepository('BtnAppBundle:Project')
+            ->findSuggestions($request->get('query'))
+        ;
+
+        return $this->json($projects);
+    }
+
+    /**
+     * @Route("/", name="time")
      * @Template()
      */
     public function indexAction(Request $request)
     {
+        //setup form for current user
+        $time = new Time();
+        $time->setUser($this->getUser());
+
+        $form = $this->createForm(new TimeType($this->getManager()), $time);
+
+        //add some post save here
+        if ($request->getMethod() == 'POST') {
+            $this->processForm($request, $form, $time);
+        }
+
         //get time reports for current user
         $manager = $this->container
             ->get('btn.time_manager')
@@ -34,15 +65,6 @@ class TimeController extends BaseController
             ->setPaginationTpl('BtnAppBundle:Time:pagination.html.twig')
             ->paginate(10)
         ;
-
-        //setup form for current user
-        $time = new Time();
-        $time->setUser($this->getUser());
-
-        $form = $this->createForm(new TimeType($this->getManager()), $time);
-
-        //add some post save here
-        $this->processForm($request, $form, $time);
 
         return array(
             'pagination' => $manager->getPagination(),
@@ -71,7 +93,7 @@ class TimeController extends BaseController
             $msg = $this->get('translator')->trans('crud.flash.saved');
             $this->getRequest()->getSession()->setFlash('success', $msg);
 
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->redirect($this->generateUrl('time'));
         }
     }
 
@@ -105,11 +127,15 @@ class TimeController extends BaseController
         $form->bind($this->getRequest());
 
         if ($form->isValid()) {
+
+            //store changes as history
+            $now = new \DateTime('now');
+            $history = $time->getHistory();
+            $history[] = array($now->format('d-m-Y H:i'), $time->getTime());
+            $time->setHistory($history);
+
             $this->getManager()->persist($time);
             $this->getManager()->flush();
-
-            $msg = $this->get('translator')->trans('crud.flash.saved');
-            $this->getRequest()->getSession()->setFlash('success', $msg);
 
             //render current row and return it
             return new Response($this->renderView('BtnAppBundle:Time:_row.html.twig', array('time' => $time)));
@@ -145,7 +171,7 @@ class TimeController extends BaseController
         $msg = $this->get('translator')->trans('Time item deleted');
         $this->getRequest()->getSession()->setFlash('success', $msg);
 
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirect($this->generateUrl('time'));
     }
 
 }

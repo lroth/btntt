@@ -13,28 +13,39 @@ class TimeFilterType extends AbstractType
 {
 
     protected $filters = array(
-                'user'    => 'u.email',
-                'project' => 't.project'
+                'user'     => 'u.username',
+                'project'  => 't.project',
+                'timeFrom' => 't.createdAt',
+                'timeTo'   => 't.createdAt',
               );
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('user', 'entity', array(
-                'label' => 'Użytkownik',
+                'label' => 'User',
                 'class' => 'Btn\UserBundle\Entity\User',
-                'empty_value' => 'wszyscy',
+                'empty_value' => 'All users',
                 'required' => false,
             ))
             ->add('project', 'entity', array(
-                'label' => 'Projekt',
+                'label' => 'Project',
                 'class' => 'Btn\AppBundle\Entity\Project',
-                'empty_value' => 'wszystkie',
+                'empty_value' => 'All projects',
                 'required' => false,
             ))
             //filter time from
-
+            ->add('timeFrom', 'text', array(
+                'label' => 'Time from',
+                'required' => false,
+                'attr' => array('class' => 'input-small')
+            ))
             //filter time to
+            ->add('timeTo', 'text', array(
+                'label' => 'Time to',
+                'required' => false,
+                'attr' => array('class' => 'input-small')
+            ))
         ;
     }
 
@@ -55,9 +66,21 @@ class TimeFilterType extends AbstractType
         return $expr->eq('p.name', $expr->literal($project));
     }
 
+    public function getTimeFrom($timeFrom, $expr)
+    {
+        $from = new \DateTime($timeFrom);
+        return $expr->gte('t.createdAt', $expr->literal($from->format('Y-m-d H:i:s')));
+    }
+
+    public function getTimeTo($timeTo, $expr)
+    {
+        $to = new \DateTime($timeTo);
+        return $expr->lte('t.createdAt', $expr->literal($to->format('Y-m-d H:i:s')));
+    }
+
     public function getUser($user, $expr)
     {
-        return $expr->eq('u.email', $expr->literal($user));
+        return $expr->eq('u.username', $expr->literal($user));
     }
 
     public function getExpr($binded_data, $expr)

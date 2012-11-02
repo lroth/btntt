@@ -25,7 +25,7 @@ class TimeRepository extends EntityRepository
 
         $qb->add('select',  't')
            ->add('where',   't.user = :user')
-           ->add('orderBy', 't.created_at DESC')
+           ->add('orderBy', 't.createdAt DESC')
            ->setParameter(':user', $user)
         ;
 

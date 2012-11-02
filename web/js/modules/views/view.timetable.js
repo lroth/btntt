@@ -1,4 +1,4 @@
-define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function () {
+define('views/view.timetable', ['datepicker', 'bootstrap-typeahead', 'bootstrap-popover'], function () {
     var timeTable = {};
 
     activateDateSelector = function() {
@@ -11,11 +11,11 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function (
             e.preventDefault();
             $(this).addClass('active');
             $('.timeContainer').val($(this).attr('data-value'));
-            $('#btn_appbundle_timetype_created_at').datepicker('hide');
+            $('#btn_appbundle_timetype_createdAt').datepicker('hide');
         })
 
         //calendar selector
-        $('#btn_appbundle_timetype_created_at').datepicker({
+        $('#btn_appbundle_timetype_createdAt').datepicker({
             calendars: 1,
             starts: 1
         }).on('changeDate', function(ev){
@@ -23,17 +23,17 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function (
             var new_date = d1.getDate() + '/' + d1.getMonth() + '/' + d1.getFullYear();
             $('button.select_date').removeClass('active');
             $('button.select_calendar').addClass('active').html('<i class="icon-calendar"></i> ' + new_date);
-            $('#btn_appbundle_timetype_created_at').datepicker('hide');
+            $('#btn_appbundle_timetype_createdAt').datepicker('hide');
         });
 
         //attach calendar open
         $('button.select_calendar').click(function(e) {
             e.preventDefault();
-            $('#btn_appbundle_timetype_created_at').datepicker('show');
+            $('#btn_appbundle_timetype_createdAt').datepicker('show');
         })
 
 
-        // $('#btn_appbundle_timetype_created_at').DatePicker();
+        // $('#btn_appbundle_timetype_createdAt').DatePicker();
 
     }
 
@@ -58,7 +58,7 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function (
                     $('div.view').find('.edit_time').toggleClass('disabled');
 
                     //attach events to form items
-                    $("#editTime").find('#btn_appbundle_timetype_created_at').datepicker({
+                    $("#editTime").find('#btn_appbundle_timetype_createdAt').datepicker({
                         calendars: 1,
                         starts: 1
                     });
@@ -111,6 +111,10 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function (
         });
     }
 
+    activateHistoryPopover = function() {
+        $('a[rel=popover]').popover();
+    }
+
     timeTable.init = function(el) {
         console.log('Here I am');
         activateDateSelector();
@@ -118,6 +122,8 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead'], function (
         activateTimeEdit();
 
         activateTimeDelete();
+
+        activateHistoryPopover();
     };
 
     return {

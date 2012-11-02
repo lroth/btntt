@@ -194,4 +194,27 @@ class Project
     {
         return $this->name;
     }
+
+    /**
+     * Set budget
+     *
+     * @param string $budget
+     * @return Project
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return string 
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
 }

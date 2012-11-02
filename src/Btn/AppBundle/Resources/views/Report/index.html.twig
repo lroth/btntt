@@ -1,34 +1,37 @@
 {% extends 'BtnAppBundle::layout.html.twig' %}
 
 {% block content %}
+<div class="view" data-view="reports">
     <h4>Time report</h4>
 
-    <form action="{{ path('report') }}" method="post" {{ form_enctype(form) }} class="form_default" id="filter">
-        <fieldset>
-          <div class="line">
-              <div class="field">
-               {{ form_row(form.user) }}
-              </div>
-          </div>
-          <div class="line">
-              <div class="field">
-               {{ form_row(form.project) }}
-              </div>
-          </div>
+    <form action="{{ path('report') }}" method="post" {{ form_enctype(form) }}  class="form-inline" id="filter">
 
-          <div class="navi_btns">
-                <input type="submit" id="_submit" name="_submit" value="Filter" class="btn btn_submit" />
-                <a href="{{ path('report', {'remove': 1}) }}" title="Remove filters" style="float: left;">Cancel</a>
-          </div>
-        </fieldset>
+    <div class="input-prepend">
+      <span class="add-on">From</span>
+      {{ form_widget(form.timeFrom) }}
+    </div>
+
+    <div class="input-prepend">
+      <span class="add-on">To</span>
+      {{ form_widget(form.timeTo) }}
+    </div>
+
+     {{ form_widget(form.user) }}
+
+     {{ form_widget(form.project) }}
+
+      <input type="submit" id="_submit" name="_submit" value="Filter" class="btn btn-success" />
+      <a href="{{ path('report', {'remove': 1}) }}" title="Remove filters" class="btn btn-danger">Reset</a>
     </form>
+    <a href="{{ path('download_report') }}" title="Remove filters" class="btn btn-primary">Download as CSV file</a> <br/><br/>
+
 
     <table class="table table-striped">
         <tbody>
             {% for time in pagination %}
                 <tr id="time_{{ time.id }}" rel="{{ time.id }}">
                     <td>{{ time.createdAt|date('M d') }}</td>
-                    <td>{{ time.time }}h</td>
+                    <td><a href="#" class="btn" rel="popover" data-placement="right" data-content="{{ time.historyAsString|nl2br }}" data-original-title="Hours changelog">{{ time.time }}h</a></td>
                     <td>{{ time.project.name }} {% if time.billable %}<span class="label label-warning">billable</span>{% else %}<span class="label">unbillable</span>{% endif %}</td>
                     <td>{{ time.user.username }}</td>
                     <td>{{ time.description|nl2br }}</td>
@@ -38,5 +41,5 @@
     </table>
 
     {{ pagination.render()|raw }}
-
+</div>
 {% endblock %}

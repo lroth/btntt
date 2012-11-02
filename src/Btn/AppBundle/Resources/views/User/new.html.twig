@@ -1,0 +1,23 @@
+{% extends 'BtnAppBundle::layout.html.twig' %}
+
+{% form_theme form 'BtnCrudBundle:Form:fields.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('user_create') }}" method="post" {{ form_enctype(form) }} class="well form-horizontal">
+        <fieldset>
+            <legend>Create user</legend>
+            {{ form_errors(form) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+
+            {{  form_rest(form) }}
+            <p>
+                <button type="submit" class="btn btn-success">{% trans %}crud.save{% endtrans %}</button>
+            </p>
+        </fieldset>
+    </form>
+
+    <a href="{{ path('user') }}" class="btn">
+        &laquo; {% trans %}crud.back{% endtrans %}
+    </a>
+{% endblock %}

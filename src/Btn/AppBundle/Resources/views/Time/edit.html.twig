@@ -1,7 +1,7 @@
 <tr id="time_{{ time.id }}" rel="{{ time.id }}">
     <td colspan="5">
         <form action="{{ path('update_time', { 'id': time.id }) }}" class="form-inline" id="editTime" autocomplete="off" novalidate="novalidate" method="post">
-            {{ form_widget(form.created_at) }}
+            {{ form_widget(form.createdAt) }}
 
             <div class="input-append">
                 {{ form_widget(form.time) }}<span class="add-on">h</span>

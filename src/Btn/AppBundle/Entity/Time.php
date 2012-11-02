@@ -3,6 +3,7 @@
 namespace Btn\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Btn\AppBundle\Entity\Time
@@ -24,6 +25,7 @@ class Time
     /**
      * @var float $time
      *
+     * @Assert\NotBlank(message="time.hours.not_empty")
      * @ORM\Column(name="time", type="decimal")
      */
     private $time;
@@ -31,6 +33,7 @@ class Time
     /**
      * @var integer $project_id
      *
+     * @Assert\NotBlank(message="time.project.not_empty")
      * @ORM\ManyToOne(targetEntity="Btn\AppBundle\Entity\Project", inversedBy="times")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -46,16 +49,18 @@ class Time
     /**
      * @var string $description
      *
+     * @Assert\NotBlank(message="time.description.not_empty")
      * @ORM\Column(name="description", type="text")
      */
     private $description;
 
     /**
-     * @var \DateTime $created_at
+     * @var \DateTime $createdAt
      *
+     * @Assert\NotBlank(message="time.date.not_empty")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var boolean $billable
@@ -63,6 +68,14 @@ class Time
      * @ORM\Column(name="billable", type="boolean")
      */
     private $billable;
+
+    /**
+     * @var string $history
+     *
+     * @ORM\Column(name="history", type="text", nullable=true)
+     */
+    private $history;
+
 
     /**
      * Get id
@@ -167,26 +180,26 @@ class Time
     }
 
     /**
-     * Set created_at
+     * Set createdAt
      *
      * @param \DateTime $createdAt
      * @return Time
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get created_at
+     * Get createdAt
      *
      * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -256,5 +269,41 @@ class Time
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set history
+     *
+     * @param string $history
+     * @return Time
+     */
+    public function setHistory($history)
+    {
+        $this->history = json_encode($history);
+
+        return $this;
+    }
+
+    /**
+     * Get history
+     *
+     * @return string
+     */
+    public function getHistory()
+    {
+        return json_decode($this->history);
+    }
+
+    public function getHistoryAsString()
+    {
+        $history = $this->getHistory();
+        $result = '';
+        if (is_array($history)) {
+            foreach ($history as $changes) {
+                $result .= $changes[0] . ' - ' . $changes[1] . "h \n";
+            }
+        }
+
+        return $result;
     }
 }

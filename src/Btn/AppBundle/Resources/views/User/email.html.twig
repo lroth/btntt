@@ -1,0 +1,23 @@
+{% extends 'BtnAppBundle::layout.html.twig' %}
+
+{% form_theme form 'BtnCrudBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="view" id="view_AdminForm">
+    <form action="{{ path('user_email', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} class="well form-horizontal">
+        <fieldset>
+            <legend>Change user email {{ entity.username }}
+            </legend>
+                {{ form_errors(form) }}
+                {{ form_row(form.email) }}
+                {{ form_rest(form) }}
+            <p>
+                <a href="{{ path('user_edit', {id: entity.id } ) }}" class="btn">
+                    &laquo; Back to edit
+                </a>
+                <button type="submit" class="btn btn-success">{% trans %}crud.save{% endtrans %}</button>
+            </p>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

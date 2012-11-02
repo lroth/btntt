@@ -7,27 +7,22 @@
         <span class="icon-bar"></span>
       </a>
 
-      <a class="brand" href="#">TimeTracker</a>
+      <a class="brand" href="{{ path('time') }}">TimeTracker</a>
 
-      <div class="btn-group pull-right">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="{{ path('fos_user_security_logout') }}">
-          <i class="icon-user"></i> {{ app.user.screenName }}
-          <span class="caret"></span>
+      <div class="pull-right">
+        <a class="btn btn-warning" href="{{ path('fos_user_security_logout') }}">
+          <i class="icon-user"></i> {{ app.user.screenName }} - gary move out!
         </a>
-        <ul class="dropdown-menu">
-          <li><a href="{{ path('homepage') }}">Homepage</a></li>
-          <li><a href="{{ path('edit_profile')  }}">Profile</a></li>
-          <li class="divider"></li>
-          <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
-        </ul>
       </div>
 
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li {% if app.request.get('control_nav') == 'time' %} class="active" {% endif %}><a href="{{ path('homepage') }}">Time</a></li>
-          <li {% if app.request.get('control_nav') == 'project' %} class="active" {% endif %}><a href="{{ path('project') }}">Projects</a></li>
-          <li class=""><a href="#">Members</a></li>
+          <li {% if app.request.get('control_nav') == 'time' %} class="active" {% endif %}><a href="{{ path('time') }}">Time</a></li>
+          {% if is_granted("ROLE_SUPER_ADMIN") %}
+            <li {% if app.request.get('control_nav') == 'project' %} class="active" {% endif %}><a href="{{ path('project') }}">Projects</a></li>
+            <li {% if app.request.get('control_nav') == 'user' %} class="active" {% endif %}><a href="{{ path('user') }}">Members</a></li>
+          {% endif %}
           <li {% if app.request.get('control_nav') == 'report' %} class="active" {% endif %}><a href="{{ path('report') }}">Reports</a></li>
         </ul>
       </div><!--/.nav-collapse -->

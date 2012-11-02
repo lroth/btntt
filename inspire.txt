@@ -11,6 +11,7 @@ Bug tracker:
 !! https://sifterapp.com/
 http://www.bugherd.com/
 redmine
+https://bitnoise.bugrocket.com/ticket/furnesh/1
 
 Crm:
 Trello

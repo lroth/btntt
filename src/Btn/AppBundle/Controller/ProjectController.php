@@ -23,21 +23,6 @@ class ProjectController extends BaseController
     }
 
     /**
-     * Get all projects as json response with query
-     *
-     * @Route("/autocomplete", name="projects_autocomplete")
-     * @return json
-     **/
-    public function autocompleteAction(Request $request)
-    {
-        $projects = $this->getRepository('BtnAppBundle:Project')
-            ->findSuggestions($request->get('query'))
-        ;
-
-        return $this->json($projects);
-    }
-
-    /**
      * Lists all Project entities.
      *
      * @Route("/", name="project")

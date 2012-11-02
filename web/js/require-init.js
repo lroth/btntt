@@ -12,6 +12,8 @@ var requireConfig = {
         'underscore'          : '../vendors/underscore-min',
         'bootstrap-modal'     : '../vendors/twitter-bootstrap/bootstrap-modal',
         'bootstrap-typeahead' : '../vendors/twitter-bootstrap/bootstrap-typeahead',
+        'bootstrap-tooltip'   : '../vendors/twitter-bootstrap/bootstrap-tooltip',
+        'bootstrap-popover'   : '../vendors/twitter-bootstrap/bootstrap-popover',
         'datepicker'          : '../vendors/datepicker/js/bootstrap-datepicker',
     },
 
@@ -24,7 +26,7 @@ var requireConfig = {
 require.config(requireConfig);
 
 require(['packages/package.jquery', 'packages/package.utils'], function($, _) {
-    require(['app'], function (App) {
+    require(['app', 'bootstrap-tooltip'], function (App) {
         //Add app object to global context, to handle from anywhere
         window.miApp = new App();
 

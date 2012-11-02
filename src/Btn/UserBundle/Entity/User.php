@@ -158,9 +158,10 @@ class User extends BaseUser
      */
     public function __construct()
     {
+        parent::__construct();
         $this->times = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add times
      *
@@ -170,7 +171,7 @@ class User extends BaseUser
     public function addTime(\Btn\AppBundle\Entity\Time $times)
     {
         $this->times[] = $times;
-    
+
         return $this;
     }
 
@@ -187,7 +188,7 @@ class User extends BaseUser
     /**
      * Get times
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTimes()
     {

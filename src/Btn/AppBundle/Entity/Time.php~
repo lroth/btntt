@@ -65,6 +65,14 @@ class Time
     private $billable;
 
     /**
+     * @var string $history
+     *
+     * @ORM\Column(name="history", type="text")
+     */
+    private $history;
+
+
+    /**
      * Get id
      *
      * @return integer

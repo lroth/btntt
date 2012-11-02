@@ -90,3 +90,12 @@ services:
         class: Btn\AppBundle\Listener\PreExecute
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    btn.user_manager:
+        class: Btn\AppBundle\Model\UserManager
+        scope: request
+        arguments:
+            em:          '@doctrine.orm.entity_manager'
+            paginator:   '@knp_paginator'
+            request:     '@request'
+            twig:        '@twig'
+            formFactory: '@form.factory'
