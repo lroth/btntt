@@ -1,4 +1,4 @@
-define('views/view.timetable', ['datepicker', 'bootstrap-typeahead', 'bootstrap-popover'], function () {
+define('views/view.timetable', ['d3js', 'datepicker', 'bootstrap-typeahead', 'bootstrap-popover'], function () {
     var timeTable = {};
 
     activateDateSelector = function() {
@@ -115,6 +115,74 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead', 'bootstrap-
         $('a[rel=popover]').popover();
     }
 
+    buildCharts = function() {
+
+        drawPie = function(data, cell) {
+
+            var width = 110,
+                height = 110,
+                radius = Math.min(width, height) / 2;
+
+            var color = d3.scale.category20();
+
+            var pie = d3.layout.pie()
+                .sort(null);
+
+            var arc = d3.svg.arc()
+                .innerRadius(radius - 30)
+                .outerRadius(radius - 5);
+
+            var svg = d3.select(cell).append("svg")
+                .attr("width", width)
+                .attr("height", height + 15)
+              .append("g")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            var label = svg.append("text");
+            var path = svg.selectAll("path")
+                .data(function(d) { return pie(data.value) })
+              .enter().append("path")
+                .attr("fill", function(d, i) { return color(i); })
+                .attr("cursort", "pointer")
+                .attr("d", arc)
+                .on("mouseover", function(d, i) {
+                    label.remove();
+                    label = svg.append("text")
+                        .attr("dy", 65)
+                        .style("text-anchor", "middle")
+                        .style("font-size", "11px")
+                        .text(data.label[i] + ' ' + data.value[i] + 'h');
+                })
+                .on("mouseout", function(d, i) {
+                    label.remove();
+                });
+
+            var text = svg.append("text")
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .text(function(d) { return d3.sum(data.value) + 'h'; });
+
+
+        }
+
+
+        //parse data
+        $('td.item-data').each(function() {
+            var data = { value: [], label: [] };
+            $(this).find('data').each(function() {
+                data.value.push(parseInt($(this).attr('data-value')));
+                data.label.push($(this).attr('data-label'));
+            });
+
+            //render data
+            if (data.value.length > 0) {
+                console.log(data);
+                console.log($(this).attr('id'));
+                drawPie(data, '#' + $(this).attr('id'));
+            };
+        });
+    }
+
     timeTable.init = function(el) {
         console.log('Here I am');
         activateDateSelector();
@@ -124,6 +192,9 @@ define('views/view.timetable', ['datepicker', 'bootstrap-typeahead', 'bootstrap-
         activateTimeDelete();
 
         activateHistoryPopover();
+
+        //build charts
+        buildCharts();
     };
 
     return {

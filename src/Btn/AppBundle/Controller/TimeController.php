@@ -66,9 +66,17 @@ class TimeController extends BaseController
             ->paginate(10)
         ;
 
+        //take your last 7 days summary
+        $lastActivity = $this->container
+            ->get('btn.time_manager')
+            ->getLastActivity($this->getUser(), 7)
+        ;
+
+
         return array(
-            'pagination' => $manager->getPagination(),
-            'form'       => $form->createView()
+            'pagination'   => $manager->getPagination(),
+            'form'         => $form->createView(),
+            'lastActivity' => $lastActivity
         );
     }
 

@@ -46,7 +46,7 @@ class Project
     /**
      * @var string $budget
      *
-     * @ORM\Column(name="budget", type="string", length=255)
+     * @ORM\Column(name="budget", type="string", length=255, nullable=true)
      */
     private $budget;
 
@@ -204,14 +204,14 @@ class Project
     public function setBudget($budget)
     {
         $this->budget = $budget;
-    
+
         return $this;
     }
 
     /**
      * Get budget
      *
-     * @return string 
+     * @return string
      */
     public function getBudget()
     {

@@ -10,6 +10,7 @@ var requireConfig = {
         'jquery'              : '../vendors/jquery/jquery-1.8.0.min',
         'jquery-ui'           : '../vendors/jquery/jquery-ui-1.8.23.custom.min',
         'underscore'          : '../vendors/underscore-min',
+        'd3js'                : '../vendors/d3',
         'bootstrap-modal'     : '../vendors/twitter-bootstrap/bootstrap-modal',
         'bootstrap-typeahead' : '../vendors/twitter-bootstrap/bootstrap-typeahead',
         'bootstrap-tooltip'   : '../vendors/twitter-bootstrap/bootstrap-tooltip',

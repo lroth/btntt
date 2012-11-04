@@ -24,6 +24,7 @@ security:
         - { path: ^/css,         role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js,          role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$,      role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/time,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/user,        role: ROLE_SUPER_ADMIN }
         - { path: ^/project,     role: ROLE_SUPER_ADMIN }

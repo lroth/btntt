@@ -29,6 +29,30 @@
       {{ form_widget(form._token) }}
     </form>
 
+    <h4>Last 7 days activity</h4>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                {% for date,items in lastActivity %}
+                    <th width="133" style="text-align: center"> {{ date }} </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for date,items in lastActivity %}
+                    <td class="item-data" id="item-{{ loop.index }}"  style="text-align: center; vertical-align: middle">
+                        {% for project,time in items %}
+                            <data data-label="{{ project }}" data-value="{{ time }}"/>
+                        {% else %}
+                            <em class="muted">lazy day</em>
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
     <h4>Your Recent Entries</h4>
     <table class="table table-striped">
         <tbody>

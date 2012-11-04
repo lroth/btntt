@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class TimeRepository extends EntityRepository
 {
     /**
-     * Get all ads for provided user (get query for pagination)
+     * Get all times for provided user (get query for pagination)
      *
      * @param User $user
      *
@@ -46,5 +46,19 @@ class TimeRepository extends EntityRepository
         }
 
         return $qb;
+    }
+
+    public function getUserReportForLastDays($user, $period = 7)
+    {
+        return  $this->getEntityManager()
+            ->createQuery(
+                'SELECT t, p, u FROM Btn\AppBundle\Entity\Time t '.
+                'JOIN t.user u '.
+                'JOIN t.project p '.
+                'WHERE t.user = :user AND t.createdAt >= :dateFrom '
+            )
+            ->setParameter('user', $user)
+            ->setParameter('dateFrom', new \DateTime('-' . $period . ' days'))
+            ->getResult();
     }
 }
