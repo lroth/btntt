@@ -19,8 +19,9 @@ define('views/view.timetable', ['d3js', 'datepicker', 'bootstrap-typeahead', 'bo
             calendars: 1,
             starts: 1
         }).on('changeDate', function(ev){
-            var d1 = new Date(ev.date);
-            var new_date = d1.getDate() + '/' + d1.getMonth() + '/' + d1.getFullYear();
+            var d1    = new Date(ev.date);
+            var month = (d1.getMonth() + 1);//bravo js Date object - months from 0 to 11 ;)
+            var new_date = d1.getDate() + '/' + month + '/' + d1.getFullYear();
             $('button.select_date').removeClass('active');
             $('button.select_calendar').addClass('active').html('<i class="icon-calendar"></i> ' + new_date);
             $('#btn_appbundle_timetype_createdAt').datepicker('hide');
@@ -184,7 +185,7 @@ define('views/view.timetable', ['d3js', 'datepicker', 'bootstrap-typeahead', 'bo
     }
 
     timeTable.init = function(el) {
-        console.log('Here I am');
+
         activateDateSelector();
 
         activateTimeEdit();

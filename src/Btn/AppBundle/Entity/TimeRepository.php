@@ -38,6 +38,7 @@ class TimeRepository extends EntityRepository
                    ->select(array('t', 'u', 'p'))
                    ->innerJoin('t.user', 'u')
                    ->innerJoin('t.project', 'p')
+                   ->add('orderBy', 't.createdAt DESC')
               ;
 
         if (!empty($conditions) && is_array($conditions)) {

@@ -28,7 +28,7 @@ class TimeType extends AbstractType
             ->add(
                 $builder->create('createdAt', 'text', array(
                     'required' => false,
-                    'data' => 'today',
+                    // 'data' => 'today', #js will take care of this one
                     'attr' => array(
                         'class'       => 'timeContainer',
                     )
