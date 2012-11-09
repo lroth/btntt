@@ -10,8 +10,9 @@ define('views/view.timetable', ['d3js', 'datepicker', 'bootstrap-typeahead', 'bo
             $('button.select_date, button.select_calendar').removeClass('active');
             e.preventDefault();
             $(this).addClass('active');
-            $('.timeContainer').val($(this).attr('data-value'));
+            // console.log($(this).attr('data-value'));
             $('#btn_appbundle_timetype_createdAt').datepicker('hide');
+            $('.timeContainer').val($(this).attr('data-value'));
         })
 
         //calendar selector
