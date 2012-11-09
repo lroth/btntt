@@ -11,7 +11,7 @@
 
 
     <form action="{{ path('time') }}" class="form-inline" id="addTime" autocomplete="off" novalidate="novalidate" method="post">
-        <div style="position:absolute; top: 0; left: 440px; opacity: 1">{{ form_widget(form.createdAt) }}</div>
+        <div style="position:absolute; top: 0; left: 240px; opacity: 0">{{ form_widget(form.createdAt) }}</div>
         <span class="control-group {% if form.time.vars.errors|length %}error{% endif %}">
             <div class="input-append">
                 {{ form_widget(form.time) }}<span class="add-on">h</span>
