@@ -25,6 +25,8 @@ class AppKernel extends Kernel
             new Btn\CrudBundle\BtnCrudBundle(),
             new Btn\UserBundle\BtnUserBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new Btn\ApiBundle\BtnApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

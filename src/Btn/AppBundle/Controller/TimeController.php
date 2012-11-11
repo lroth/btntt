@@ -54,7 +54,7 @@ class TimeController extends BaseController
 
         //add some post save here
         if ($request->getMethod() == 'POST') {
-            $this->processForm($request, $form, $time);
+            return $this->processForm($request, $form, $time);
         }
 
         //get time reports for current user
@@ -72,11 +72,11 @@ class TimeController extends BaseController
             ->getLastActivity($this->getUser(), 7)
         ;
 
-
         return array(
             'pagination'   => $manager->getPagination(),
             'form'         => $form->createView(),
-            'lastActivity' => $lastActivity
+            'lastActivity' => $lastActivity,
+            'editPeriod'   => new \DateTime('-3 days')
         );
     }
 
@@ -114,6 +114,15 @@ class TimeController extends BaseController
      **/
     public function editAction(Time $time)
     {
+        if ($time->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException('This is not your Time entity.');
+        }
+
+        //check if it is not to late to edit this one
+        if ($time->getCreatedAt() < new \DateTime('-3 days')) {
+            throw $this->createNotFoundException('It is to late to edit this entity.');
+        }
+
         $form = $this->createForm(new TimeType($this->getManager()), $time);
 
         return array(
@@ -131,6 +140,15 @@ class TimeController extends BaseController
      */
     public function updateAction(Time $time)
     {
+        if ($time->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException('This is not your Time entity.');
+        }
+
+        //check if it is not to late to edit this one
+        if ($time->getCreatedAt() < new \DateTime('-3 days')) {
+            throw $this->createNotFoundException('It is to late to edit this entity.');
+        }
+
         $form = $this->createForm(new TimeType($this->getManager()), $time);
         $form->bind($this->getRequest());
 
@@ -146,7 +164,10 @@ class TimeController extends BaseController
             $this->getManager()->flush();
 
             //render current row and return it
-            return new Response($this->renderView('BtnAppBundle:Time:_row.html.twig', array('time' => $time)));
+            return new Response($this->renderView('BtnAppBundle:Time:_row.html.twig', array(
+                'time'       => $time,
+                'editPeriod' => new \DateTime('-3 days')
+            )));
         }
 
         return array(
@@ -171,6 +192,11 @@ class TimeController extends BaseController
 
         if ($time->getUser() !== $this->getUser()) {
             throw $this->createNotFoundException('This is not your Time entity.');
+        }
+
+        //check if it is not to late to edit this one
+        if ($time->getCreatedAt() < new \DateTime('-3 days')) {
+            throw $this->createNotFoundException('It is to late to edit this entity.');
         }
 
         $em->remove($time);

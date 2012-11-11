@@ -10,6 +10,21 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
+        api:
+            pattern: ^/api
+            fos_oauth: true
+            stateless: true
+        oauth_authorize:
+            pattern: ^/oauth/v2/auth
+            form_login:
+                provider: fos_userbundle
+                check_path: /oauth/v2/auth_login_check
+                login_path: /oauth/v2/auth_login
+            anonymous: true
+        oauth_token:
+            pattern: ^/oauth/v2/token
+            security: false
+
         main:
             pattern: ^/
             form_login:
@@ -24,11 +39,13 @@ security:
         - { path: ^/css,         role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js,          role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$,      role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,        role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,            role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/time,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/user,        role: ROLE_SUPER_ADMIN }
         - { path: ^/project,     role: ROLE_SUPER_ADMIN }
         - { path: ^/report,      role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/api,         roles: [ IS_AUTHENTICATED_FULLY ] }
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER

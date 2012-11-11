@@ -1,0 +1,19 @@
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+
+    <class name="Btn\ApiBundle\Form\Model\Authorize">
+
+        <property name="allowAccess">
+            <constraint name="True">
+                <option name="message">Please check the checkbox to allow access to your profile.</option>
+                <option name="groups">
+                    <value>Authorize</value>
+                </option>
+            </constraint>
+        </property>
+
+    </class>
+
+</constraint-mapping>

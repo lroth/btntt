@@ -1,0 +1,20 @@
+pagination:
+    previous:   Previous
+    next:       Next
+crud:
+    actions:    Actions
+    create_new: Create new
+    back:       Back to list
+    delete:     Delete
+    save:       Save
+    create:     Create
+    show:       Show
+    edit:       Edit
+    flash:
+        saved:   Changes saved!
+        deleted: Item delted!
+    breadcrumb:
+        list:    List
+        edit:    Edit
+        new:     Create
+        show:    Show

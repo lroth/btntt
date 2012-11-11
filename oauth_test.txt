@@ -1,0 +1,17 @@
+//dummy oauth2 testing
+//from console - create client request flow:
+php app/console btn:oauth-server:client:create --redirect-uri=http://www.google.com --grant-type=token --grant-type=authorization_code ChromeTimeTracker
+
+//then call this one
+http://localhost/btntt/web/oauth/v2/auth?client_id=4_1o1hflye2nj4os880ksowggocoo0w00scs4kgs8oc084ks8o80&response_type=code&redirect_uri=http%3A%2F%2Fwww.google.com
+
+//you will end on something like this:
+https://www.google.com/?code=kN9nv2Wqmp8zcli5aEGtyMYnA5L6d9qe0HXCFVLn3Sw
+
+//Now, call the /oauth/v2/token endpoint to get your access and refresht tokens.
+http://localhost/btntt/web/oauth/v2/token?client_id=4_1o1hflye2nj4os880ksowggocoo0w00scs4kgs8oc084ks8o80&client_secret=1zklwafh2aysksc4w8c4w88wsg4c88kosco04kc0okgc0c8w8c&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fwww.google.com&code=joZyHaySoxvurL3yx8zV2zJupiQFJUUbPNss2cifhGI
+
+//you will get something like this:
+{"access_token":"ZSQG94iHjV3bjMb1YldgopMmZywCnQwG3I4mCNx3vbM","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"tOtP3p94NiLpvewWXoYCRXgeX7dPtnVFYIuMp8ZacEE"}
+
+http://localhost/btntt/web/oauth/v2/auth?client_id=4_1o1hflye2nj4os880ksowggocoo0w00scs4kgs8oc084ks8o80&redirect_uri=http%3A%2F%2Fwww.google.com&response_type=token

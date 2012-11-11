@@ -1,3 +1,8 @@
+btn_api:
+    resource: "@BtnApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 btn_app:
     resource: "@BtnAppBundle/Controller/"
     type:     annotation
@@ -7,6 +12,16 @@ BtnUserBundle:
     resource: "@BtnUserBundle/Controller/"
     type:     annotation
     prefix:   /
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+btn_oauth_server_security:
+    resource: "@BtnApiBundle/Resources/config/routing/security.xml"
+    prefix: /
 
 # FOS security bundle
 

@@ -27,6 +27,15 @@ fos_user:
         address:        noreply@bitnoise.pl
         sender_name:    Btn App
 
+fos_oauth_server:
+    db_driver: orm
+    client_class:        Btn\ApiBundle\Entity\Client
+    access_token_class:  Btn\ApiBundle\Entity\AccessToken
+    refresh_token_class: Btn\ApiBundle\Entity\RefreshToken
+    auth_code_class:     Btn\ApiBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_manager
+
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
