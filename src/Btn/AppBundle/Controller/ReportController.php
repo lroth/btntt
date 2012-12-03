@@ -40,9 +40,27 @@ class ReportController extends BaseController
             ->paginate()
         ;
 
+        //@TODO: refactor this one - lame code just for fast results of sum in view
+       $query = $this->container->get('btn.time_manager')
+            ->setNs('reports')
+            ->createForm(new TimeFilterType())
+            ->setQueryMethod('getReportQuery')
+            ->enablePageSession()
+            ->filter()
+            ->setQuery()
+            ->getQuery()
+        ;
+        $results = $query->getResult();
+        $total = 0;
+        foreach ($results as $i => $time) {
+            $total += $time->getTime();
+        }
+
+
         return array(
             'pagination' => $manager->getPagination(),
-            'form'       => $manager->getForm()->createView()
+            'form'       => $manager->getForm()->createView(),
+            'total'      => $total,
         );
     }
 
