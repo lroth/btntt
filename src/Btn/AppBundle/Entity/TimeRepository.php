@@ -35,11 +35,11 @@ class TimeRepository extends EntityRepository
     public function getReportQuery($conditions)
     {
         $qb = $this->createQueryBuilder('t')
-                   ->select(array('t', 'u', 'p'))
-                   ->innerJoin('t.user', 'u')
-                   ->innerJoin('t.project', 'p')
-                   ->add('orderBy', 't.createdAt DESC')
-              ;
+           ->select(array('t', 'u', 'p'))
+           ->innerJoin('t.user', 'u')
+           ->innerJoin('t.project', 'p')
+           ->add('orderBy', 't.createdAt DESC')
+        ;
 
         if (!empty($conditions) && is_array($conditions)) {
             $expr = call_user_func_array(array($qb->expr(), 'andx'), $conditions);
