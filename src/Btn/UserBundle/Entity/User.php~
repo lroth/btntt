@@ -53,6 +53,12 @@ class User extends BaseUser
     private $times;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Btn\AppBundle\Entity\Project", inversedBy="users")
+     * @ORM\JoinTable(name="projects_users")
+     */
+    private $projects;
+
+    /**
      * Get id
      *
      * @return integer
@@ -152,5 +158,46 @@ class User extends BaseUser
     public function getPhone()
     {
         return $this->phone;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->times = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add times
+     *
+     * @param Btn\AppBundle\Entity\Time $times
+     * @return User
+     */
+    public function addTime(\Btn\AppBundle\Entity\Time $times)
+    {
+        $this->times[] = $times;
+
+        return $this;
+    }
+
+    /**
+     * Remove times
+     *
+     * @param Btn\AppBundle\Entity\Time $times
+     */
+    public function removeTime(\Btn\AppBundle\Entity\Time $times)
+    {
+        $this->times->removeElement($times);
+    }
+
+    /**
+     * Get times
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTimes()
+    {
+        return $this->times;
     }
 }

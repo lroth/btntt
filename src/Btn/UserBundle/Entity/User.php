@@ -53,6 +53,11 @@ class User extends BaseUser
     private $times;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Btn\AppBundle\Entity\Project", mappedBy="users")
+     */
+    private $projects;
+
+    /**
      * Get id
      *
      * @return integer
@@ -193,5 +198,37 @@ class User extends BaseUser
     public function getTimes()
     {
         return $this->times;
+    }
+
+    /**
+     * Add projects
+     *
+     * @param Btn\AppBundle\Entity\Project $projects
+     * @return User
+     */
+    public function addProject(\Btn\AppBundle\Entity\Project $projects)
+    {
+        $this->projects[] = $projects;
+        return $this;
+    }
+
+    /**
+     * Remove projects
+     *
+     * @param Btn\AppBundle\Entity\Project $projects
+     */
+    public function removeProject(\Btn\AppBundle\Entity\Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

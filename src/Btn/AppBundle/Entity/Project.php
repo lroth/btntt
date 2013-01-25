@@ -23,11 +23,39 @@ class Project
     private $id;
 
     /**
+     * @var string $lead_id
+     *
+     * @ORM\Column(name="leadId", type="integer")
+     */
+    private $leadId;    
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var \DateTime $start_time
+     *
+     * @ORM\Column(name="start_time", type="datetime")
+     */
+    private $startTime;
+
+    /**
+     * @var \DateTime $end_time
+     *
+     * @ORM\Column(name="end_time", type="datetime")
+     */
+    private $endTime;
 
     /**
      * @var \DateTime $created_at
@@ -54,6 +82,18 @@ class Project
      * @ORM\OneToMany(targetEntity="Btn\AppBundle\Entity\Time", mappedBy="project")
      **/
     private $times;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AccessData", mappedBy="project")
+     */
+    private $accessData;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Btn\UserBundle\Entity\User", inversedBy="projects")
+     * @ORM\JoinTable(name="projects_users")
+     */
+    private $users;
+
 
     /**
      * Get id
@@ -216,5 +256,158 @@ class Project
     public function getBudget()
     {
         return $this->budget;
+    }
+
+    /**
+     * Set leadId
+     *
+     * @param integger $leadId
+     * @return Project
+     */
+    public function setLeadId(\integger $leadId)
+    {
+        $this->leadId = $leadId;
+        return $this;
+    }
+
+    /**
+     * Get leadId
+     *
+     * @return integger 
+     */
+    public function getLeadId()
+    {
+        return $this->leadId;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Project
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set startTime
+     *
+     * @param datetime $startTime
+     * @return Project
+     */
+    public function setStartTime($startTime)
+    {
+        $this->startTime = $startTime;
+        return $this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return datetime 
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param datetime $endTime
+     * @return Project
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return datetime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * Add accessData
+     *
+     * @param Btn\AppBundle\Entity\AccessData $accessData
+     * @return Project
+     */
+    public function addAccessData(\Btn\AppBundle\Entity\AccessData $accessData)
+    {
+        $this->accessData[] = $accessData;
+        return $this;
+    }
+
+    /**
+     * Remove accessData
+     *
+     * @param Btn\AppBundle\Entity\AccessData $accessData
+     */
+    public function removeAccessData(\Btn\AppBundle\Entity\AccessData $accessData)
+    {
+        $this->accessData->removeElement($accessData);
+    }
+
+    /**
+     * Get accessData
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getAccessData()
+    {
+        return $this->accessData;
+    }
+
+
+    /**
+     * Add users
+     *
+     * @param Btn\UserBundle\Entity\User $users
+     * @return Project
+     */
+    public function addUser(\Btn\UserBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param Btn\UserBundle\Entity\User $users
+     */
+    public function removeUser(\Btn\UserBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
