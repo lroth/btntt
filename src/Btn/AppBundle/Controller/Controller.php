@@ -36,6 +36,7 @@ class Controller extends BaseController
             'param'   => $param
         );
 
+
         return $this->json($result);
     }
 
