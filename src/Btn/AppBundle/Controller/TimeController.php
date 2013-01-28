@@ -22,7 +22,7 @@ class TimeController extends BaseController
 {
     public function preExecute()
     {
-       $this->getRequest()->request->set('control_nav', 'time');
+        $this->getRequest()->request->set('control_nav', 'time');
     }
 
     /**
@@ -34,8 +34,7 @@ class TimeController extends BaseController
     public function autocompleteAction(Request $request)
     {
         $projects = $this->getRepository('BtnAppBundle:Project')
-            ->findSuggestions($request->get('query'))
-        ;
+            ->findSuggestions($request->get('query'));
 
         return $this->json($projects);
     }
@@ -63,20 +62,18 @@ class TimeController extends BaseController
             ->setNs('time')
             ->fetchQuery($this->getRepository('BtnAppBundle:Time')->getQueryForUser($this->getUser()))
             ->setPaginationTpl('BtnAppBundle:Time:pagination.html.twig')
-            ->paginate(10)
-        ;
+            ->paginate(10);
 
         //take your last 7 days summary
         $lastActivity = $this->container
             ->get('btn.time_manager')
-            ->getLastActivity($this->getUser(), 7)
-        ;
+            ->getLastActivity($this->getUser(), 7);
 
         return array(
-            'pagination'   => $manager->getPagination(),
-            'form'         => $form->createView(),
+            'pagination' => $manager->getPagination(),
+            'form' => $form->createView(),
             'lastActivity' => $lastActivity,
-            'editPeriod'   => new \DateTime('-3 days')
+            'editPeriod' => new \DateTime('-3 days')
         );
     }
 
@@ -165,14 +162,14 @@ class TimeController extends BaseController
 
             //render current row and return it
             return new Response($this->renderView('BtnAppBundle:Time:_row.html.twig', array(
-                'time'       => $time,
+                'time' => $time,
                 'editPeriod' => new \DateTime('-3 days')
             )));
         }
 
         return array(
-            'time'   => $time,
-            'form'   => $form->createView()
+            'time' => $time,
+            'form' => $form->createView()
         );
     }
 
