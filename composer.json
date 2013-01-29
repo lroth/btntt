@@ -12,6 +12,7 @@
         
         "doctrine/data-fixtures"           :"dev-master",
         "doctrine/doctrine-fixtures-bundle":"*",
+        "jms/serializer-bundle" : "*",
 
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "2.1.*",

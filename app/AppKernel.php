@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Btn\ApiBundle\BtnApiBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this)
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

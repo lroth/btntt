@@ -1,0 +1,13 @@
+{
+  "volo": {
+    "dependencies": {
+      "jquery": "github:jquery/jquery/1.9.0",
+      "underscore": "github:documentcloud/underscore/1.4.3",
+      "backbone": "github:documentcloud/backbone/0.9.10",
+      "backbone.marionette": "https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js",
+      "require": "github:jrburke/requirejs/2.1.4",
+      "handlebars": "https://raw.github.com/wycats/handlebars.js/1.0.rc.2/dist/handlebars.js",
+      "text": "github:requirejs/text/2.0.4"
+    }
+  }
+}

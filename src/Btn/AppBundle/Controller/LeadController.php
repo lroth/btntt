@@ -7,7 +7,9 @@ use Btn\AppBundle\Entity\Enquiry;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Btn\AppBundle\Controller\Controller as BaseController;
+
+use Btn\AppBundle\Controller\RestController as RestController;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  * User controller.
  *
  */
-class LeadController extends BaseController
+class LeadController extends RestController
 {
     /**
      * @Route("/lead/", name="leadList")
@@ -24,8 +26,11 @@ class LeadController extends BaseController
      */
     public function indexAction()
     {
-    	
-        return array();
+        $serializer = $this->container->get('serializer');
+    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:Lead');
+        $leads      = $repository->findAll();
+
+        return new Response($serializer->serialize($leads, 'json'));
     }
 
     /**
