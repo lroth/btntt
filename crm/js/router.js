@@ -22,7 +22,7 @@ define(['controllers/lead'], function(LeadController) {
    * We will add some magic here when project will grow up 
    */
   var initialize = function() {
-      console.log('Router initialize...');
+      console.log('INITIALIZE: Router\r\n');
 
       /* Marionette router will use method from passed controller */
       var leadRouter = new LeadRouter({

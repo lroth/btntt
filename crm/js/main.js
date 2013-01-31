@@ -7,7 +7,9 @@ requirejs.config({
 
     'jquery': 'lib/jquery',
     'underscore': 'lib/underscore',
-    'handlebars': 'lib/handlebars',
+    'handlebars': 'lib/handlebars/handlebars',
+    'handlebars.module': 'lib/handlebars/handlebars.module',
+
     'text': 'lib/require/text'
   },
 
@@ -16,7 +18,7 @@ requirejs.config({
       deps: ['backbone.marionette']
     },
     'backbone': {
-      deps: ['underscore', 'jquery', 'handlebars'],
+      deps: ['underscore', 'jquery', 'handlebars.module'],
       exports: 'Backbone'
     },
     'backbone.marionette': {
@@ -36,7 +38,7 @@ requirejs.config({
   }
 });
 
-console.log('Require.js configuration loaded...');
+console.log('LOAD: require.js configuration\r\n');
 
 require(['app'], function(app) {
   app.start();

@@ -1,23 +1,23 @@
 define(['router'], function(router) {
 	"use strict";
 
-
 	var App = new Marionette.Application();
+
+	App.restUrl = '/web/';
+
+	App.getRestUrl = function(route) {
+		return Backbone.history.location.origin + this.restUrl + route;
+	}	
 	
-	App.on("initialize:after", function(){
-  		
-	});
-
-
+	App.on("initialize:after", function(){});
 
 	/* Add layout regions here to controll views */
 	App.addRegions({
-		left: '#helper',
-		main: '#main'
+		content : "#content"
 	});
 
 	App.addInitializer(function() {
-		console.log('Application initialize...');
+		console.log('INITIALIZE: Application');
 
 		/* Initialize whole routing here */
 		router.initialize();
