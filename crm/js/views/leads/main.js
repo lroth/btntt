@@ -1,12 +1,11 @@
 define([
-  'models/lead', 
   'collections/lead',
 
   'views/leads/add',
   'views/leads/list',
   'views/leads/search'
 ], 
-function(LeadModel, LeadCollection, ViewAdd, ViewList, ViewSearch) {
+function(LeadCollection, ViewAdd, ViewList, ViewSearch) {
 
   var LeadsMainView = Backbone.View.extend({
     tagName : 'div',
@@ -27,15 +26,15 @@ function(LeadModel, LeadCollection, ViewAdd, ViewList, ViewSearch) {
     },
 
     initialize: function(options) {
-      console.log('LeadsMainView::initialize');
+      console.log('LeadsMainView::initialize() \r\n');
       
-      this.collection = new LeadCollection(options);
-      this.model      = new LeadModel(options);
+      this.collection     = new LeadCollection(options);
+      options.collection  = this.collection;
 
       this.subViews = {
-        add   : new ViewAdd(),
-        search: new ViewSearch(),
-        list  : new ViewList()
+        add   : new ViewAdd(options),
+        search: new ViewSearch(options),
+        list  : new ViewList(options)
       };
     }
   });

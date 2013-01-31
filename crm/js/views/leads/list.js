@@ -7,7 +7,7 @@ function(tmpl, LeadModel, LeadCollection) {
 
   var LeadListView = Backbone.View.extend({
     tagName   : 'div',
-    className : 'list',
+    className : 'eight columns',
     id        : 'leads',
 
     getHtml: function(response) {
@@ -19,18 +19,15 @@ function(tmpl, LeadModel, LeadCollection) {
     },
 
     render: function() {
-      // this.collection.fetch({
-      //   success: _.bind(function(collection, response) {
-      //     this.$el.append(this.getHtml(response));
-      //   }, this)
-      // })
+      this.collection.fetch({
+        success: _.bind(function(collection, response) {
+          this.$el.append(this.getHtml(response));
+        }, this)
+      })
     },
 
     initialize: function(options) {
-      // console.log('\r\nInitalize list view');
-
-      // this.collection = new LeadCollection(options);
-      // this.model = new LeadModel();
+      console.log('\r\LeadListView::initialize()');
     }
   });
 

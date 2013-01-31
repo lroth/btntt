@@ -6,13 +6,14 @@ function(tmpl) {
   var LeadSearchView = Backbone.View.extend({
     tagName   : 'div',
     id        : 'search',
+    className : 'eight columns',
 
     render: function() {
       this.$el.html(tmpl);
     },
 
     initialize: function(options) {
-      console.log('eadSearchView::initialize');
+      console.log('LeadSearchView::initialize()');
     }
   });
 

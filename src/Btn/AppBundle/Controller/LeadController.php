@@ -32,42 +32,4 @@ class LeadController extends RestController
 
         return new Response($serializer->serialize($leads, 'json'));
     }
-
-    /**
-     * @Route("/lead/{id}", name="leadShow")
-     * @Method({"GET"})
-     */
-    public function Action()
-    {
-        
-        return array();
-    }
-
-    /**
-     * @Route("/lead", name="leadAdd")
-     * @Method({"POST"})
-     */
-    public function addAction()
-    {
-        
-        return array();
-    }
-
-    /**
-     * @Route("/lead", name="leadUpdate")
-     * @Method({"PUT"})
-     */
-    public function updateAction()
-    {
-        return array();
-    }
-
-    /**
-     * @Route("/lead", name="leadDelete")
-     * @Method({"DELETE"})
-     */
-    public function deleteAction()
-    {
-        return array();
-    }    
 }
