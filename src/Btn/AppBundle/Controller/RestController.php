@@ -32,7 +32,11 @@ class RestController extends BaseController {
      */
 	public function getAllAction($resourceName)
 	{
-		die('Get all from ' .$resourceName);
+		$serializer = $this->container->get('serializer');
+    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:' . ucfirst($resourceName));
+        $entities   = $repository->findAll();
+
+        return new Response($serializer->serialize($entities, 'json'));
 	}
 
 	/**
@@ -41,7 +45,11 @@ class RestController extends BaseController {
      */
 	public function getAction($resourceName, $id)
 	{
-		die('Get from ' .$resourceName . ' with id = ' . $id);
+		$serializer = $this->container->get('serializer');
+    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:' . ucfirst($resourceName));
+        $entities      = $repository->find($id);
+
+        return new Response($serializer->serialize($entities, 'json'));
 	}
 
 	/**
@@ -60,6 +68,11 @@ class RestController extends BaseController {
 	public function addAction($resourceName)
 	{
 		die('Add to ' . $resourceName);
+	}
+
+	public function defaultAction($resourceName)
+	{
+		die('no api method');
 	}
 }
 

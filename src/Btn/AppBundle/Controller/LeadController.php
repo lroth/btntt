@@ -24,12 +24,12 @@ class LeadController extends RestController
      * @Route("/lead/", name="leadList")
      * @Method({"GET"})
      */
-    public function indexAction()
-    {
-        $serializer = $this->container->get('serializer');
-    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:Lead');
-        $leads      = $repository->findAll();
+    // public function indexAction()
+    // {
+    //     $serializer = $this->container->get('serializer');
+    // 	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:Lead');
+    //     $leads      = $repository->findAll();
 
-        return new Response($serializer->serialize($leads, 'json'));
-    }
+    //     return new Response($serializer->serialize($leads, 'json'));
+    // }
 }

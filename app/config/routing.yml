@@ -48,3 +48,7 @@ fos_user_change_password:
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #    prefix:   /_internal
+
+# btn_api_default:
+#     url:       /api/*
+#     defaults:  { _controller: BtnAppBundle:Controller/RestController:default }
