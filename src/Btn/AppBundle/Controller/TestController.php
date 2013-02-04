@@ -25,14 +25,16 @@ class TestController extends BaseController
     {
     	$em = $this->getDoctrine()->getManager();
 
-    	/* add lead *
+    	/* add lead */
+        $user = $em->getRepository('BtnUserBundle:User')->find(1);
+
     	$lead = new Lead();
     	$lead->setName('Dropr');
     	$lead->setEmail('cypherq@gmail.com');
     	$lead->setDescription('Project for Dropr.com');
     	$lead->setAlert(new \DateTime());
     	$lead->setUpdatedAt(new \DateTime());
-    	$lead->setUserId(1);
+    	$lead->setUser($user);
 
     	$em->persist($lead);
     	$em->flush();

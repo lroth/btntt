@@ -26,7 +26,7 @@ function(LeadCollection, ViewAdd, ViewList, ViewSearch) {
     },
 
     initialize: function(options) {
-      console.log('LeadsMainView::initialize() \r\n');
+      console.log('LeadsMainView::initialize \r\n');
       
       this.collection     = new LeadCollection(options);
       options.collection  = this.collection;

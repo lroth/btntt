@@ -58,6 +58,12 @@ class User extends BaseUser
     private $projects;
 
     /**
+     * @ORM\OneToMany(targetEntity="Btn\AppBundle\Entity\Lead", mappedBy="user")
+     * @ORM\JoinColumn(name="lead_id", referencedColumnName="id")
+     */
+    private $leads;
+
+    /**
      * Get id
      *
      * @return integer
@@ -230,5 +236,37 @@ class User extends BaseUser
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Add leads
+     *
+     * @param Btn\AppBundle\Entity\Lead $leads
+     * @return User
+     */
+    public function addLead(\Btn\AppBundle\Entity\Lead $leads)
+    {
+        $this->leads[] = $leads;
+        return $this;
+    }
+
+    /**
+     * Remove leads
+     *
+     * @param Btn\AppBundle\Entity\Lead $leads
+     */
+    public function removeLead(\Btn\AppBundle\Entity\Lead $leads)
+    {
+        $this->leads->removeElement($leads);
+    }
+
+    /**
+     * Get leads
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLeads()
+    {
+        return $this->leads;
     }
 }

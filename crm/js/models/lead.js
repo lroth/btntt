@@ -7,7 +7,7 @@ define([], function() {
 			description	: "",
 			email		: "cypherq@gmail.com",
 			name		: ""
-		}
+		},
 	});
 
 	return LeadModel;

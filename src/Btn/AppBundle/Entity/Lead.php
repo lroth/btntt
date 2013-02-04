@@ -65,11 +65,10 @@ class Lead
     private $alert;
 
     /**
-     * @var integer $userId
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Btn\UserBundle\Entity\User", inversedBy="leads")
      */
-    private $userId;
+    private $user;
 
     /**
      * @ORM\OneToMany(targetEntity="Enquiry", mappedBy="lead")
@@ -218,27 +217,6 @@ class Lead
         return $this->alert;
     }
 
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return Lead
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
     public function __construct()
     {
         $this->enquiries = new \Doctrine\Common\Collections\ArrayCollection();
@@ -307,5 +285,27 @@ class Lead
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Btn\UserBundle\Entity\User $user
+     * @return Lead
+     */
+    public function setUser(\Btn\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Btn\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

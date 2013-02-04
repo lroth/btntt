@@ -42,4 +42,5 @@ console.log('LOAD: require.js configuration\r\n');
 
 require(['app'], function(app) {
   app.start();
+  app.initializeLayout();
 });

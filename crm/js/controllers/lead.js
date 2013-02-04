@@ -2,16 +2,16 @@ define(['App'], function(App) {
 	var LeadController = Marionette.Controller.extend({
 
 		initialize: function(options) {
-			console.log('LeadController::initialize()');
+			console.log('LeadController::initialize');
 
 			this.restUrl = App.getRestUrl('lead');
 		},
 
 		leadsList: function() {
-			console.log('LeadController::leadsList()\r\n');
+			console.log('LeadController::leadsList\r\n');
 
 			var options = {
-				url: this.restUrl
+				url 		: this.restUrl
 			};
 
 			require(['views/leads/main'], function(LeadsMainView) {

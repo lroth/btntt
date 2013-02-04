@@ -13,7 +13,7 @@ function(tmpl) {
     },
 
     initialize: function(options) {
-      console.log('LeadAddView::initialize()');
+      console.log('LeadAddView::initialize');
     }
   });
 

@@ -1,14 +1,36 @@
 define([
-  'text!templates/lead/list.html', 
-  'models/lead', 
-  'collections/lead'
+  'App',
+  'text!templates/lead/list.html'
 ], 
-function(tmpl, LeadModel, LeadCollection) {
+function(App, tmpl) {
 
   var LeadListView = Backbone.View.extend({
     tagName   : 'div',
     className : 'eight columns',
     id        : 'leads',
+
+    events: {
+      'click .remove': 'removeLead',
+    },
+
+    onLeadRemoved : function(leadView, response) {
+      this.removeLeadView(leadView);
+      App.vent.trigger('layout:message', response.message);
+    },
+
+    removeLead : function(e) {
+      var leadView = $(e.target).closest('tr')
+          , leadId = $(leadView).attr('data-model-id')
+          ;
+
+      this.leadsCollection.get(leadId).destroy({
+        success : _.bind(this.onLeadRemoved, this, leadView)
+      });
+    },
+
+    removeLeadView : function(leadView) {
+      $(leadView).hide('slow', function(){ $(leadView).remove(); });
+    },
 
     getHtml: function(response) {
       var tmplCompiled = Handlebars.compile(tmpl);
@@ -27,7 +49,9 @@ function(tmpl, LeadModel, LeadCollection) {
     },
 
     initialize: function(options) {
-      console.log('\r\LeadListView::initialize()');
+      console.log('\r\LeadListView::initialize');
+
+      this.leadsCollection = options.collection;
     }
   });
 

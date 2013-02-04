@@ -99,6 +99,7 @@ services:
         class: Btn\AppBundle\Listener\PreExecute
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+        priority: -1000
     btn.user_manager:
         class: Btn\AppBundle\Model\UserManager
         scope: request

@@ -13,7 +13,7 @@ function(tmpl) {
     },
 
     initialize: function(options) {
-      console.log('LeadSearchView::initialize()');
+      console.log('LeadSearchView::initialize');
     }
   });
 

@@ -17,13 +17,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 */
 class RestController extends BaseController {
 
+	public function preExecute()
+	{
+		$this->manager 		= $this->getDoctrine()->getManager();
+		$this->serializer 	= $this->container->get('serializer');
+		$this->translator  = $this->get('translator');
+	}
+
+	public function postExecute()
+	{
+		//@lukasz
+	}
+
+	/* get repository by resource name */
+	private function getRepoByResource($name)
+	{
+		return $this->manager->getRepository('BtnAppBundle:' . ucfirst($name));
+	}
+
 	/**
      * @Route("/{resourceName}/{resourceId}", name="actionDelete")
      * @Method({"DELETE"})
      */
 	public function deleteAction($resourceName, $resourceId)
 	{
-		die('Delete ' . $resourceName);
+		$this->manager->remove($this->getRepoByResource($resourceName)->find($resourceId));
+		$this->manager->flush();
+
+		return new Response($this->serializer->serialize(array(
+			'message' => $this->translator->trans(ucfirst($resourceName) . ' with id ' . $resourceId . ' deleted successfully!')
+		), 'json'));
 	}
 
 	/**
@@ -32,11 +55,11 @@ class RestController extends BaseController {
      */
 	public function getAllAction($resourceName)
 	{
-		$serializer = $this->container->get('serializer');
-    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:' . ucfirst($resourceName));
-        $entities   = $repository->findAll();
-
-        return new Response($serializer->serialize($entities, 'json'));
+        return new Response(
+        	$this->serializer->serialize(
+        		$this->getRepoByResource($resourceName)->findAll(), 'json'
+    		)
+    	);
 	}
 
 	/**
@@ -45,11 +68,11 @@ class RestController extends BaseController {
      */
 	public function getAction($resourceName, $id)
 	{
-		$serializer = $this->container->get('serializer');
-    	$repository = $this->getDoctrine()->getRepository('BtnAppBundle:' . ucfirst($resourceName));
-        $entities      = $repository->find($id);
-
-        return new Response($serializer->serialize($entities, 'json'));
+		return new Response(
+        	$this->serializer->serialize(
+        		$this->getRepoByResource($resourceName)->find($id), 'json'
+    		)
+    	);
 	}
 
 	/**

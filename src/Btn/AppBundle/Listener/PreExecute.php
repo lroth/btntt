@@ -26,3 +26,20 @@ class PreExecute
     }
 
 }
+
+//this version doesn't work with annotations for routes
+// class PreExecute
+// {
+//     public function onKernelController($event)
+//     {
+//         $currentController = $event->getController();
+//         $newController = function() use ($currentController) {
+//             // pre-execute
+//             $rs = call_user_func_array($currentController, func_get_args());
+//             // post-execute
+ 
+//             return $rs;
+//         };
+//         $event->setController($newController);
+//     }
+// }

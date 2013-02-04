@@ -10,14 +10,14 @@
 </thead>
 <tbody>
   {{#each leads}}
-    <tr>
-    <td>username here </td>
+    <tr data-model-id="{{id}}">
+    <td>{{user.username}}</td>
     <td>{{name}}</td>
     <td>{{email}}</td>
     <td>{{leadDateFormat alert}}</td>
     <td>
       <a class="tiny button" href="#">Edit</a>
-      <a class="tiny alert button" href="#">X</a>
+      <a class="tiny alert button remove" href="#">X</a>
     </td>
   </tr>
   {{/each}}
