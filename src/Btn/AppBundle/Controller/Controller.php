@@ -169,4 +169,8 @@ class Controller extends BaseController
         return $entity;
     }
 
+    public function createRestForm($form)
+    {
+        return $form;
+    }
 }

@@ -84,13 +84,10 @@ class TestController extends BaseController
         $form->bindRequest($request);
         
         if ($form->isValid()) {
-            die('WO');
-        } else {
-        
-            ldd($form->createView());
+            return new Response($this->serializer->serialize($form, 'json'));
+        } else {       
+            ldd($form->getChildren());
+            return new Response($this->serializer->serialize($form->createJsonView(), 'json'));
         }
-
-            // ldd($form);
-        return new Response($this->serializer->serialize($form, 'json'));
     }
 }
