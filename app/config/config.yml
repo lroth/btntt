@@ -77,6 +77,12 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
 
+raul_fraile_ladybug:
+    general:
+        expanded:             false
+    object:
+        max_nesting_level:    2
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%

@@ -5,6 +5,8 @@ namespace Btn\AppBundle\Controller;
 use Btn\AppBundle\Entity\Lead;
 use Btn\AppBundle\Entity\Enquiry;
 
+use Btn\AppBundle\Form\LeadType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Btn\AppBundle\Controller\Controller as BaseController;
@@ -25,7 +27,7 @@ class TestController extends BaseController
     {
     	$em = $this->getDoctrine()->getManager();
 
-    	/* add lead */
+    	/* add lead *
         $user = $em->getRepository('BtnUserBundle:User')->find(1);
 
     	$lead = new Lead();
@@ -53,7 +55,7 @@ class TestController extends BaseController
 		$enq->setEstimationTime(10);
 		$enq->setBudget('20000 zl');
 		$enq->setContent('Blablalbalbalba');
-		$enq->setTitle('Zapytanie o taski dla Benego');
+		$enq->setTitle('Zapytanie o leadi dla Benego');
 		$enq->setProjectStartTime(new \DateTime());
 		$enq->setProjectEndTime(new \DateTime());
 		$enq->setEnquiryDeadline(new \DateTime());
@@ -65,8 +67,30 @@ class TestController extends BaseController
     	$em->flush();
     	/**/
 
+
     	
     	ldd($request);
         return array();
+    }
+
+    /**
+     * @Route("/test-form", name="test")
+     */
+    public function formAction(Request $request)
+    {
+        $this->serializer = $this->container->get('serializer');
+        $form = $this->createForm(new LeadType(), new Lead());
+
+        $form->bindRequest($request);
+        
+        if ($form->isValid()) {
+            die('WO');
+        } else {
+        
+            ldd($form->createView());
+        }
+
+            // ldd($form);
+        return new Response($this->serializer->serialize($form, 'json'));
     }
 }

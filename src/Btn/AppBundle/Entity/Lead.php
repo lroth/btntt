@@ -2,6 +2,7 @@
 
 namespace Btn\AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,7 +39,7 @@ class Lead
 
     /**
      * @var string $name
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;

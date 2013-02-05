@@ -6,27 +6,31 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class LeadFormType extends AbstractType
+class LeadType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('createdAt')
+            ->add('updatedAt')
             ->add('name')
             ->add('email')
             ->add('description')
             ->add('alert')
+            ->add('user')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Btn\AppBundle\Entity\Lead'
+            'data_class' => 'Btn\AppBundle\Entity\Lead',
+            'csrf_protection' => false
         ));
     }
 
     public function getName()
     {
-        return 'btn_appbundle_leadformtype';
+        return 'btn_appbundle_leadtype';
     }
 }
