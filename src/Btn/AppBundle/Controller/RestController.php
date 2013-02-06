@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
 /**
-*	@Route("/api")
+*	@Route("/rest")
 */
 class RestController extends BaseController {
 
@@ -85,16 +85,19 @@ class RestController extends BaseController {
 	}
 
 	/**
-     * @Route("/{resourceName}/", name="actionAdd")
+     * @Route("/{resourceName}", name="actionAdd")
      * @Method({"POST"})
      */
 	public function addAction($resourceName)
 	{
+		$form = $this->createForm(new LeadType(), new Lead());
+
 		die('Add to ' . $resourceName);
 	}
 
 	public function defaultAction($resourceName)
 	{
+		//@lukasz - throw exception here 
 		die('no api method');
 	}
 }

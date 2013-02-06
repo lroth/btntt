@@ -1,13 +1,16 @@
 define([
   'App',
+  'views/view',
   'text!templates/lead/list.html'
 ], 
-function(App, tmpl) {
+function(App, BaseView, tmpl) {
 
-  var LeadListView = Backbone.View.extend({
+  var View = {
     tagName   : 'div',
     className : 'eight columns',
     id        : 'leads',
+
+    tmpl      : tmpl,
 
     events: {
       'click .remove': 'removeLead',
@@ -32,28 +35,14 @@ function(App, tmpl) {
       $(leadView).hide('slow', function(){ $(leadView).remove(); });
     },
 
-    getHtml: function(response) {
-      var tmplCompiled = Handlebars.compile(tmpl);
-
-      return tmplCompiled({
-        leads: response
-      });
-    },
-
-    render: function() {
-      this.collection.fetch({
-        success: _.bind(function(collection, response) {
-          this.$el.append(this.getHtml(response));
-        }, this)
-      })
-    },
-
     initialize: function(options) {
       console.log('\r\LeadListView::initialize');
 
-      this.leadsCollection = options.collection;
+      this.collection = options.collection;
     }
-  });
+  };
+
+  var LeadListView = Backbone.View.extend(_.extend(View, new BaseView()));
 
   return LeadListView;
 });

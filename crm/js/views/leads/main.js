@@ -1,11 +1,11 @@
 define([
   'collections/lead',
 
-  'views/leads/add',
+  'views/leads/form',
   'views/leads/list',
   'views/leads/search'
 ], 
-function(LeadCollection, ViewAdd, ViewList, ViewSearch) {
+function(LeadCollection, ViewForm, ViewList, ViewSearch) {
 
   var LeadsMainView = Backbone.View.extend({
     tagName : 'div',
@@ -32,9 +32,9 @@ function(LeadCollection, ViewAdd, ViewList, ViewSearch) {
       options.collection  = this.collection;
 
       this.subViews = {
-        add   : new ViewAdd(options),
-        search: new ViewSearch(options),
-        list  : new ViewList(options)
+        form   : new ViewForm(options),
+        search : new ViewSearch(options),
+        list   : new ViewList(options)
       };
     }
   });

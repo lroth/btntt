@@ -3,7 +3,7 @@ define(['models/lead'], function(LeadModel) {
 		model 	: LeadModel,
 
 		initialize : function(options) {
-			this.url = options.url;
+			this.url = options.url.rest;
 		}
 	});
 

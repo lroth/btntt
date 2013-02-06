@@ -3,15 +3,16 @@ define(['App'], function(App) {
 
 		initialize: function(options) {
 			console.log('LeadController::initialize');
-
-			this.restUrl = App.getRestUrl('lead');
 		},
 
 		leadsList: function() {
 			console.log('LeadController::leadsList\r\n');
 
 			var options = {
-				url 		: this.restUrl
+				url 		: {
+					api  : App.getUrl('api', ''),
+					rest : App.getUrl('rest', 'lead')
+				}
 			};
 
 			require(['views/leads/main'], function(LeadsMainView) {

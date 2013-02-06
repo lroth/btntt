@@ -3,10 +3,26 @@ define(['router'], function(router) {
 	"use strict";
 
 	var App 	= new Marionette.Application();
-	App.restUrl = '/web/api/';
 
-	App.getRestUrl = function(route) {
-		return Backbone.history.location.origin + this.restUrl + route;
+	App.url = {
+		api 	: '/web/api/',
+		rest 	: '/web/rest/'
+	};
+
+	App.initializeLayout = function() {
+		/* Initialize layout view */
+		require(['views/layout/main'], function(LayoutView) {
+			this.layoutView = new LayoutView();
+		});
+	};
+
+	App.setUrls = function() {
+		var origin = Backbone.history.location.origin; 
+		for(var i in this.url) { this.url[i] = origin + this.url[i]; }
+	};
+
+	App.getUrl = function(type, route) {
+		return this.url[type] + route;
 	};	
 
 	/* Add layout regions here to controll views */
@@ -17,16 +33,10 @@ define(['router'], function(router) {
 	App.addInitializer(function() {
 		console.log('INITIALIZE: Application');
 
+		this.setUrls();
 		// Initialize whole routing here 
 		router.initialize();
 	});
-
-	App.initializeLayout = function() {
-		/* Initialize layout view */
-		require(['views/layout/main'], function(LayoutView) {
-			this.layoutView = new LayoutView();
-		});
-	};
 
 	return App;
 });

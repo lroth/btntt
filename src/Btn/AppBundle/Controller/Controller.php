@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
+    private $namespaces = array(
+        'form'      => 'Btn\\AppBundle\\Form\\',
+        'entity'    => 'Btn\\AppBundle\\Entity\\'
+    );
+
     /**
      * Set flash message
      *
@@ -169,8 +174,31 @@ class Controller extends BaseController
         return $entity;
     }
 
-    public function createRestForm($form)
+    public function getMetadata($entity) {
+        return $this->getManager()->getClassMetadata(get_class($entity));
+    }
+
+    public function getResource($type, $name)
     {
+        $fullName  = $this->namespaces[$type] . ucfirst($name);
+        $fullName .= ($type == 'form') ? 'Type' : '';
+
+        return $fullName;
+    }
+
+    public function createJsonForm($model)
+    {
+        $fieldsMap  = $this->getMetadata($model)->fieldMappings;
+        $form       = array();
+        
+        foreach ($fieldsMap as $name => $field) {
+            $form[] = array(
+                'name' => $name, //$field['columnName'],
+                'type' => $field['type'],
+                'placeholder' => ucfirst($field['columnName'])
+            );
+        }
+
         return $form;
     }
 }

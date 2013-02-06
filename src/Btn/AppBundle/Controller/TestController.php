@@ -67,8 +67,6 @@ class TestController extends BaseController
     	$em->flush();
     	/**/
 
-
-    	
     	ldd($request);
         return array();
     }
@@ -86,8 +84,8 @@ class TestController extends BaseController
         if ($form->isValid()) {
             return new Response($this->serializer->serialize($form, 'json'));
         } else {       
-            ldd($form->getChildren());
-            return new Response($this->serializer->serialize($form->createJsonView(), 'json'));
+            // ldd($form->getChildren());
+            return new Response($this->serializer->serialize($this->createJsonForm($form), 'json'));
         }
     }
 }
