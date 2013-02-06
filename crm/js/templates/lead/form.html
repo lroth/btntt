@@ -1,13 +1,7 @@
 <form id="lead-add">
 	{{#each data}}
-		<input type="text" placeholder="{{placeholder}}" name="{{name}}"/>		
+		<input type="text" placeholder="{{name}}" name="{{name}}"/>
 	{{/each}}
-  <!-- <input type="text" placeholder="Name" />
-  <input type="text" placeholder="Company" />
-  <input type="text" placeholder="Email" />
-  <input type="text" placeholder="Email" class="error" />
-  <small class="error">Invalid entry</small>
-  <textarea placeholder="Description"></textarea>
-  <input type="text" placeholder="Set reminder to" /> -->
-  <input type="submit" class="button add right" value="Create new LEAD" />
+	<input type="submit" class="button cancel alert" value="Cancel" style="display:none;"  />
+  	<input type="submit" class="button add right success" value="Create new LEAD" />
 </form>

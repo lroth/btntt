@@ -79,7 +79,7 @@ class TestController extends BaseController
         $this->serializer = $this->container->get('serializer');
         $form = $this->createForm(new LeadType(), new Lead());
 
-        $form->bindRequest($request);
+        // $form->bindRequest($request);
         
         if ($form->isValid()) {
             return new Response($this->serializer->serialize($form, 'json'));

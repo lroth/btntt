@@ -16,7 +16,7 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
       var formData = {};
       
       $.each($('#lead-add input[type=text]'), function(key, input){
-        formData[$(input).attr('name')] = $(input).val();
+        formData[$(input).attr('placeholder')] = $(input).val();
       });
 
       return formData;
@@ -24,29 +24,53 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
 
     addLead : function(e) {
       var formData = this.getFormData();
-      console.log(formData);
-      this.collection.create(formData);
+
+      this.collection.create(
+        formData, 
+        { 
+          silent: true, 
+          wait  : true, 
+          success : _.bind(this.addSuccessCallback, this),
+          error   : _.bind(this.addErrorCallback, this) 
+        });
       
       return false;
     },
 
-    customRender: function() {
-      $.get(this.options.url.api + 'get/form/lead', _.bind(function(response) {
-        response = this.parseForm(JSON.parse(response).form);
-        this.$el.append(this.getHtml(response));
-      }, this));
+    addErrorCallback : function(collection, response) {
+      var objResponse = JSON.parse(response.responseText);
+
+      if(!_.isUndefined(objResponse.errors)) { 
+        this.cleanErrors();
+        this.showErrors(objResponse.errors);
+      }
     },
 
-    parseForm : function(form) {
-      //@cypherq: move this to fields
-      var exclude     = ['id', 'createdAt', 'updatedAt'];
-      var parsedForm  = [];
-
-      for(var i =0; i < form.length; i++) { 
-        if(exclude.indexOf(form[i].name) == -1) { parsedForm.push(form[i]); } 
+    showErrors : function(errors) {      
+      for(var i in errors) {
+        var small = '<small style="display:none;" class="error">' + errors[i] + '</small>';
+        $('input[name=' + i + ']').addClass('error').after(small);
+        $('small.error').fadeIn('normal');
       }
+    },
 
-      return parsedForm;
+    addSuccessCallback : function(collection, response) {
+      this.cleanErrors();
+
+      App.vent.trigger('layout:message', { type: "success", message : response.message});
+      App.vent.trigger('lead:add');
+    },
+
+    cleanErrors : function() {
+      $('small.error').remove();
+      $('input.error').removeClass('error');
+    },
+
+    customRender: function() {
+      $.get(this.options.url.api + 'get/form/lead', _.bind(function(response) {
+        response = JSON.parse(response).form;
+        this.$el.append(this.getHtml(response));
+      }, this));
     },
 
     getCsfrToken: function() {

@@ -11,13 +11,11 @@ class LeadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('name')
-            ->add('email')
-            ->add('description')
-            ->add('alert')
-            ->add('user')
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('description', 'textarea')
+            // ->add('alert', 'datetime')
+            ->add('alert', 'text')
         ;
     }
 

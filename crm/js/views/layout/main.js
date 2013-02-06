@@ -12,8 +12,9 @@ define(['App'], function(App) {
       App.vent.on('layout:message', this.showMessage);
     },
 
-    showMessage: function(message) {
-      console.log(message);  
+    showMessage: function(event) {
+      $('.alert-box').addClass(event.type).text(event.message).fadeIn();
+      setTimeout(function(){ $('.alert-box').fadeOut() }, 4000);
     }
   });
 

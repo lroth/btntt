@@ -2,6 +2,8 @@ define([],
 function() {
 
   var View = function() {
+    this.isFirstRender = true;
+
     this.getHtml = function(response) {
       var tmplCompiled = Handlebars.compile(this.tmpl);
 
@@ -15,11 +17,19 @@ function() {
         this.customRender(); 
       }
       else {
-        this.collection.fetch({
-        success: _.bind(function(collection, response) {
-          this.$el.append(this.getHtml(response));
-        }, this)
-      })
+        if(this.isFirstRender) {
+          this.collection.fetch({
+            success: _.bind(function(collection, response) {
+              this.isFirstRender = false;
+              this.$el.html(this.getHtml(response));
+            }, this)
+          })
+        }
+        else {
+          this.$el.fadeOut();
+          this.$el.html(this.getHtml(this.collection.toJSON()));
+          this.$el.fadeIn();
+        }
       }
     }
   };

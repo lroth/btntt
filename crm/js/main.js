@@ -1,5 +1,6 @@
 requirejs.config({
   baseUrl: 'js',
+  urlArgs: "bust=" + +new Date(),
 
   paths: {
     'backbone': 'lib/backbone/backbone',
@@ -7,8 +8,12 @@ requirejs.config({
 
     'jquery': 'lib/jquery',
     'underscore': 'lib/underscore',
+
+    'moment' : 'lib/moment.min',
+    
     'handlebars': 'lib/handlebars/handlebars',
     'handlebars.module': 'lib/handlebars/handlebars.module',
+
 
     'text': 'lib/require/text'
   },
@@ -34,6 +39,10 @@ requirejs.config({
     },
     'handlebars': {
       exports: 'Handlebars'
+    },
+
+    'moment' : {
+      exports : 'moment'
     }
   }
 });

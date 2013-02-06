@@ -30,12 +30,14 @@ class ApiController extends BaseController {
 	public function getFormAction($resourceName) 
 	{
 		$modelName		= $this->getResource('entity', $resourceName);
+		$formName		= $this->getResource('form', $resourceName);
+
 		$model 			= new $modelName();
+		$form 			= $this->createForm(new $formName());
 
 		return new Response(
 			$this->serializer->serialize(
-				array( 'form' => $this->createJsonForm($model) ), 
-				'json'
+				array( 'form' => $this->createJsonForm($form, $model) ), 'json'
 			)
 		);
 	}

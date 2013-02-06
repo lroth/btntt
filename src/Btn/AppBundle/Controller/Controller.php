@@ -12,6 +12,7 @@ class Controller extends BaseController
         'entity'    => 'Btn\\AppBundle\\Entity\\'
     );
 
+    private $allErrors = array();
     /**
      * Set flash message
      *
@@ -186,19 +187,66 @@ class Controller extends BaseController
         return $fullName;
     }
 
-    public function createJsonForm($model)
+    public function createJsonForm($form)
     {
-        $fieldsMap  = $this->getMetadata($model)->fieldMappings;
-        $form       = array();
-        
-        foreach ($fieldsMap as $name => $field) {
-            $form[] = array(
-                'name' => $name, //$field['columnName'],
-                'type' => $field['type'],
-                'placeholder' => ucfirst($field['columnName'])
+        $jsonForm   = array();
+
+        foreach ($form->createView()->getChildren() as $key => $child) {
+            $types = $child->vars['block_prefixes'];
+            $type  = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === false)) ? $types[3] : $types[2];
+
+            $jsonForm[] = array(
+                'name' => $key,
+                'type' => $type
             );
         }
 
-        return $form;
+        return $jsonForm;
+    }
+
+    public function getAllErrors($children, $template = true) {
+        $this->getAllFormErrors($children);
+        return $this->allErrors;
+    }
+   
+    
+    private function getAllFormErrors($children, $template = true) {
+        foreach ($children as $child) {
+            if ($child->hasErrors()) {
+                $vars = $child->createView()->getVars();
+                $errors = $child->getErrors();
+                foreach ($errors as $error) {
+                    $this->allErrors[$vars["name"]][] = $this->convertFormErrorObjToString($error);
+                }
+            }
+    
+            if ($child->hasChildren()) {
+                $this->getAllErrors($child);
+            }
+        }
+    }
+    
+    private function convertFormErrorObjToString($error) {
+        $errorMessageTemplate = $error->getMessageTemplate();
+        foreach ($error->getMessageParameters() as $key => $value) {
+            $errorMessageTemplate = str_replace($key, $value, $errorMessageTemplate);
+        }
+        return $errorMessageTemplate;
+    }
+
+    public function getFormErrors($form)
+    {
+        $this->translator = $this->get('translator');
+
+        foreach($form->getErrors() as $e) {
+            $errors[]=$this->translator->trans($this->convertFormErrorObjToString($e), array(), 'validators');
+        }
+        
+        
+        foreach($this->getAllErrors($form->getChildren()) as $key => $error) {
+            $errors[$key] = $this->translator->trans($error[0], array(), 'validators');
+        }
+
+        return $errors;
     }
 }

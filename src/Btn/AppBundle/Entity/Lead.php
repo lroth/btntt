@@ -51,13 +51,14 @@ class Lead
      *     message = "The email '{{ value }}' is not a valid email.",
      *     checkMX = true
      * )
+     *
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
     /**
      * @var string $description
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
@@ -312,5 +313,16 @@ class Lead
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedValue()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+
+        $this->alert = new \DateTime($this->alert);
     }
 }

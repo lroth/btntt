@@ -90,9 +90,29 @@ class RestController extends BaseController {
      */
 	public function addAction($resourceName)
 	{
-		$form = $this->createForm(new LeadType(), new Lead());
+		$modelName 	= $this->getResource('entity', $resourceName);
+		$formName 	= $this->getResource('form', $resourceName);
 
-		die('Add to ' . $resourceName);
+		$requestJson 	= $this->getRequest()->getContent();
+		$request 		= (array) json_decode($requestJson);
+
+		$model 		= new $modelName();
+		$form 		= $this->createForm(new $formName(), $model);
+
+		$this->getRequest()->request->set($form->getName(), $request);
+		$form->bind($this->getRequest());
+
+		if(!$form->isValid()) {
+			$errors = $this->getFormErrors($form);
+			return new Response($this->serializer->serialize(array('errors' => $errors), 'json'), 400);
+		}
+		else {
+			$em = $this->getManager();
+			$em->persist($model);
+			$em->flush();
+
+			return new Response($this->serializer->serialize(array('message' => $this->translator->trans(ucfirst($resourceName) . ' saved!')), 'json'));
+		}
 	}
 
 	public function defaultAction($resourceName)
