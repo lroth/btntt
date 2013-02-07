@@ -1,8 +1,26 @@
 define(['handlebars'], function(){
 	Handlebars.registerHelper('leadDateFormat', function(date) {
-	    var date  = new Date(Date.parse(date))
-	        , sep = '/';
+		return moment(date).calendar();
+	});
 
-		return date.getDate() + sep + (date.getMonth() + 1) + sep + date.getFullYear()
+	Handlebars.registerHelper('formInputWidget', function() {
+		var inputStr = '';
+
+		if(this.type !== 'textarea') {
+
+	    	inputStr = 
+	    		'<input data-format="' 	+ this.format + 
+	    		'" type="' 				+ this.type + 
+	    		'" placeholder="' 		+ this.name +
+	    		'" name="' 				+ this.name + '"/>'
+    		;	
+		}
+		else {
+			inputStr = 
+				'<textarea name="' 		+ this.name +
+				'">Add your ' 			+ this.name + '...</textarea>'
+		}
+
+		return new Handlebars.SafeString(inputStr);
 	});
 });

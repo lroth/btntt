@@ -1,7 +1,9 @@
-<form id="lead-add">
+<form id="lead-add" data-lead-id="">
 	{{#each data}}
-		<input type="text" placeholder="{{name}}" name="{{name}}"/>
+		{{formInputWidget}}
 	{{/each}}
-	<input type="submit" class="button cancel alert" value="Cancel" style="display:none;"  />
-  	<input type="submit" class="button add right success" value="Create new LEAD" />
+	<div class="right">
+		<input type="submit" class="button cancel alert" value="Cancel" style="display:none;"  />
+  		<input type="submit" class="button submit success" value="Create new LEAD" />
+	</div>
 </form>

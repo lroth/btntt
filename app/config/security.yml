@@ -41,6 +41,7 @@ security:
         - { path: ^/login$,      role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/,            role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/test-login,            role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/time,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/user,        role: ROLE_SUPER_ADMIN }
         - { path: ^/project,     role: ROLE_SUPER_ADMIN }

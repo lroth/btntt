@@ -9,7 +9,8 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     editMode    : false,
 
     events : {
-      'click .add': 'addLead'
+      'click .submit': 'submitLead',
+      'click .cancel': 'cancelEdit'
     },
 
     getFormData : function() {
@@ -22,18 +23,30 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
       return formData;
     },
 
-    addLead : function(e) {
+    submitLead : function(e) {
       var formData = this.getFormData();
 
-      this.collection.create(
-        formData, 
-        { 
-          silent: true, 
-          wait  : true, 
-          success : _.bind(this.addSuccessCallback, this),
-          error   : _.bind(this.addErrorCallback, this) 
-        });
-      
+      if(this.editMode) {
+        var model = this.collection.get(this.getFormId());
+        
+        if(!_.isEmpty(model)) {
+          model.save(formData, {
+            success: _.bind(this.addSuccessCallback, this)
+          });
+        }
+      }
+      else {
+        this.collection.create(
+          formData, 
+          { 
+            silent: true, 
+            wait  : false, 
+            success : _.bind(this.addSuccessCallback, this),
+            error   : _.bind(this.addErrorCallback, this) 
+          }
+        );  
+      }
+
       return false;
     },
 
@@ -54,10 +67,15 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
       }
     },
 
+    cleanForm : function() {
+      $('#lead-add input, #lead-add textarea').not('[type=submit]').val('');
+    },
+
     addSuccessCallback : function(collection, response) {
       this.cleanErrors();
+      this.cleanForm();
 
-      App.vent.trigger('layout:message', { type: "success", message : response.message});
+      App.vent.trigger('layout:message', { type: "success", message : 'Lead added!'});
       App.vent.trigger('lead:add');
     },
 
@@ -67,21 +85,78 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     },
 
     customRender: function() {
-      $.get(this.options.url.api + 'get/form/lead', _.bind(function(response) {
+      $.get(this.options.url.api + 'get/form/lead/', _.bind(function(response) {
         response = JSON.parse(response).form;
         this.$el.append(this.getHtml(response));
       }, this));
     },
 
     getCsfrToken: function() {
-      $.get(this.options.url.api + 'get/token', function(response) {
+      $.get(this.options.url.api + 'get/token/', function(response) {
         this.token = response.token;
       });
+    },
+
+    setInputData : function(model, key, input){
+        var value = model.get($(input).attr('name'));
+        $(input).val(this.formatInputValue(input, value));
+    },
+
+    setFormData : function(model) {
+      $.each(
+        $('#lead-add input, #lead-add textarea').not('[type=submit]'), 
+        _.bind(this.setInputData, this, model)
+      );
+    },
+
+    formatInputValue : function(input, value) {
+      if(!_.isEmpty($(input).attr('data-format'))) {
+        value = moment(value).calendar();
+      }
+
+      return value;
+    },
+
+    editMode : function(model) {
+      this.editMode = true;
+
+      this.setEditId(model.get('id'));
+
+      this.setFormData(model);
+      this.setButtons();
+    },
+
+    getEditId : function() {
+      return $('#lead-add').attr('data-lead-id');
+    },
+
+    setEditId : function(id) {
+      $('#lead-add').attr('data-lead-id', (_.isUndefined(id) ? '' : id ));
+    },
+
+    setButtons : function() {
+      $('#lead-add .button.cancel')[(this.editMode) ? 'show' : 'hide']();
+      $('#lead-add .button.submit').val(((this.editMode) ? 'Edit' : 'Create new') + ' LEAD');
+    },
+
+    cancelEdit : function() {
+      this.editMode = false;
+
+      this.cleanForm();
+      this.cleanErrors();
+
+      this.setEditId();
+
+      this.setButtons();
+
+      return false;
     },
 
     initialize: function(options) {
       console.log('LeadFormView::initialize');
       
+      App.vent.on('lead:edit', _.bind(this.editMode, this) );   
+
       this.options = options;
       this.getCsfrToken();
     }

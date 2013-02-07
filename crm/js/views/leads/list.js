@@ -40,6 +40,8 @@ function(App, BaseView, tmpl) {
           , leadId = $(leadView).attr('data-model-id')
           , model  = this.collection.get(leadId)
           ;
+
+        App.vent.trigger('lead:edit', model);
     },
 
     removeLeadView : function(leadView) {

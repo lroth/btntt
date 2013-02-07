@@ -14,6 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Lead
 {
+    public $customCallbacks = array(
+        'setCurrentUser',
+    );
+
     /**
      * @var integer $id
      *
@@ -324,5 +328,6 @@ class Lead
         $this->updatedAt = new \DateTime();
 
         $this->alert = new \DateTime($this->alert);
+
     }
 }

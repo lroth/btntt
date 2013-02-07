@@ -25,6 +25,34 @@ define(['router'], function(router) {
 		return this.url[type] + route;
 	};	
 
+	App.initApp = function() {
+		/* non sense method a little bit but temporary I can laeve it here */
+		$.get(this.url.api + 'get/init-data/', _.bind(this.onGetInitData, this));
+	};
+
+	App.request = function() {
+
+	};
+
+	App.onGetInitData = function(response){
+		var initData = JSON.parse(response);
+		
+		if(!initData.user.auth) { 
+			/* redirect to login page if not logged */
+			window.location = initData.baseUrl + '/login'; 
+		}
+		else { 
+			/* set user global data  */
+			this.userData = initData.user; 
+
+			/* without url's  */
+			this.setUrls();
+			
+			// Initialize whole routing here 
+			router.initialize();
+		}
+	};
+
 	/* Add layout regions here to controll views */
 	App.addRegions({
 		content : "#content"
@@ -33,9 +61,7 @@ define(['router'], function(router) {
 	App.addInitializer(function() {
 		console.log('INITIALIZE: Application');
 
-		this.setUrls();
-		// Initialize whole routing here 
-		router.initialize();
+		this.initApp();
 	});
 
 	return App;

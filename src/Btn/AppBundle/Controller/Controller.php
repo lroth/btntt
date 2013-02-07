@@ -192,12 +192,19 @@ class Controller extends BaseController
         $jsonForm   = array();
 
         foreach ($form->createView()->getChildren() as $key => $child) {
-            $types = $child->vars['block_prefixes'];
-            $type  = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === false)) ? $types[3] : $types[2];
+            $types  = $child->vars['block_prefixes'];
+            $type   = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === false)) ? $types[3] : $types[2];
+            $format = '';
+            
+            if($type == 'datetime' || $type == 'date') {
+                $type   = 'text';
+                $format = 'datetime';
+            }
 
             $jsonForm[] = array(
-                'name' => $key,
-                'type' => $type
+                'name'      => $key,
+                'type'      => $type,
+                'format'    => $format
             );
         }
 
@@ -248,5 +255,10 @@ class Controller extends BaseController
         }
 
         return $errors;
+    }
+
+    public function getCurrentUser()
+    {
+        return $this->get('security.context')->getToken()->getUser();
     }
 }

@@ -17,11 +17,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 */
 class RestController extends BaseController {
 
-	public function preExecute()
+	public function preExecute($event, $resolver)
 	{
 		$this->manager 		= $this->getDoctrine()->getManager();
 		$this->serializer 	= $this->container->get('serializer');
-		$this->translator  = $this->get('translator');
+		$this->translator  	= $this->get('translator');
+
+		if(is_string($this->getCurrentUser())) {
+			$request = $event->getRequest();
+
+			$request->attributes->set('_controller', 'BtnAppBundle:Api:exception');
+			$request->attributes->set('_route', 'actionException');
+			$request->attributes->set('type', 'not_authenticated');
+
+			$event->setController($resolver->getController($request));
+		}
 	}
 
 	public function postExecute()
@@ -108,10 +118,13 @@ class RestController extends BaseController {
 		}
 		else {
 			$em = $this->getManager();
+
+			$this->doCustomActions($model);
+
 			$em->persist($model);
 			$em->flush();
 
-			return new Response($this->serializer->serialize(array('message' => $this->translator->trans(ucfirst($resourceName) . ' saved!')), 'json'));
+			return new Response($this->serializer->serialize($model, 'json'));
 		}
 	}
 
@@ -119,6 +132,22 @@ class RestController extends BaseController {
 	{
 		//@lukasz - throw exception here 
 		die('no api method');
+	}
+
+	/* kind of magic - move to repo */
+	private function doCustomActions(&$model)
+	{
+		foreach ($model->customCallbacks as $action) {
+			if(method_exists($this, $action)) {
+				call_user_func_array(array($this, $action), array(&$model));
+			}
+		}
+	}
+
+	/* move this to service or something */
+	private function setCurrentUser(&$model)
+	{
+		$model->setUser($this->getCurrentUser());
 	}
 }
 

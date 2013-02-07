@@ -23,7 +23,7 @@ requirejs.config({
       deps: ['backbone.marionette']
     },
     'backbone': {
-      deps: ['underscore', 'jquery', 'handlebars.module'],
+      deps: ['underscore', 'jquery', 'moment', 'handlebars.module'],
       exports: 'Backbone'
     },
     'backbone.marionette': {

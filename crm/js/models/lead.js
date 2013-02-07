@@ -1,9 +1,9 @@
-define(['moment'], function() {
+define([], function() {
 	var LeadModel = Backbone.Model.extend({
 		defaults: {
 			alert		: '',
 			description	: "",
-			email		: "cypherq@gmail.com",
+			email		: "",
 			name		: ""
 		},
 	});

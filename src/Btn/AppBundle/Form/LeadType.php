@@ -14,8 +14,7 @@ class LeadType extends AbstractType
             ->add('name', 'text')
             ->add('email', 'email')
             ->add('description', 'textarea')
-            // ->add('alert', 'datetime')
-            ->add('alert', 'text')
+            ->add('alert', 'date')
         ;
     }
 
