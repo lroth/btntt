@@ -5,12 +5,12 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     className   : 'four columns',
     id          : 'lead-form',
 
-    tmpl        : tmpl,
-    editMode    : false,
+    tmpl          : tmpl,
+    isEditMode    : false,
 
     events : {
-      'click .submit': 'submitLead',
-      'click .cancel': 'cancelEdit'
+      'click input.submit' : 'submitLead',
+      'click input.cancel'  : 'cancelEdit'
     },
 
     getFormData : function() {
@@ -24,10 +24,12 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     },
 
     submitLead : function(e) {
+      e.preventDefault();
+
       var formData = this.getFormData();
 
-      if(this.editMode) {
-        var model = this.collection.get(this.getFormId());
+      if(this.isEditMode) {
+        var model = this.collection.get(this.getEditId());
         
         if(!_.isEmpty(model)) {
           model.save(formData, {
@@ -61,8 +63,11 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
 
     showErrors : function(errors) {      
       for(var i in errors) {
-        var small = '<small style="display:none;" class="error">' + errors[i] + '</small>';
-        $('input[name=' + i + ']').addClass('error').after(small);
+        var   attr  = '[name=' + i + ']'
+            , small = '<small style="display:none;" class="error">' + errors[i] + '</small>'
+            ;
+
+        $('input, textarea').filter(attr).addClass('error').after(small);
         $('small.error').fadeIn('normal');
       }
     },
@@ -81,7 +86,7 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
 
     cleanErrors : function() {
       $('small.error').remove();
-      $('input.error').removeClass('error');
+      $('#lead-add input, #lead-add textarea').filter('.error').removeClass('error');
     },
 
     customRender: function() {
@@ -117,9 +122,10 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
       return value;
     },
 
-    editMode : function(model) {
-      this.editMode = true;
+    setEditMode : function(model) {
+      this.isEditMode = true;
 
+      this.cleanErrors();
       this.setEditId(model.get('id'));
 
       this.setFormData(model);
@@ -135,12 +141,12 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     },
 
     setButtons : function() {
-      $('#lead-add .button.cancel')[(this.editMode) ? 'show' : 'hide']();
-      $('#lead-add .button.submit').val(((this.editMode) ? 'Edit' : 'Create new') + ' LEAD');
+      $('#lead-add .button.cancel')[(this.isEditMode) ? 'show' : 'hide']();
+      $('#lead-add .button.submit').val(((this.isEditMode) ? 'Edit' : 'Create new') + ' LEAD');
     },
 
     cancelEdit : function() {
-      this.editMode = false;
+      this.isEditMode = false;
 
       this.cleanForm();
       this.cleanErrors();
@@ -155,7 +161,7 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     initialize: function(options) {
       console.log('LeadFormView::initialize');
       
-      App.vent.on('lead:edit', _.bind(this.editMode, this) );   
+      App.vent.on('lead:edit', _.bind(this.setEditMode, this) );   
 
       this.options = options;
       this.getCsfrToken();
