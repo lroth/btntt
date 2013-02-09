@@ -16,8 +16,8 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
     getFormData : function() {
       var formData = {};
       
-      $.each($('#lead-add input[type=text]'), function(key, input){
-        formData[$(input).attr('placeholder')] = $(input).val();
+      $.each($('#lead-add input, #lead-add textarea').not('[type=submit]'), function(key, input){
+        formData[$(input).attr('name')] = $(input).val();
       });
 
       return formData;
@@ -91,7 +91,7 @@ define(['App', 'views/view', 'text!templates/lead/form.html'], function(App, Bas
 
     customRender: function() {
       $.get(this.options.url.api + 'get/form/lead/', _.bind(function(response) {
-        response = JSON.parse(response).form;
+        response = response.form;
         this.$el.append(this.getHtml(response));
       }, this));
     },

@@ -179,7 +179,7 @@ class Controller extends BaseController
         return $this->getManager()->getClassMetadata(get_class($entity));
     }
 
-    public function getResource($type, $name)
+    public function getResourceFullName($type, $name)
     {
         $fullName  = $this->namespaces[$type] . ucfirst($name);
         $fullName .= ($type == 'form') ? 'Type' : '';
@@ -241,6 +241,20 @@ class Controller extends BaseController
         return $errorMessageTemplate;
     }
 
+    public function getResourceObjects($resourceName)
+    {
+        $entityName  = $this->getResourceFullName('entity', $resourceName);
+        $formName    = $this->getResourceFullName('form', $resourceName);
+
+        $entity      = new $entityName();
+
+        $form = $this->createForm(
+            new $formName,  $entity
+        );
+
+        return array( 'form' => $form, 'entity' => $entity );
+    }
+
     public function getFormErrors($form)
     {
         $this->translator = $this->get('translator');
@@ -260,5 +274,16 @@ class Controller extends BaseController
     public function getCurrentUser()
     {
         return $this->get('security.context')->getToken()->getUser();
+    }
+
+    public function getRestResponse($content, $statusCode = 200)
+    {
+        $response = new Response();
+        
+        $response->setStatusCode($statusCode);
+        $response->setContent($this->serializer->serialize( $content, 'json' ));
+        $response->headers->set('Content-type', 'application/json');
+
+        return $response;
     }
 }

@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 *	@Route("/rest")
 */
 class RestController extends BaseController {
+	private $resources = array();
 
 	public function preExecute($event, $resolver)
 	{
@@ -94,37 +95,55 @@ class RestController extends BaseController {
 		die('Edit ' .$resourceName . ' with id = ' . $id);
 	}
 
+	private function getRestRequest()
+	{
+		return ((array) json_decode(
+			$this->getRequest()->getContent()
+		));
+	}
+
+	private function validateRequest($resourceName)
+	{
+		$resourceObjs 	= $this->getResourceObjects($resourceName);
+
+		$form 			= $resourceObjs['form'];
+		$entity 		= $resourceObjs['entity'];
+
+		$requestObj = $this->getRequest();
+		$requestObj->request->set( $form->getName(), $this->getRestRequest());
+
+		$form->bind($requestObj);
+
+		$validationArr = array(
+			'isValid' 	=> $form->isValid(),
+			'entity'	=> $entity
+		);
+		
+		$validationArr['errors'] = 
+			(!$validationArr['isValid']) ? $this->getFormErrors($form) : null;
+
+		return $validationArr;
+	}
+
 	/**
      * @Route("/{resourceName}", name="actionAdd")
      * @Method({"POST"})
      */
 	public function addAction($resourceName)
 	{
-		$modelName 	= $this->getResource('entity', $resourceName);
-		$formName 	= $this->getResource('form', $resourceName);
+		$validation = $this->validateRequest($resourceName);	
 
-		$requestJson 	= $this->getRequest()->getContent();
-		$request 		= (array) json_decode($requestJson);
-
-		$model 		= new $modelName();
-		$form 		= $this->createForm(new $formName(), $model);
-
-		$this->getRequest()->request->set($form->getName(), $request);
-		$form->bind($this->getRequest());
-
-		if(!$form->isValid()) {
-			$errors = $this->getFormErrors($form);
-			return new Response($this->serializer->serialize(array('errors' => $errors), 'json'), 400);
+		if(!$validation['isValid']) {
+			return $this->getRestResponse($validation, 400);
 		}
 		else {
-			$em = $this->getManager();
+			$entity = $validation['entity'];
+			$this->doCustomActions($entity);
 
-			$this->doCustomActions($model);
+			$this->manager->persist($entity);
+			$this->manager->flush();
 
-			$em->persist($model);
-			$em->flush();
-
-			return new Response($this->serializer->serialize($model, 'json'));
+			return $this->getRestResponse($entity);
 		}
 	}
 
@@ -135,19 +154,19 @@ class RestController extends BaseController {
 	}
 
 	/* kind of magic - move to repo */
-	private function doCustomActions(&$model)
+	private function doCustomActions(&$entity)
 	{
-		foreach ($model->customCallbacks as $action) {
+		foreach ($entity->customCallbacks as $action) {
 			if(method_exists($this, $action)) {
-				call_user_func_array(array($this, $action), array(&$model));
+				call_user_func_array(array($this, $action), array(&$entity));
 			}
 		}
 	}
 
 	/* move this to service or something */
-	private function setCurrentUser(&$model)
+	private function setCurrentUser(&$entity)
 	{
-		$model->setUser($this->getCurrentUser());
+		$entity->setUser($this->getCurrentUser());
 	}
 }
 
