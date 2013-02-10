@@ -1,6 +1,6 @@
 define([
   'App',
-  'views/view',
+  'core/view',
   'text!templates/lead/list.html'
 ], 
 function(App, BaseView, tmpl) {
@@ -56,7 +56,8 @@ function(App, BaseView, tmpl) {
     }
   };
 
-  var LeadListView = Backbone.View.extend(_.extend(View, new BaseView()));
+  var LeadListView = Backbone.View.extend(View);
+  _.extend(LeadListView.prototype, new BaseView());
 
   return LeadListView;
 });

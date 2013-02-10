@@ -1,4 +1,4 @@
-define(['handlebars'], function(){
+define(['handlebars', 'moment'], function(handlebars, moment){
 	Handlebars.registerHelper('leadDateFormat', function(date) {
 		return moment(date).calendar();
 	});
