@@ -1,24 +1,27 @@
 define(['App', 'core/view'], function(App, BaseView) {
 
   var Form = function() {
+      /* backbone view stuff */
       this.tagName    = 'div';
       this.className  = 'four columns';
       this.id         = 'model-form';
 
-      this.isEditMode = false;
-
-      this.elements = {};
-
       this.events = {
-        'click input.save': 'saveModel',
-        'click input.cancel': 'cancelEdit'
+        'click input.save'  : 'saveModel',
+        'click input.cancel': 'resetForm'
       };
 
-      this.setElementsSelectors = function() {
-        this.elements.form = $('#model-save');
-        this.elements.inputs = $(this.elements.form).find('input, textarea').not('[type=submit]');
+      this.isEditMode = false;
 
-        console.log(this.elements);
+      /* selectors cache */
+      this.elements   = {};
+
+      this.setElementsSelectors = function() {
+        this.elements.form    = $('#model-save');
+        this.elements.inputs  = $(this.elements.form).find('input, textarea').not('[type=submit]');
+
+        this.elements.cancelBtn   = $(this.elements.form).find('.button.cancel');
+        this.elements.successBtn  = $(this.elements.form).find('.button.success');
       };
 
       this.getFormData = function() {
@@ -36,28 +39,27 @@ define(['App', 'core/view'], function(App, BaseView) {
 
         var formData = this.getFormData();
 
+        this.modelSaveOptions.success = _.bind(this.modelSaveOptions.success, this);
+        this.modelSaveOptions.error   = _.bind(this.modelSaveOptions.error, this);
+
+        /* @todo: merge to one thing */
         if(this.isEditMode) {
           var model = this.collection.get(this.getEditId());
-
+          
           if(!_.isEmpty(model)) {
-            model.save(formData, {
-              success: _.bind(this.addSuccessCallback, this)
-            });
+            this.modelSaveOptions.patch = true;
+            model.save(formData, this.modelSaveOptions);
+            
           }
         } else {
-          this.collection.create(
-          formData, {
-            silent: true,
-            wait: false,
-            success: _.bind(this.addSuccessCallback, this),
-            error: _.bind(this.addErrorCallback, this)
-          });
+          this.modelSaveOptions.patch = false;
+          this.collection.create(formData, this.modelSaveOptions);
         }
 
         return false;
       };
 
-      this.addErrorCallback = function(collection, response) {
+      this.addErrorCallback = function(collection, response) { console.log('foo');
         var objResponse = JSON.parse(response.responseText);
 
         if(!_.isUndefined(objResponse.errors)) {
@@ -82,13 +84,14 @@ define(['App', 'core/view'], function(App, BaseView) {
       },
 
       this.addSuccessCallback = function(collection, response) {
-        this.cleanErrors();
-        this.cleanForm();
+        this.resetForm();
 
+        /* @TODO: just make this better  */
         App.vent.trigger('layout:message', {
           type: "success",
-          message: 'Lead added!'
+          message: 'Lead ' + (this.isEditMode) ? 'edited' : 'added' +'!'
         });
+
         App.vent.trigger('lead:add');
       },
 
@@ -117,8 +120,7 @@ define(['App', 'core/view'], function(App, BaseView) {
       },
 
       this.setFormData = function(model) {
-        $.each(
-        $(this.elements.inputs), _.bind(this.setInputData, this, model));
+        $.each($(this.elements.inputs), _.bind(this.setInputData, this, model));
       },
 
       this.formatInputValue = function(input, value) {
@@ -147,23 +149,37 @@ define(['App', 'core/view'], function(App, BaseView) {
         $(this.elements.form).attr('data-model-id', (_.isUndefined(id) ? '' : id));
       },
 
-      this.setButtons = function() {
-        $(this.elements.form).find('.button.cancel')[(this.isEditMode) ? 'show' : 'hide']();
-        $(this.elements.form).find('.button.submit').val(((this.isEditMode) ? 'Edit' : 'Create new') + ' ' + this.options.modelName.toUpperCase());
+      this.setButtons = function() { console.trace();
+        var caption = ((this.isEditMode) ? 'Edit' : 'Create new') + ' ' + this.options.modelName.toUpperCase();
+
+        $(this.elements.cancelBtn)[(this.isEditMode) ? 'show' : 'hide']();
+        $(this.elements.successBtn).val(caption);
       },
 
-      this.cancelEdit = function() {
+      this.resetForm = function() {
         this.isEditMode = false;
 
         this.cleanForm();
         this.cleanErrors();
 
         this.setEditId();
-
         this.setButtons();
 
         return false;
       }
+
+      /* 
+       * some configuration for POST and PUT 
+       * at the end, when things are defined
+
+       http://backbonejs.org/#Events-catalog USE add, sync instead
+      */
+      this.modelSaveOptions = {
+        silent  : true,
+        wait    : true,
+        success : this.addSuccessCallback,
+        error   : this.addErrorCallback
+      };
     };
 
   _.extend(Form.prototype, new BaseView());

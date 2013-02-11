@@ -179,10 +179,14 @@ class Controller extends BaseController
         return $this->getManager()->getClassMetadata(get_class($entity));
     }
 
-    public function getResourceFullName($type, $name)
+    public function getResourceFullName($type, $name, $editMode = false)
     {
         $fullName  = $this->namespaces[$type] . ucfirst($name);
-        $fullName .= ($type == 'form') ? 'Type' : '';
+        
+        if($type == 'form') { 
+            $fullName .= ($editMode) ? 'Edit' : '';
+            $fullName .= 'Type'; 
+        }
 
         return $fullName;
     }
@@ -241,13 +245,15 @@ class Controller extends BaseController
         return $errorMessageTemplate;
     }
 
-    public function getResourceObjects($resourceName)
+    public function getResourceObjects($resourceName, $entityId = null)
     {
+        $editMode    = ($entityId != null && is_int($entityId));
         $entityName  = $this->getResourceFullName('entity', $resourceName);
-        $formName    = $this->getResourceFullName('form', $resourceName);
+        $formName    = $this->getResourceFullName('form', $resourceName, $editMode);
 
-        $entity      = new $entityName();
-
+        /* grab entity here */
+        $entity = ($editMode) ? $this->manager->getRepository($entityName)->find($entityId) : (new $entityName());
+        
         $form = $this->createForm(
             new $formName,  $entity
         );

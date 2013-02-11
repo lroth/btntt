@@ -86,14 +86,27 @@ class RestController extends BaseController {
     	);
 	}
 
-	/**
-     * @Route("/{resourceName}/{id}", name="actionEdit")
-     * @Method({"PUT"})
-     */
-	public function editAction($resourceName, $id)
-	{
-		die('Edit ' .$resourceName . ' with id = ' . $id);
-	}
+	// /**
+ //     * @Route("/{resourceName}/{id}", name="actionEdit")
+ //     * @Method({"PUT"})
+ //     */
+	// public function editAction($resourceName, $id)
+	// {
+	// 	$validation = $this->validateRequest($resourceName);	
+
+	// 	if(!$validation['isValid']) {
+	// 		return $this->getRestResponse($validation, 400);
+	// 	}
+	// 	else {
+	// 		$entity = $validation['entity'];
+	// 		$this->doCustomActions($entity);
+
+	// 		$this->manager->persist($entity);
+	// 		$this->manager->flush();
+
+	// 		return $this->getRestResponse($entity);
+	// 	}
+	// }
 
 	private function getRestRequest()
 	{
@@ -102,9 +115,9 @@ class RestController extends BaseController {
 		));
 	}
 
-	private function validateRequest($resourceName)
+	private function validateRequest($resourceName, $id = null)
 	{
-		$resourceObjs 	= $this->getResourceObjects($resourceName);
+		$resourceObjs 	= $this->getResourceObjects($resourceName, $id);
 
 		$form 			= $resourceObjs['form'];
 		$entity 		= $resourceObjs['entity'];
@@ -126,12 +139,12 @@ class RestController extends BaseController {
 	}
 
 	/**
-     * @Route("/{resourceName}", name="actionAdd")
-     * @Method({"POST"})
+     * @Route("/{resourceName}/{id}", name="actionOperateOn", defaults={"id" = null})
+     * @Method({"POST", "PUT", "PATCH"})
      */
-	public function addAction($resourceName)
+	public function operateAction($resourceName, $id = null)
 	{
-		$validation = $this->validateRequest($resourceName);	
+		$validation = $this->validateRequest($resourceName, $id);	
 
 		if(!$validation['isValid']) {
 			return $this->getRestResponse($validation, 400);
