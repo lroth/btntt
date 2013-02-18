@@ -10,42 +10,41 @@ define(['router'], function(router) {
 	};
 
 	App.initializeLayout = function() {
-		/* Initialize layout view */
+		// Initialize layout view
 		require(['views/layout/main'], function(LayoutView) {
 			this.layoutView = new LayoutView();
 		});
 	};
 
+	// prepend host to every url from `App.url`
 	App.setUrls = function() {
 		var origin = Backbone.history.location.origin; 
 		for(var i in this.url) { this.url[i] = origin + this.url[i]; }
 	};
 
+	// helper for accessing url's
 	App.getUrl = function(type, route) {
 		return this.url[type] + route;
 	};	
 
 	App.initApp = function() {
-		/* non sense method a little bit but temporary I can laeve it here */
-		$.get(this.url.api + 'get/init-data/', _.bind(this.onGetInitData, this));
+		// non sense method a little bit but temporary I can laeve it here
+		$.get(this.url.api + 'get/init-data/', _.bind(this.onInitData, this));
 	};
 
-	App.request = function() {
 
-	};
-
-	App.onGetInitData = function(response){
+	App.onInitData = function(response){
 		var initData = JSON.parse(response);
 		
 		if(!initData.user.auth) { 
-			/* redirect to login page if not logged */
+			// redirect to login page if not logged
 			window.location = initData.baseUrl + '/login'; 
 		}
 		else { 
-			/* set user global data  */
+			// set user global data
 			this.userData = initData.user; 
 
-			/* without url's  */
+			// update defined urls with root 
 			this.setUrls();
 			
 			// Initialize whole routing here 
@@ -53,7 +52,7 @@ define(['router'], function(router) {
 		}
 	};
 
-	/* Add layout regions here to controll views */
+	// Add layout regions here to controll views
 	App.addRegions({
 		content : "#content"
 	});

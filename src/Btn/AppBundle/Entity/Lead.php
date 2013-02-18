@@ -320,14 +320,22 @@ class Lead
     }
 
     /**
-     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function setCreatedValue()
+    {
+        $this->updatedAt    = new \DateTime();
+        $this->alert        = new \DateTime($this->alert);
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateValues()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
 
         $this->alert = new \DateTime($this->alert);
-
     }
 }

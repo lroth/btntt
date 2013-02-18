@@ -86,28 +86,6 @@ class RestController extends BaseController {
     	);
 	}
 
-	// /**
- //     * @Route("/{resourceName}/{id}", name="actionEdit")
- //     * @Method({"PUT"})
- //     */
-	// public function editAction($resourceName, $id)
-	// {
-	// 	$validation = $this->validateRequest($resourceName);	
-
-	// 	if(!$validation['isValid']) {
-	// 		return $this->getRestResponse($validation, 400);
-	// 	}
-	// 	else {
-	// 		$entity = $validation['entity'];
-	// 		$this->doCustomActions($entity);
-
-	// 		$this->manager->persist($entity);
-	// 		$this->manager->flush();
-
-	// 		return $this->getRestResponse($entity);
-	// 	}
-	// }
-
 	private function getRestRequest()
 	{
 		return ((array) json_decode(
@@ -123,7 +101,7 @@ class RestController extends BaseController {
 		$entity 		= $resourceObjs['entity'];
 
 		$requestObj = $this->getRequest();
-		$requestObj->request->set( $form->getName(), $this->getRestRequest());
+		$requestObj->request->set($form->getName(), $this->getRestRequest());
 
 		$form->bind($requestObj);
 
@@ -144,20 +122,26 @@ class RestController extends BaseController {
      */
 	public function operateAction($resourceName, $id = null)
 	{
+		/* grab request, preserve resources, validate data */
 		$validation = $this->validateRequest($resourceName, $id);	
 
-		if(!$validation['isValid']) {
-			return $this->getRestResponse($validation, 400);
+		/* if no entity, $id was wrong, or entity doesn't exists */
+		if($validation['entity'] == null) { 
+			return $this->getRestResponse(
+						array('message' => 'No ' . $resourceName . ' with id ' . $id), 400); 
 		}
-		else {
-			$entity = $validation['entity'];
-			$this->doCustomActions($entity);
 
-			$this->manager->persist($entity);
-			$this->manager->flush();
+		/* validation goes wrong, return errors */
+		if(!$validation['isValid']) { return $this->getRestResponse($validation, 400); }
+		
+		/* do some custom actions, like setting current user */
+		$this->doCustomActions($validation['entity']);
 
-			return $this->getRestResponse($entity);
-		}
+		/* if id == null, */
+		if($id == null) { $this->manager->persist($validation['entity']); }
+		$this->manager->flush();
+
+		return $this->getRestResponse($validation['entity']);
 	}
 
 	public function defaultAction($resourceName)

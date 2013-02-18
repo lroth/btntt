@@ -3,16 +3,18 @@ requirejs.config({
   urlArgs: "bust=" + +new Date(),
 
   paths: {
-    'backbone': 'lib/backbone/backbone',
-    'backbone.marionette': 'lib/backbone/backbone.marionette',
+    'backbone'            : 'lib/backbone/backbone',
+    'backbone.marionette' : 'lib/backbone/backbone.marionette',
 
-    'jquery': 'lib/jquery',
-    'underscore': 'lib/underscore',
+    'jquery'          : 'lib/jquery/jquery',
+    'jquery.module'   : 'lib/jquery/jquery.module',
 
-    'moment' : 'lib/moment.min',
+    'pikaday'     : 'lib/pikaday',
+    'underscore'  : 'lib/underscore',
+    'moment'      : 'lib/moment.min',
     
-    'handlebars': 'lib/handlebars/handlebars',
-    'handlebars.module': 'lib/handlebars/handlebars.module',
+    'handlebars'        : 'lib/handlebars/handlebars',
+    'handlebars.module' : 'lib/handlebars/handlebars.module',
 
 
     'text': 'lib/require/text'
@@ -23,7 +25,7 @@ requirejs.config({
       deps: ['backbone.marionette']
     },
     'backbone': {
-      deps: ['underscore', 'jquery', 'moment', 'handlebars.module'],
+      deps: ['underscore', 'jquery.module', 'handlebars.module', 'moment', 'pikaday'],
       exports: 'Backbone'
     },
     'backbone.marionette': {
@@ -33,6 +35,9 @@ requirejs.config({
 
     'jquery': {
       exports: '$'
+    },
+    'pikaday': {
+      deps: ['moment']
     },
     'underscore': {
       exports: '_'

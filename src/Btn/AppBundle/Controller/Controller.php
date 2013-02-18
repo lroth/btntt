@@ -247,7 +247,7 @@ class Controller extends BaseController
 
     public function getResourceObjects($resourceName, $entityId = null)
     {
-        $editMode    = ($entityId != null && is_int($entityId));
+        $editMode    = ($entityId != null);
         $entityName  = $this->getResourceFullName('entity', $resourceName);
         $formName    = $this->getResourceFullName('form', $resourceName, $editMode);
 

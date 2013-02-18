@@ -1,7 +1,7 @@
 define(['App', 'core/view'], function(App, BaseView) {
 
   var Form = function() {
-      /* backbone view stuff */
+      //backbone view stuff
       this.tagName    = 'div';
       this.className  = 'four columns';
       this.id         = 'model-form';
@@ -11,11 +11,13 @@ define(['App', 'core/view'], function(App, BaseView) {
         'click input.cancel': 'resetForm'
       };
 
+      // define if form is in edit mode or not
       this.isEditMode = false;
 
-      /* selectors cache */
+      // selectors cache
       this.elements   = {};
 
+      // cache selectors in `this.elements` object
       this.setElementsSelectors = function() {
         this.elements.form    = $('#model-save');
         this.elements.inputs  = $(this.elements.form).find('input, textarea').not('[type=submit]');
@@ -24,6 +26,8 @@ define(['App', 'core/view'], function(App, BaseView) {
         this.elements.successBtn  = $(this.elements.form).find('.button.success');
       };
 
+      
+      // get values from each elements specified in `this.elements.inputs`
       this.getFormData = function() {
         var formData = {};
 
@@ -34,40 +38,52 @@ define(['App', 'core/view'], function(App, BaseView) {
         return formData;
       };
 
+      
+      // can create new and edit existing model
       this.saveModel = function(e) {
         e.preventDefault();
 
         var formData = this.getFormData();
 
-        this.modelSaveOptions.success = _.bind(this.modelSaveOptions.success, this);
-        this.modelSaveOptions.error   = _.bind(this.modelSaveOptions.error, this);
+        var modelSaveOptions = {
+          // wait for the server before adding the new model to the collection
+          wait    : true,
+          
+          // when passing `path` to model options during save
+          // only changed fields will be saved
+          patch   : this.isEditMode,
 
-        /* @todo: merge to one thing */
+          success : _.bind(this.saveSuccessCallback, this),
+          error   : _.bind(this.saveErrorCallback, this)
+        };
+
+        // @TODO: merge to one thing
         if(this.isEditMode) {
           var model = this.collection.get(this.getEditId());
           
           if(!_.isEmpty(model)) {
-            this.modelSaveOptions.patch = true;
-            model.save(formData, this.modelSaveOptions);
+            model.save(formData, modelSaveOptions);
             
           }
         } else {
-          this.modelSaveOptions.patch = false;
-          this.collection.create(formData, this.modelSaveOptions);
+          this.collection.create(formData, modelSaveOptions);
         }
 
         return false;
       };
 
-      this.addErrorCallback = function(collection, response) { console.log('foo');
+      // handling model save errors
+      this.saveErrorCallback = function(collection, response) {
         var objResponse = JSON.parse(response.responseText);
 
+        // remove old errors and show new
         if(!_.isUndefined(objResponse.errors)) {
           this.cleanErrors();
           this.showErrors(objResponse.errors);
         }
       };
 
+      // parse json error list to template
       this.showErrors = function(errors) {
         //@TODO: use templates here!
         for(var i in errors) {
@@ -79,83 +95,136 @@ define(['App', 'core/view'], function(App, BaseView) {
         }
       };
 
+      // remove all values
       this.cleanForm = function() {
+        //@TODO: add selects reset handling
         $(this.elements.inputs).val('');
       },
 
-      this.addSuccessCallback = function(collection, response) {
+      // handling successfull model save
+      this.saveSuccessCallback = function(collection, response) {
+        // clean form from just added values
         this.resetForm();
 
-        /* @TODO: just make this better  */
+        // @TODO: just make this better
         App.vent.trigger('layout:message', {
           type: "success",
-          message: 'Lead ' + (this.isEditMode) ? 'edited' : 'added' +'!'
+          message: this.options.modelName + ' ' + (this.isEditMode) ? 'edited' : 'added' +'!'
         });
 
+        // Tell other views, that new model is added 
+        // (for example list.js want to refresh when new lead is added)
         App.vent.trigger('lead:add');
       },
 
+      // cleaning form from css error classes
       this.cleanErrors = function() {
         $(this.elements.form).find('small.error').remove();
         $(this.elements.inputs).filter('.error').removeClass('error');
       },
 
+      // fired from `render()` method when it's defined
       this.customRender = function() {
+        // grab form in json format
         $.get(this.options.url.api + 'get/form/' + this.options.modelName, _.bind(function(response) {
           response = response.form;
+
+          // generated html from json form
           this.$el.append(this.getHtml(response));
+
+          // cache form selectors
           this.setElementsSelectors();
+
+          // initialize custom handlings on some fields
+          this.initializeCustomFields();
         }, this));
       },
 
+      this.initializeCustomFields = function() {
+        // initialize pikaday for every data
+        $.each($('[data-format=datetime]'), function(key, value) {
+          var picker = new Pikaday({ 
+            firstDay : 1,
+            field    : value,
+            minDate  : moment().toDate(),
+            format   : 'MMMM DD YYYY'
+          });
+        }.bind(this));
+      }
+
+      // actually unused
       this.getCsfrToken = function() {
         $.get(this.options.url.api + 'get/token/', function(response) {
           this.token = response.token;
         });
       },
 
+      // propagate model values to inputs with same names
+      // used in edit mode
       this.setInputData = function(model, key, input) {
+        //@TODO: again, select isn't handled
         var value = model.get($(input).attr('name'));
         $(input).val(this.formatInputValue(input, value));
       },
 
+      // just fire setInputData for each element
       this.setFormData = function(model) {
         $.each($(this.elements.inputs), _.bind(this.setInputData, this, model));
       },
 
-      this.formatInputValue = function(input, value) {
-        if(!_.isEmpty($(input).attr('data-format'))) {
-          value = moment(value).calendar();
+      // handle custom `data-format` for inputs
+      this.formatInputValue = function(input, value) {      
+        // value will be parsed by `moment.js`
+        switch($(input).attr('data-format'))
+        {
+          case 'datetime' :
+            value = moment(value).calendar();
+            break;
         }
 
         return value;
       },
 
+      // change form mode to edit
       this.setEditMode = function(model) {
+        // set correct flag
         this.isEditMode = true;
 
+        // remove old validation errors
         this.cleanErrors();
+
+        // set id of model we are editing
         this.setEditId(model.get('id'));
 
+        // propagate model data to form
         this.setFormData(model);
+
+        // change button captions and add cancel button
         this.setButtons();
       },
 
+      // helper for quick model id access
       this.getEditId = function() {
         return $(this.elements.form).attr('data-model-id');
       },
 
+      // helper for quick mode id set
       this.setEditId = function(id) {
         $(this.elements.form).attr('data-model-id', (_.isUndefined(id) ? '' : id));
       },
 
-      this.setButtons = function() { console.trace();
+      // set buttons visibillity and captions
+      this.setButtons = function() {
         var caption = ((this.isEditMode) ? 'Edit' : 'Create new') + ' ' + this.options.modelName.toUpperCase();
 
+        // show cancel button
         $(this.elements.cancelBtn)[(this.isEditMode) ? 'show' : 'hide']();
+
+        // change universal save button caption
         $(this.elements.successBtn).val(caption);
       },
 
+      // revert this form class and form view to basic state
       this.resetForm = function() {
         this.isEditMode = false;
 
@@ -167,21 +236,10 @@ define(['App', 'core/view'], function(App, BaseView) {
 
         return false;
       }
-
-      /* 
-       * some configuration for POST and PUT 
-       * at the end, when things are defined
-
-       http://backbonejs.org/#Events-catalog USE add, sync instead
-      */
-      this.modelSaveOptions = {
-        silent  : true,
-        wait    : true,
-        success : this.addSuccessCallback,
-        error   : this.addErrorCallback
-      };
     };
 
+  // extend this `object.prototype` instead of object only
+  // with new base view object (because `BaseView` is `constructor`)
   _.extend(Form.prototype, new BaseView());
 
   return Form;

@@ -9,7 +9,9 @@
       "handlebars": "https://raw.github.com/wycats/handlebars.js/1.0.rc.2/dist/handlebars.js",
       "text": "github:requirejs/text/2.0.4",
       "backbone.layoutmanager": "github:tbranyen/backbone.layoutmanager/0.8.2",
-      "moment.min": "https://raw.github.com/timrwood/moment/1.7.2/min/moment.min.js"
+      "moment.min": "https://raw.github.com/timrwood/moment/1.7.2/min/moment.min.js",
+      "Pikaday": "https://github.com/dbushell/Pikaday.git",
+      "pikaday.jquery": "https://raw.github.com/dbushell/Pikaday/master/plugins/pikaday.jquery.js"
     }
   }
 }
