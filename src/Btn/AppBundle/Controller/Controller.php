@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
-    private $namespaces = array(
+    protected $namespaces = array(
         'form'      => 'Btn\\AppBundle\\Form\\',
         'entity'    => 'Btn\\AppBundle\\Entity\\'
     );

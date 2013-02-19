@@ -336,6 +336,6 @@ class Lead
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
 
-        $this->alert = new \DateTime($this->alert);
+        // $this->alert = new \DateTime($this->alert);
     }
 }

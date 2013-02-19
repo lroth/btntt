@@ -11,6 +11,9 @@ define(['App', 'core/view'], function(App, BaseView) {
         'click input.cancel': 'resetForm'
       };
 
+      // contains data pickers for easy access
+      this.pickers = {};
+
       // define if form is in edit mode or not
       this.isEditMode = false;
 
@@ -141,9 +144,10 @@ define(['App', 'core/view'], function(App, BaseView) {
       },
 
       this.initializeCustomFields = function() {
+        
         // initialize pikaday for every data
         $.each($('[data-format=datetime]'), function(key, value) {
-          var picker = new Pikaday({ 
+          this.pickers[$(value).attr('name')] = new Pikaday({ 
             firstDay : 1,
             field    : value,
             minDate  : moment().toDate(),
