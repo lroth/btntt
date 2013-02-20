@@ -26,7 +26,7 @@ class Time
      * @var float $time
      *
      * @Assert\NotBlank(message="time.hours.not_empty")
-     * @ORM\Column(name="time", type="decimal")
+     * @ORM\Column(name="time", type="float")
      */
     private $time;
 

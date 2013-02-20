@@ -25,9 +25,9 @@ class Project
     /**
      * @var string $lead_id
      *
-     * @ORM\Column(name="leadId", type="integer")
+     * @ORM\Column(name="leadId", type="integer", nullable=true)
      */
-    private $leadId;    
+    private $leadId;
 
     /**
      * @var string $name
@@ -39,21 +39,21 @@ class Project
     /**
      * @var string $description
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
      * @var \DateTime $start_time
      *
-     * @ORM\Column(name="start_time", type="datetime")
+     * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     private $startTime;
 
     /**
      * @var \DateTime $end_time
      *
-     * @ORM\Column(name="end_time", type="datetime")
+     * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
     private $endTime;
 
@@ -261,10 +261,10 @@ class Project
     /**
      * Set leadId
      *
-     * @param integger $leadId
+     * @param int $leadId
      * @return Project
      */
-    public function setLeadId(\integger $leadId)
+    public function setLeadId($leadId)
     {
         $this->leadId = $leadId;
         return $this;
@@ -273,7 +273,7 @@ class Project
     /**
      * Get leadId
      *
-     * @return integger 
+     * @return int
      */
     public function getLeadId()
     {
@@ -295,7 +295,7 @@ class Project
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -317,7 +317,7 @@ class Project
     /**
      * Get startTime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStartTime()
     {
@@ -339,7 +339,7 @@ class Project
     /**
      * Get endTime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getEndTime()
     {
@@ -371,7 +371,7 @@ class Project
     /**
      * Get accessData
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getAccessData()
     {
@@ -404,7 +404,7 @@ class Project
     /**
      * Get users
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {

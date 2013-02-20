@@ -64,10 +64,6 @@ assetic:
                 - js/require-init.js
         app_css:
             inputs:
-                # - bundles/braincraftedbootstrap/css/bootstrap.css
-                # # - bundles/braincraftedbootstrap/css/bootstrap-responsive.css
-                # - fonts/stylesheet.css
-                # - css/bootstrap.css
                 - ../vendor/twitter/bootstrap/twitter/bootstrap/less/bootstrap.less
                 - less/style.less
                 - js/vendors/datepicker/css/datepicker.css
@@ -92,6 +88,11 @@ raul_fraile_ladybug:
         expanded:             false
     object:
         max_nesting_level:    2
+
+#knp paginator fix
+knp_paginator:
+    default_options:
+        distinct: false
 
 # Swiftmailer Configuration
 swiftmailer:

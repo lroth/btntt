@@ -35,7 +35,7 @@ class TimeType extends AbstractType
                 ))
                 ->prependNormTransformer($dateTransformer)
             )
-            ->add('time', 'text', array('attr' =>
+            ->add('time', 'number', array('attr' =>
                 array(
                     'class'       => 'input-small',
                     'placeholder' => 'Time',
