@@ -213,6 +213,10 @@ class Lead
      */
     public function setAlert($alert)
     {
+        if (!($alert instanceof \DateTime)) {
+            $alert = new \DateTime($alert);
+        }
+
         $this->alert = $alert;
         return $this;
     }
@@ -325,7 +329,6 @@ class Lead
     public function setCreatedValue()
     {
         $this->updatedAt    = new \DateTime();
-        $this->alert        = new \DateTime($this->alert);
     }
 
     /**
@@ -335,7 +338,5 @@ class Lead
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-
-        // $this->alert = new \DateTime($this->alert);
     }
 }

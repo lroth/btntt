@@ -102,7 +102,7 @@ class RestController extends BaseController {
 
 		$requestObj = $this->getRequest();
 		$requestObj->request->set($form->getName(), $this->getRestRequest());
-
+		
 		$form->bind($requestObj);
 
 		$validationArr = array(

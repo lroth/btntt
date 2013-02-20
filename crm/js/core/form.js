@@ -151,7 +151,7 @@ define(['App', 'core/view'], function(App, BaseView) {
             firstDay : 1,
             field    : value,
             minDate  : moment().toDate(),
-            format   : 'MMMM DD YYYY'
+            format   : 'YYYY-MM-DD'
           });
         }.bind(this));
       }
