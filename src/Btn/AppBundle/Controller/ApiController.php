@@ -27,12 +27,13 @@ class ApiController extends BaseController {
      * @Route("/get/form/{resourceName}/", name="actionGetForm")
      * @Method({"GET"})
      */
-	public function getFormAction($resourceName) 
+	public function getFormAction($resourceName)
 	{
+        $data = $this->getResourceObjects($resourceName);
 		$form = $this->createJsonForm(
-			$this->getResourceObjects($resourceName)['form']
+			$data['form']
 		);
-		
+
 		return $this->getRestResponse(
 			array( 'form' => $form)
 		);
@@ -41,7 +42,7 @@ class ApiController extends BaseController {
 	/**
      * @Route("/get/token/", name="actionGetToken")
      */
-	public function getTokenAction() 
+	public function getTokenAction()
 	{
 		$csrf 	= $this->get('form.csrf_provider');
 		$token 	= $csrf->generateCsrfToken('');
@@ -70,14 +71,14 @@ class ApiController extends BaseController {
 	{
 		$userData = array();
 
-        if(is_string($user)) { 
-        	$userData['auth'] = false; 
+        if(is_string($user)) {
+        	$userData['auth'] = false;
         } else {
         	$userData['auth'] 		= true;
         	$userData['username'] 	= $user->getUsername();
         	$userData['email']		= $user->getEmail();
         	$userData['id']			= $user->getId();
-        	
+
         }
 
 		return $userData;
@@ -100,9 +101,9 @@ class ApiController extends BaseController {
 		);
 
 		$response = array('message' => $map[$type]['message']);
-		
+
 		return new Response(
-			$serializer->serialize($response, 'json'), 
+			$serializer->serialize($response, 'json'),
 			$map[$type]['code']
 		);
 	}
