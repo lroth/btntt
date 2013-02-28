@@ -24,7 +24,7 @@ class RestController extends BaseController {
 		$this->serializer 	= $this->container->get('serializer');
 		$this->translator  	= $this->get('translator');
 
-		if(is_string($this->getCurrentUser())) {
+		if($this->isAuthenticated()) {
 			$request = $event->getRequest();
 
 			$request->attributes->set('_controller', 'BtnAppBundle:Api:exception');
@@ -43,6 +43,8 @@ class RestController extends BaseController {
 	/* get repository by resource name */
 	private function getRepoByResource($name)
 	{
+		//TODO: class exists
+		//TODO: configured repository namespace
 		return $this->manager->getRepository('BtnAppBundle:' . ucfirst($name));
 	}
 
@@ -126,6 +128,8 @@ class RestController extends BaseController {
 		$validation = $this->validateRequest($resourceName, $id);	
 
 		/* if no entity, $id was wrong, or entity doesn't exists */
+		//TODO: if $id ! = null
+		//TODO: no validate request if entity doesn't exists try - catch
 		if($validation['entity'] == null) { 
 			return $this->getRestResponse(
 						array('message' => 'No ' . $resourceName . ' with id ' . $id), 400); 
@@ -138,6 +142,7 @@ class RestController extends BaseController {
 		$this->doCustomActions($validation['entity']);
 
 		/* if id == null, */
+		//TODO: kick out this if
 		if($id == null) { $this->manager->persist($validation['entity']); }
 		$this->manager->flush();
 
@@ -147,10 +152,12 @@ class RestController extends BaseController {
 	public function defaultAction($resourceName)
 	{
 		//@lukasz - throw exception here 
+		//TODO: json response temporary here...
 		die('no api method');
 	}
 
 	/* kind of magic - move to repo */
+	//TODO: to service...
 	private function doCustomActions(&$entity)
 	{
 		foreach ($entity->customCallbacks as $action) {
@@ -160,6 +167,7 @@ class RestController extends BaseController {
 		}
 	}
 
+	//TODO: to service...
 	/* move this to service or something */
 	private function setCurrentUser(&$entity)
 	{

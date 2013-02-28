@@ -21,7 +21,6 @@ class DashboardController extends BaseController
      */
     public function indexAction(Request $request)
     {
-
         return array();
     }
 }

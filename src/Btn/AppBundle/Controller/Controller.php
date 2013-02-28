@@ -277,13 +277,14 @@ class Controller extends BaseController
         return $errors;
     }
 
-    public function getCurrentUser()
+    public function isAuthenticated()
     {
-        return $this->get('security.context')->getToken()->getUser();
+        return $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY');
     }
 
     public function getRestResponse($content, $statusCode = 200)
     {
+        //TODO: doesn't work in IE
         $response = new Response();
         
         $response->setStatusCode($statusCode);
