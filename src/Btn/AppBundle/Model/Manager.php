@@ -152,7 +152,7 @@ class Manager {
     {
         //try to get currrent page from request or session
         $this->processPage();
-
+        
         $this->pagination = $this->paginator->paginate($this->getQuery(), $this->getPage(), $limit);
         $this->pagination->setTemplate($this->getPaginatonTpl());
         return $this;

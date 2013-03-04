@@ -63,7 +63,7 @@ class TimeController extends BaseController
             ->fetchQuery($this->getRepository('BtnAppBundle:Time')->getQueryForUser($this->getUser()))
             ->setPaginationTpl('BtnAppBundle:Time:pagination.html.twig')
             ->paginate(10);
-
+        
         //take your last 7 days summary
         $lastActivity = $this->container
             ->get('btn.time_manager')
