@@ -17,3 +17,4 @@ app/config/parameters.ini
 
 #sass
 data/mockup/.sass/*
+.idea/
