@@ -1,5 +1,10 @@
+//global define
+//global Marionette
+//global Backbone
+
 // There we will specify other controllers to store routes in one place
 // while keeping decomposited structure of controllers
+
 define(['controllers/lead'], function(LeadController) {
   "use strict";
 

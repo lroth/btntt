@@ -14,7 +14,7 @@ class LeadEditType extends AbstractType
             ->add('name', 'text')
             ->add('email', 'email')
             ->add('description', 'textarea')
-            ->add('alert', 'date')
+            ->add('alert', 'date', array('widget' => 'single_text', 'format' => 'yyyy-MM-dd'))
         ;
     }
 

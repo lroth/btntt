@@ -69,7 +69,7 @@ class Lead
 
     /**
      * @var datetime $alert
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @ORM\Column(name="alert", type="datetime")
      */
     private $alert;
@@ -213,7 +213,7 @@ class Lead
      */
     public function setAlert($alert)
     {
-        if (!($alert instanceof \DateTime)) {
+        if (!empty($alert) && !($alert instanceof \DateTime)) {
             $alert = new \DateTime($alert);
         }
 

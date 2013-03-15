@@ -40,7 +40,6 @@ define(['App', 'core/view'], function (App, BaseView) {
             var formData = {};
 
             $.each(this.elements.inputs, function (key, input) {
-                console.log($(input).val(), $(input).attr('name'));
                 formData[$(input).attr('name')] = $(input).val();
             });
 
@@ -168,8 +167,7 @@ define(['App', 'core/view'], function (App, BaseView) {
             });
         };
 
-        // propagate model values to inputs with same names
-        // used in edit mode
+        // propagate model values to inputs with same names in edit mode
         this.setInputData = function (model, key, input) {
             //@TODO: again, select isn't handled
             var value = model.get($(input).attr('name'));
@@ -185,8 +183,10 @@ define(['App', 'core/view'], function (App, BaseView) {
         this.formatInputValue = function (input, value) {
             // value will be parsed by `moment.js`
             switch ($(input).attr('data-format')) {
+                //@TODO: put this to external class
                 case 'datetime' :
-                    value = moment(value).calendar();
+                    //@TODO: set date format in some global config
+                    value = moment(value).format('YYYY-MM-DD');
                     break;
             }
 

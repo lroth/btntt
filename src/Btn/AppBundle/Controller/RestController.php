@@ -106,7 +106,7 @@ class RestController extends BaseController
         $requestObj->request->set($form->getName(), $this->getRestRequest());
 
         $form->bind($requestObj);
-        echo '<pre>'; print_r($entity); die();
+
         $validationArr = array(
             'isValid' => $form->isValid(),
             'entity'  => $entity
@@ -173,7 +173,7 @@ class RestController extends BaseController
     /* move this to service or something */
     private function setCurrentUser(&$entity)
     {
-        $entity->setUser($this->getCurrentUser());
+        $entity->setUser($this->getUser());
     }
 }
 
