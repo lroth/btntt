@@ -1,67 +1,76 @@
-define(['router'], function(router) {
-	console.log('app require');
-	"use strict";
+// global Backbone
+// global Marionette
+// global define
+// global _
 
-	var App 	= new Marionette.Application();
+define(['router'], function (router) {
+    "use strict";
 
-	App.url = {
-		api 	: '/web/api/',
-		rest 	: '/web/rest/'
-	};
+    var App = new Marionette.Application();
 
-	App.initializeLayout = function() {
-		// Initialize layout view
-		require(['views/layout/main'], function(LayoutView) {
-			this.layoutView = new LayoutView();
-		});
-	};
+    App.url = {
+        api : '/web/api/',
+        rest: '/web/rest/'
+    };
 
-	// prepend host to every url from `App.url`
-	App.setUrls = function() {
-		var origin = Backbone.history.location.origin; 
-		for(var i in this.url) { this.url[i] = origin + this.url[i]; }
-	};
+    App.initializeLayout = function () {
+        // Initialize layout view
+        require(['views/layout/main'], function (LayoutView) {
+            this.layoutView = new LayoutView();
+        });
+    };
 
-	// helper for accessing url's
-	App.getUrl = function(type, route) {
-		return this.url[type] + route;
-	};	
+    // prepend host to every url from `App.url`
+    App.setUrls = function () {
+        var origin = Backbone.history.location.origin;
+        _.each(this.url, function(key) {
+        console.log(key);
+        });
 
-	App.initApp = function() {
-		// non sense method a little bit but temporary I can laeve it here
-		$.get(this.url.api + 'get/init-data/', _.bind(this.onInitData, this));
-	};
+        for (var i in this.url) {
+            this.url[i] = origin + this.url[i];
+        }
+    };
 
+    // helper for accessing url's
+    App.getUrl = function (type, route) {
+        return this.url[type] + route;
+    };
 
-	App.onInitData = function(response){
-		var initData = JSON.parse(response);
-		
-		if(!initData.user.auth) { 
-			// redirect to login page if not logged
-			window.location = initData.baseUrl + '/login'; 
-		}
-		else { 
-			// set user global data
-			this.userData = initData.user; 
+    App.initApp = function () {
+        // non sense method a little bit but temporary I can laeve it here
+        $.get(this.url.api + 'get/init-data/', _.bind(this.onInitData, this));
+    };
 
-			// update defined urls with root 
-			this.setUrls();
-			
-			// Initialize whole routing here 
-			router.initialize();
-		}
-	};
+    App.onInitData = function (response) {
+        var initData = JSON.parse(response);
 
-	// Add layout regions here to controll views
-	App.addRegions({
-		content : "#content"
-	});
+        if (!initData.user.auth) {
+            // redirect to login page if not logged
+            window.location = initData.baseUrl + '/login';
+        }
+        else {
+            // set user global data
+            this.userData = initData.user;
 
-	App.addInitializer(function() {
-		console.log('INITIALIZE: Application');
+            // update defined urls with root
+            this.setUrls();
 
-		this.initApp();
-	});
+            // Initialize whole routing here
+            router.initialize();
+        }
+    };
 
-	return App;
+    // Add layout regions here to controll views
+    App.addRegions({
+        content: "#content"
+    });
+
+    App.addInitializer(function () {
+        console.log('INITIALIZE: Application');
+
+        this.initApp();
+    });
+
+    return App;
 });
