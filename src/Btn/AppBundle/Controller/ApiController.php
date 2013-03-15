@@ -56,7 +56,7 @@ class ApiController extends BaseController {
      */
 	public function appInitAction()
 	{
-		$user = $this->getCurrentUser();
+		$user = $this->getUser();
         $base = $this->container->get('router')->getContext()->getBaseUrl();
 
         $response = array(
@@ -71,7 +71,7 @@ class ApiController extends BaseController {
 	{
 		$userData = array();
 
-        if(is_string($user)) {
+        if(is_null($user)) {
         	$userData['auth'] = false;
         } else {
         	$userData['auth'] 		= true;

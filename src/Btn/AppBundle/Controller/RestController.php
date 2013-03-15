@@ -24,7 +24,7 @@ class RestController extends BaseController {
 		$this->serializer 	= $this->container->get('serializer');
 		$this->translator  	= $this->get('translator');
 
-		if($this->isAuthenticated()) {
+		if(!$this->isAuthenticated()) {
 			$request = $event->getRequest();
 
 			$request->attributes->set('_controller', 'BtnAppBundle:Api:exception');

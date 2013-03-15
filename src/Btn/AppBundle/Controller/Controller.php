@@ -8,11 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 class Controller extends BaseController
 {
     protected $namespaces = array(
-        'form'      => 'Btn\\AppBundle\\Form\\',
-        'entity'    => 'Btn\\AppBundle\\Entity\\'
+        'form'   => 'Btn\\AppBundle\\Form\\',
+        'entity' => 'Btn\\AppBundle\\Entity\\'
     );
 
     private $allErrors = array();
+
     /**
      * Set flash message
      *
@@ -25,11 +26,10 @@ class Controller extends BaseController
         $this->getRequest()->getSession()->setFlash($type, $message);
     }
 
-
     /**
      * Renders JSON for our MooTools View wrapper.
      *
-     * @param array    $array
+     * @param array $array
      * @param Response $response
      *
      * @return Response A Response instance
@@ -42,21 +42,20 @@ class Controller extends BaseController
             'param'   => $param
         );
 
-
         return $this->json($result);
     }
 
     /**
      * Renders array into JSON.
      *
-     * @param array    $array
+     * @param array $array
      * @param Response $response
      *
      * @return Response A Response instance
      */
-    public function json(array $array, Response $response = null)
+    public function json(array $array, Response $response = NULL)
     {
-        if (null === $response) {
+        if (NULL === $response) {
             $response = new Response();
         }
 
@@ -73,7 +72,7 @@ class Controller extends BaseController
      *
      * @return EntityManager
      */
-    public function getManager($name = null)
+    public function getManager($name = NULL)
     {
         return $this->getDoctrine()->getManager($name);
     }
@@ -86,7 +85,7 @@ class Controller extends BaseController
      *
      * @return EntityRepository
      */
-    public function getRepository($repositoryName, $managerName = null)
+    public function getRepository($repositoryName, $managerName = NULL)
     {
         return $this->getManager($managerName)->getRepository($repositoryName);
     }
@@ -95,12 +94,12 @@ class Controller extends BaseController
      * Shortcut to find an entity by id
      *
      * @param string $class
-     * @param mixed  $id
+     * @param mixed $id
      * @param string $managerName
      *
      * @return object or NULL if the entity was not found
      */
-    public function findEntity($class, $id, $managerName = null)
+    public function findEntity($class, $id, $managerName = NULL)
     {
         return $this->getRepository($class, $managerName)->find($id);
     }
@@ -109,12 +108,12 @@ class Controller extends BaseController
      * Shortcut to find an entity by criteria
      *
      * @param string $class
-     * @param array  $criteria    An array of criteria (field => value)
+     * @param array $criteria    An array of criteria (field => value)
      * @param string $managerName
      *
      * @return object or NULL if the entity was not found
      */
-    public function findEntityBy($class, array $criteria, $managerName = null)
+    public function findEntityBy($class, array $criteria, $managerName = NULL)
     {
         return $this->getRepository($class, $managerName)->findOneBy($criteria);
     }
@@ -123,18 +122,18 @@ class Controller extends BaseController
      * Finds the entity by id or throws a NotFoundHttpException
      *
      * @param string $class
-     * @param mixed  $id
+     * @param mixed $id
      * @param string $managerName
      *
      * @return object The found entity
      *
      * @throws NotFoundHttpException if the entity was not found
      */
-    public function findEntityOr404($class, $id, $managerName = null)
+    public function findEntityOr404($class, $id, $managerName = NULL)
     {
         $entity = $this->findEntity($class, $id, $managerName);
 
-        if (null === $entity) {
+        if (NULL === $entity) {
             throw $this->createNotFoundException(sprintf(
                 'The %s entity with id "%s" was not found.',
                 $class,
@@ -149,23 +148,25 @@ class Controller extends BaseController
      * Finds the entity matching the specified criteria or throws a NotFoundHttpException
      *
      * @param string $class
-     * @param array  $criteria An array of criteria (field => value)
+     * @param array $criteria An array of criteria (field => value)
      * @param string $class
      *
      * @return object The found entity
      *
      * @throws NotFoundHttpException if the entity was not found
      */
-    public function findEntityByOr404($class, array $criteria, $managerName = null)
+    public function findEntityByOr404($class, array $criteria, $managerName = NULL)
     {
         $entity = $this->findEntityBy($class, $criteria, $managerName);
 
-        if (null === $entity) {
+        if (NULL === $entity) {
             throw $this->createNotFoundException(sprintf(
                 'The %s entity with %s was not found.',
                 $class,
                 implode(' and ', array_map(
-                    function ($k, $v) { sprintf('%s "%s"', $k, $v); },
+                    function ($k, $v) {
+                        sprintf('%s "%s"', $k, $v);
+                    },
                     array_flip($criteria),
                     $criteria
                 ))
@@ -175,17 +176,18 @@ class Controller extends BaseController
         return $entity;
     }
 
-    public function getMetadata($entity) {
+    public function getMetadata($entity)
+    {
         return $this->getManager()->getClassMetadata(get_class($entity));
     }
 
-    public function getResourceFullName($type, $name, $editMode = false)
+    public function getResourceFullName($type, $name, $editMode = FALSE)
     {
-        $fullName  = $this->namespaces[$type] . ucfirst($name);
-        
-        if($type == 'form') { 
+        $fullName = $this->namespaces[$type] . ucfirst($name);
+
+        if ($type == 'form') {
             $fullName .= ($editMode) ? 'Edit' : '';
-            $fullName .= 'Type'; 
+            $fullName .= 'Type';
         }
 
         return $fullName;
@@ -193,51 +195,53 @@ class Controller extends BaseController
 
     public function createJsonForm($form)
     {
-        $jsonForm   = array();
+        $jsonForm = array();
 
         foreach ($form->createView()->getChildren() as $key => $child) {
             $types  = $child->vars['block_prefixes'];
-            $type   = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === false)) ? $types[3] : $types[2];
+            $type   = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === FALSE)) ? $types[3] : $types[2];
             $format = '';
-            
-            if($type == 'datetime' || $type == 'date') {
+
+            if ($type == 'datetime' || $type == 'date') {
                 $type   = 'text';
                 $format = 'datetime';
             }
 
             $jsonForm[] = array(
-                'name'      => $key,
-                'type'      => $type,
-                'format'    => $format
+                'name'   => $key,
+                'type'   => $type,
+                'format' => $format
             );
         }
 
         return $jsonForm;
     }
 
-    public function getAllErrors($children, $template = true) {
+    public function getAllErrors($children, $template = TRUE)
+    {
         $this->getAllFormErrors($children);
         return $this->allErrors;
     }
-   
-    
-    private function getAllFormErrors($children, $template = true) {
+
+    private function getAllFormErrors($children, $template = TRUE)
+    {
         foreach ($children as $child) {
             if ($child->hasErrors()) {
-                $vars = $child->createView()->getVars();
+                $vars   = $child->createView()->getVars();
                 $errors = $child->getErrors();
                 foreach ($errors as $error) {
                     $this->allErrors[$vars["name"]][] = $this->convertFormErrorObjToString($error);
                 }
             }
-    
+
             if ($child->hasChildren()) {
                 $this->getAllErrors($child);
             }
         }
     }
-    
-    private function convertFormErrorObjToString($error) {
+
+    private function convertFormErrorObjToString($error)
+    {
         $errorMessageTemplate = $error->getMessageTemplate();
         foreach ($error->getMessageParameters() as $key => $value) {
             $errorMessageTemplate = str_replace($key, $value, $errorMessageTemplate);
@@ -245,32 +249,31 @@ class Controller extends BaseController
         return $errorMessageTemplate;
     }
 
-    public function getResourceObjects($resourceName, $entityId = null)
+    public function getResourceObjects($resourceName, $entityId = NULL)
     {
-        $editMode    = ($entityId != null);
-        $entityName  = $this->getResourceFullName('entity', $resourceName);
-        $formName    = $this->getResourceFullName('form', $resourceName, $editMode);
+        $editMode   = ($entityId != NULL);
+        $entityName = $this->getResourceFullName('entity', $resourceName);
+        $formName   = $this->getResourceFullName('form', $resourceName, $editMode);
 
         /* grab entity here */
         $entity = ($editMode) ? $this->manager->getRepository($entityName)->find($entityId) : (new $entityName());
-        
+
         $form = $this->createForm(
-            new $formName,  $entity
+            new $formName, $entity
         );
 
-        return array( 'form' => $form, 'entity' => $entity );
+        return array('form' => $form, 'entity' => $entity);
     }
 
     public function getFormErrors($form)
     {
         $this->translator = $this->get('translator');
 
-        foreach($form->getErrors() as $e) {
-            $errors[]=$this->translator->trans($this->convertFormErrorObjToString($e), array(), 'validators');
+        foreach ($form->getErrors() as $e) {
+            $errors[] = $this->translator->trans($this->convertFormErrorObjToString($e), array(), 'validators');
         }
-        
-        
-        foreach($this->getAllErrors($form->getChildren()) as $key => $error) {
+
+        foreach ($this->getAllErrors($form->getChildren()) as $key => $error) {
             $errors[$key] = $this->translator->trans($error[0], array(), 'validators');
         }
 
@@ -286,9 +289,9 @@ class Controller extends BaseController
     {
         //TODO: doesn't work in IE
         $response = new Response();
-        
+
         $response->setStatusCode($statusCode);
-        $response->setContent($this->serializer->serialize( $content, 'json' ));
+        $response->setContent($this->serializer->serialize($content, 'json'));
         $response->headers->set('Content-type', 'application/json');
 
         return $response;
