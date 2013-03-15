@@ -15,21 +15,17 @@ define(['router'], function (router) {
 
     App.initializeLayout = function () {
         // Initialize layout view
-        require(['views/layout/main'], function (LayoutView) {
+        require(['views/layout/main'], _.bind(function (LayoutView) {
             this.layoutView = new LayoutView();
-        });
+        }, this));
     };
 
     // prepend host to every url from `App.url`
     App.setUrls = function () {
         var origin = Backbone.history.location.origin;
-        _.each(this.url, function(key) {
-        console.log(key);
-        });
-
-        for (var i in this.url) {
-            this.url[i] = origin + this.url[i];
-        }
+        _.each(this.url, function(value, key) {
+            this.url[key] = origin + value;
+        }, this);
     };
 
     // helper for accessing url's

@@ -69,7 +69,7 @@ class Lead
 
     /**
      * @var datetime $alert
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="alert", type="datetime")
      */
     private $alert;
