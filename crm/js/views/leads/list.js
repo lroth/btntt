@@ -1,63 +1,28 @@
+//global define
+//global _
+//global Backbone
+
 define([
-  'App',
-  'core/view',
-  'text!templates/lead/list.html'
-], 
-function(App, BaseView, tmpl) {
+    'core/list',
+    'text!templates/lead/list.html'
+],
+    function (BaseList, tmpl) {
+        "use strict";
 
-  var View = {
-    tagName   : 'div',
-    className : 'eight columns',
-    id        : 'leads',
+        var View = {
+            id  : 'leads',
+            tmpl: tmpl,
 
-    tmpl      : tmpl,
+            initialize: function (options) {
+                console.log('\r\n LeadListView::initialize');
 
-    events: {
-      'click .remove' : 'removeLead',
-      'click .edit'   : 'editLead',
-    },
+                this.collection = options.collection;
+                this.bindBehaviors();
+            }
+        };
 
-    onLeadRemoved : function(leadView, collection, response) {
-      this.removeLeadView(leadView);
-      App.vent.trigger('layout:message', { type: "success", message : response.message});
-    },
+        var LeadListView = Backbone.View.extend(View);
+        _.extend(LeadListView.prototype, new BaseList());
 
-    removeLead : function(e) {
-      var leadView = $(e.target).closest('tr')
-          , leadId = $(leadView).attr('data-model-id')
-          , model  = this.collection.get(leadId)
-          ;
-
-      if(!_.isUndefined(model)) {
-        model.destroy({
-          success : _.bind(this.onLeadRemoved, this, leadView)
-        });
-      }
-    },
-
-    editLead : function(e) {
-      var leadView = $(e.target).closest('tr')
-          , leadId = $(leadView).attr('data-model-id')
-          , model  = this.collection.get(leadId)
-          ;
-
-        App.vent.trigger('lead:edit', model);
-    },
-
-    removeLeadView : function(leadView) {
-      $(leadView).hide('slow', function(){ $(leadView).remove(); });
-    },
-
-    initialize: function(options) {
-      console.log('\r\LeadListView::initialize');
-
-      this.collection = options.collection;
-      App.vent.on('lead:add', _.bind(this.render, this));
-    }
-  };
-
-  var LeadListView = Backbone.View.extend(View);
-  _.extend(LeadListView.prototype, new BaseView());
-
-  return LeadListView;
-});
+        return LeadListView;
+    });

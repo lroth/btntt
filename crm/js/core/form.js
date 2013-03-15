@@ -7,6 +7,10 @@ define(['App', 'core/view'], function (App, BaseView) {
     "use strict";
 
     var Form = function () {
+        this.behaviors = {
+            'edit': 'setEditMode'
+        };
+
         //backbone view stuff
         this.tagName = 'div';
         this.className = 'four columns';
@@ -93,7 +97,7 @@ define(['App', 'core/view'], function (App, BaseView) {
         // parse json error list to template
         this.showErrors = function (errors) {
             //@TODO: use templates here!
-            _.each(errors, function(value, key){
+            _.each(errors, function (value, key) {
                 var attr = '[name=' + key + ']',
                     small = '<small style="display:none;" class="error">' + value + '</small>';
 
@@ -116,12 +120,12 @@ define(['App', 'core/view'], function (App, BaseView) {
             // @TODO: just make this better
             App.vent.trigger('layout:message', {
                 type   : "success",
-                message: this.options.modelName + ' ' + (this.isEditMode) ? 'edited' : 'added' + '!'
+                message: this.options.modelName + ' ' + ((this.isEditMode) ? 'edited' : 'added') + '!'
             });
 
             // Tell other views, that new model is added
             // (for example list.js want to refresh when new lead is added)
-            App.vent.trigger('lead:add');
+            App.vent.trigger(this.options.modelName + ':add');
         };
 
         // cleaning form from css error classes
