@@ -14,8 +14,6 @@ define([
         tmpl        : tmpl,
 
         initialize: function (options) {
-            console.log('LeadFormView::initialize');
-
             this.options = options;
             this.getCsfrToken();
 

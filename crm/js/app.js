@@ -23,7 +23,7 @@ define(['router'], function (router) {
     // prepend host to every url from `App.url`
     App.setUrls = function () {
         var origin = Backbone.history.location.origin;
-        _.each(this.url, function(value, key) {
+        _.each(this.url, function (value, key) {
             this.url[key] = origin + value;
         }, this);
     };
@@ -63,8 +63,6 @@ define(['router'], function (router) {
     });
 
     App.addInitializer(function () {
-        console.log('INITIALIZE: Application');
-
         this.initApp();
     });
 

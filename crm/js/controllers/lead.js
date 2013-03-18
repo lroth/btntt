@@ -1,27 +1,30 @@
-define(['App'], function(App) {
-	var LeadController = Marionette.Controller.extend({
+//global define
+//global Marionette
 
-		initialize: function(options) {
-			console.log('LeadController::initialize');
-		},
+define(['App'], function (App) {
+    "use strict";
 
-		leadsList: function() {
-			console.log('LeadController::leadsList\r\n');
+    var LeadController = Marionette.Controller.extend({
 
-			var options = {
-				url 		: {
-					api  : App.getUrl('api', ''),
-					rest : App.getUrl('rest', 'lead')
-				},
-				modelName : 'lead' 
-			};
+        initialize: function (options) {
+        },
 
-			require(['views/leads/main'], function(LeadsMainView) {
-				App.content.show(new LeadsMainView(options));
-			});
-		}
+        leadsList: function () {
 
-	});
+            var options = {
+                url      : {
+                    api : App.getUrl('api', ''),
+                    rest: App.getUrl('rest', 'lead')
+                },
+                modelName: 'lead'
+            };
 
-	return LeadController;
+            require(['views/leads/main'], function (LeadsMainView) {
+                App.content.show(new LeadsMainView(options));
+            });
+        }
+
+    });
+
+    return LeadController;
 });

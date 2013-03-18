@@ -14,8 +14,6 @@ define([
             tmpl: listTmpl,
 
             initialize: function (options) {
-                console.log('\r\n LeadListView::initialize');
-
                 this.collection = options.collection;
                 this.bindBehaviors();
             }

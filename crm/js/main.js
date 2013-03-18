@@ -61,8 +61,6 @@ requirejs.config({
     }
 });
 
-console.log('LOAD: require.js configuration\r\n');
-
 require(['app'], function (app) {
     "use strict";
 
