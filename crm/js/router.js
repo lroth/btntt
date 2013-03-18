@@ -37,9 +37,7 @@ define([
                 controller: new EnquiryController()
             });
 
-            // tell to `Backbone` where is `root` of application
-            Backbone.history.start({pushState: true, root: "/crm/", silent: false});
-            console.log(Backbone.history.fragment);
+            Backbone.history.start();
         };
 
         return {
