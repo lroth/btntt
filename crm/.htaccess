@@ -1,0 +1,10 @@
+<ifModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /crm/
+    RewriteCond %{THE_REQUEST} ^.*/index.html
+    RewriteRule ^(.*)index.php$ /crm/$1 [R,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/index\.html
+    RewriteRule (.*) index.html
+</ifModule>
