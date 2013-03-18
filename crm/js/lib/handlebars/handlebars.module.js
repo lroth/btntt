@@ -1,26 +1,31 @@
-define(['handlebars', 'moment'], function(handlebars, moment){
-	Handlebars.registerHelper('leadDateFormat', function(date) {
-		return moment(date).format('MMMM DD YYYY');
-	});
+//global define
+//global Handlebars
 
-	Handlebars.registerHelper('formInputWidget', function() {
-		var inputStr = '';
+define(['handlebars', 'moment'], function (handlebars, moment) {
+    "use strict";
 
-		if(this.type !== 'textarea') {
+    Handlebars.registerHelper('leadDateFormat', function (date) {
+        return moment(date).format('MMMM DD YYYY');
+    });
 
-	    	inputStr = 
-	    		'<input data-format="' 	+ this.format + 
-	    		'" type="' 				+ this.type + 
-	    		'" placeholder="' 		+ this.name +
-	    		'" name="' 				+ this.name + '"/>'
-    		;	
-		}
-		else {
-			inputStr = 
-				'<textarea name="' 		+ this.name +
-				'">Add your ' 			+ this.name + '...</textarea>'
-		}
+    Handlebars.registerHelper('formInputWidget', function () {
+        var inputStr = '';
 
-		return new Handlebars.SafeString(inputStr);
-	});
+        if (this.type !== 'textarea') {
+
+            inputStr =
+                '<input data-format="' + this.format +
+                    '" type="' + this.type +
+                    '" placeholder="' + this.name +
+                    '" name="' + this.name + '"/>'
+            ;
+        }
+        else {
+            inputStr =
+                '<textarea name="' + this.name +
+                    '">Add your ' + this.name + '...</textarea>';
+        }
+
+        return new Handlebars.SafeString(inputStr);
+    });
 });

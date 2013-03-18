@@ -8,7 +8,8 @@ define(['App', 'core/view'], function (App, BaseView) {
 
     var Form = function () {
         this.behaviors = {
-            'edit': 'setEditMode'
+            'edit'  : { action: 'setEditMode' },
+            'remove': { action: 'onResourceRemove' }
         };
 
         //backbone view stuff
@@ -125,7 +126,7 @@ define(['App', 'core/view'], function (App, BaseView) {
 
             // Tell other views, that new model is added
             // (for example list.js want to refresh when new lead is added)
-            App.vent.trigger(this.options.modelName + ':add');
+            App.vent.trigger(this.getEventName('add'));
         };
 
         // cleaning form from css error classes
@@ -197,6 +198,12 @@ define(['App', 'core/view'], function (App, BaseView) {
             return value;
         };
 
+        this.onResourceRemove = function (modelId) {
+            if (this.isEditMode && (this.editId === modelId)) {
+                this.resetForm();
+            }
+        };
+
         // change form mode to edit
         this.setEditMode = function (model) {
             // set correct flag
@@ -222,6 +229,7 @@ define(['App', 'core/view'], function (App, BaseView) {
 
         // helper for quick mode id set
         this.setEditId = function (id) {
+            this.editId = id;
             $(this.elements.form).attr('data-model-id', (_.isUndefined(id) ? '' : id));
         };
 

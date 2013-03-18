@@ -8,7 +8,7 @@ define(['App', 'core/view'], function (App, BaseView) {
 
     var List = function () {
         this.behaviors = {
-            'add': 'render'
+            'add': { action: 'render' }
         };
 
         this.tagName = 'div';
@@ -24,13 +24,14 @@ define(['App', 'core/view'], function (App, BaseView) {
 
             if (!_.isUndefined(resource.model)) {
                 resource.model.destroy({
-                    success: _.bind(this.onResourceRemoved, this, resource.view)
+                    success: _.bind(this.onResourceRemoved, this, resource)
                 });
             }
         };
 
-        this.onResourceRemoved = function (resourceView, collection, response) {
-            this.removeResourceView(resourceView);
+        this.onResourceRemoved = function (resource, collection, response) {
+            this.removeResourceView(resource.view);
+            App.vent.trigger(this.getEventName('remove'), resource.model.id);
             App.vent.trigger('layout:message', { type: "success", message: response.message});
         };
 
@@ -41,7 +42,7 @@ define(['App', 'core/view'], function (App, BaseView) {
         },
 
             this.editResource = function (e) {
-                App.vent.trigger(this.options.modelName + ':edit', this.getResourceData(e.target).model);
+                App.vent.trigger(this.getEventName('edit'), this.getResourceData(e.target).model);
             };
 
         this.getResourceData = function (target) {

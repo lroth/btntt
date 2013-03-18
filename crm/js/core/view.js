@@ -46,9 +46,16 @@ define(['App'], function (App) {
         };
 
         this.bindBehaviors = function () {
-            _.each(this.behaviors, function (action, name) {
-                App.vent.on(this.options.modelName + ':' + name, _.bind(this[action], this));
+            var resource = '';
+
+            _.each(this.behaviors, function (event, name) {
+                resource = (_.isUndefined(event.resource)) ? this.options.modelName : event.action;
+                App.vent.on(resource + ':' + name, _.bind(this[event.action], this));
             }, this);
+        };
+
+        this.getEventName = function (name, resource) {
+            return ((_.isUndefined(resource)) ? this.options.modelName : resource) + ':' + name;
         };
     };
 
