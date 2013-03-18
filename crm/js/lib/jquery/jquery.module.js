@@ -1,3 +1,3 @@
-define(['jquery'], function($){
-	return $;
+define(['jquery', 'jquery.reveal'], function ($) {
+    return $;
 });

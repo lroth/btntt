@@ -2,62 +2,94 @@
 //global _
 //global Pikaday
 //global moment
+//global Handlebars
 
-define(['App', 'core/view'], function (App, BaseView) {
-    "use strict";
+define([
+    'App',
+    'core/view',
 
-    var List = function () {
-        this.behaviors = {
-            'add': { action: 'render' }
-        };
+    //Oh, god, it should be component
+    'text!templates/confirm.popup.html'
+],
+    function (App, BaseView, confirmPopupTmpl) {
+        "use strict";
 
-        this.tagName = 'div';
-        this.className = 'eight columns';
+        var List = function () {
+            //@TODO: it's wrong way definitely
+            this.confirmPopup = Handlebars.compile(confirmPopupTmpl);
 
-        this.events = {
-            'click .remove': 'removeResource',
-            'click .edit'  : 'editResource'
-        };
+            this.behaviors = {
+                'add': { action: 'render' }
+            };
 
-        this.removeResource = function (e) {
-            var resource = this.getResourceData(e.target);
+            this.tagName = 'div';
+            this.className = 'eight columns';
 
-            if (!_.isUndefined(resource.model)) {
-                resource.model.destroy({
-                    success: _.bind(this.onResourceRemoved, this, resource)
+            this.events = {
+                'click .remove': 'onResourceRemove',
+                'click .edit'  : 'editResource'
+            };
+
+            this.onResourceRemove = function (e) {
+                var resource = this.getResourceData(e.target);
+
+                //@TODO: God, forgive me, I'll rewrite it to module ASAP
+                var popupId = 'remove-resource-' + resource.model.id;
+                var popup = this.confirmPopup({
+                    id     : popupId,
+                    title  : 'Sure remove?',
+                    content: 'Confirm you want to remove this item.',
+                    button : {cancel: 'Cancel', submit: 'Sure'}
                 });
-            }
-        };
 
-        this.onResourceRemoved = function (resource, collection, response) {
-            this.removeResourceView(resource.view);
-            App.vent.trigger(this.getEventName('remove'), resource.model.id);
-            App.vent.trigger('layout:message', { type: "success", message: response.message});
-        };
+                $('body').append(popup);
+                $('#' + popupId).reveal();
+                $('#' + popupId).find('.button.cancel').click(function () {
+                    $(this).parent().trigger('reveal:close');
+                });
+                $('#' + popupId).find('.button.submit').click(_.bind(function () {
+                    $('#' + popupId).trigger('reveal:close');
+                    this.removeResource(resource);
+                }, this));
+            };
 
-        this.removeResourceView = function (resourceView) {
-            $(resourceView).hide('slow', function () {
-                $(resourceView).remove();
-            });
-        },
+            this.removeResource = function (resource) {
+                if (!_.isUndefined(resource.model)) {
+                    resource.model.destroy({
+                        success: _.bind(this.onResourceRemoved, this, resource)
+                    });
+                }
+            };
+
+            this.onResourceRemoved = function (resource, collection, response) {
+                this.removeResourceView(resource.view);
+                App.vent.trigger(this.getEventName('remove'), resource.model.id);
+                App.vent.trigger('layout:message', { type: "success", message: response.message});
+            };
+
+            this.removeResourceView = function (resourceView) {
+                $(resourceView).hide('slow', function () {
+                    $(resourceView).remove();
+                });
+            };
 
             this.editResource = function (e) {
                 App.vent.trigger(this.getEventName('edit'), this.getResourceData(e.target).model);
             };
 
-        this.getResourceData = function (target) {
-            var resource = {};
-            resource.view = $(target).closest('tr');
-            resource.id = $(resource.view).attr('data-model-id');
-            resource.model = this.collection.get(resource.id);
+            this.getResourceData = function (target) {
+                var resource = {};
+                resource.view = $(target).closest('tr');
+                resource.id = $(resource.view).attr('data-model-id');
+                resource.model = this.collection.get(resource.id);
 
-            return resource;
+                return resource;
+            };
         };
-    };
 
-    // extend this `object.prototype` instead of object only
-    // with new base view object (because `BaseView` is `constructor`)
-    _.extend(List.prototype, new BaseView());
+        // extend this `object.prototype` instead of object only
+        // with new base view object (because `BaseView` is `constructor`)
+        _.extend(List.prototype, new BaseView());
 
-    return List;
-});
+        return List;
+    });

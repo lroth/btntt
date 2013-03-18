@@ -6,12 +6,12 @@ define([
     'core/list',
     'text!templates/lead/list.html'
 ],
-    function (BaseList, tmpl) {
+    function (BaseList, listTmpl) {
         "use strict";
 
         var View = {
             id  : 'leads',
-            tmpl: tmpl,
+            tmpl: listTmpl,
 
             initialize: function (options) {
                 console.log('\r\n LeadListView::initialize');

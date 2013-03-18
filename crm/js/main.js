@@ -9,6 +9,9 @@ requirejs.config({
         'backbone.marionette': 'lib/backbone/backbone.marionette',
 
         'jquery'       : 'lib/jquery/jquery',
+
+        //@TODO: move this to external module
+        'jquery.reveal': 'foundation/jquery.foundation.reveal',
         'jquery.module': 'lib/jquery/jquery.module',
 
         'pikaday'   : 'lib/pikaday',
@@ -32,6 +35,11 @@ requirejs.config({
         'backbone.marionette': {
             deps   : ['backbone'],
             exports: 'Marionette'
+        },
+
+        //@TODO: as above: it should be in modal module
+        'jquery.reveal'      : {
+            deps: ['jquery']
         },
 
         'jquery'    : {

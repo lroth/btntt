@@ -1,0 +1,10 @@
+<div {{#if id}} id="{{id}}" {{/if}} class="reveal-modal">
+<h2>{{title}}</h2>
+{{#if header}}
+<p class="lead">{{header}}</p>
+{{/if}}
+
+<p>{{content}}</p>
+<a class="button cancel">{{button.cancel}}</a>
+<a class="button success submit">{{button.submit}}</a>
+</div>
