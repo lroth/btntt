@@ -20,7 +20,7 @@ define(['handlebars', 'moment'], function (handlebars, moment) {
                 break;
 
             case 'choice':
-                inputStr = '<select name="' + this.name + '>';
+                inputStr = '<select name="' + this.name + '">';
                 for (var i = 0; i < this.choices.length; i++) {
                     inputStr += '<option value="' + this.choices[i].value + '">' + this.choices[i].label + '</option>';
                 }

@@ -34,7 +34,7 @@ define(['App', 'core/view'], function (App, BaseView) {
         // cache selectors in `this.elements` object
         this.setElementsSelectors = function () {
             this.elements.form = $('#model-save');
-            this.elements.inputs = $(this.elements.form).find('input, textarea').not('[type=submit]');
+            this.elements.inputs = $(this.elements.form).find('input, textarea, select').not('[type=submit]');
 
             this.elements.cancelBtn = $(this.elements.form).find('.button.cancel');
             this.elements.successBtn = $(this.elements.form).find('.button.success');
