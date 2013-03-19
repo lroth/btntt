@@ -162,9 +162,11 @@ class RestController extends BaseController
     //TODO: to service...
     private function doCustomActions(&$entity)
     {
-        foreach ($entity->customCallbacks as $action) {
-            if (method_exists($this, $action)) {
-                call_user_func_array(array($this, $action), array(&$entity));
+        if (property_exists($entity, 'customCallbacks') && is_array($entity->customCallbacks)) {
+            foreach ($entity->customCallbacks as $action) {
+                if (method_exists($this, $action)) {
+                    call_user_func_array(array($this, $action), array(&$entity));
+                }
             }
         }
     }

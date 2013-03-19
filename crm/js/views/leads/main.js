@@ -45,9 +45,9 @@ define([
 
                 // subviews will be appened in same order as defined in `this.subViews` objects
                 this.subViews = {
-                    form  : new ViewForm(options),
-                    search: new ViewSearch(options),
-                    list  : new ViewList(options)
+                    form: new ViewForm(options),
+//                    search: new ViewSearch(options),
+                    list: new ViewList(options)
                 };
             }
         });

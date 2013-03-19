@@ -4,13 +4,13 @@
 
 define([
     'core/list',
-    'text!templates/lead/list.html'
+    'text!templates/enquiry/list.html'
 ],
     function (BaseList, listTmpl) {
         "use strict";
 
         var View = {
-            id  : 'leads',
+            id  : 'enquiries',
             tmpl: listTmpl,
 
             initialize: function (options) {
@@ -19,8 +19,8 @@ define([
             }
         };
 
-        var LeadListView = Backbone.View.extend(View);
-        _.extend(LeadListView.prototype, new BaseList());
+        var EnquiryListView = Backbone.View.extend(View);
+        _.extend(EnquiryListView.prototype, new BaseList());
 
-        return LeadListView;
+        return EnquiryListView;
     });

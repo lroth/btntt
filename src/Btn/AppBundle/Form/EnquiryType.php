@@ -11,23 +11,28 @@ class EnquiryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estimationTime', '')
+            ->add('estimationTime', 'number')
             ->add('budget', 'text')
-            ->add('content')
-            ->add('title')
-            ->add('projectStartTime')
-            ->add('projectEndTime')
-            ->add('enquiryDeadline')
-            ->add('status')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('lead');
+            ->add('content', 'textarea')
+            ->add('title', 'text')
+            ->add('projectStartTime', 'date', array('widget' => 'single_text', 'format' => 'yyyy-MM-dd'))
+            ->add('projectEndTime', 'date', array('widget' => 'single_text', 'format' => 'yyyy-MM-dd'))
+            ->add('enquiryDeadline', 'date', array('widget' => 'single_text', 'format' => 'yyyy-MM-dd'))
+            ->add('status', 'text')
+            ->add('lead', 'entity', array(
+                'class'    => 'BtnAppBundle:Lead',
+                'property' => 'name',
+//                'query_builder' => function(EntityRepository $er) {
+//                    return $er->createQueryBuilder('u');
+//                }
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Btn\AppBundle\Entity\Enquiry'
+            'data_class'      => 'Btn\AppBundle\Entity\Enquiry',
+            'csrf_protection' => FALSE
         ));
     }
 

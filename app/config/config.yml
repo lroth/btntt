@@ -87,7 +87,7 @@ raul_fraile_ladybug:
     general:
         expanded:             false
     object:
-        max_nesting_level:    2
+        max_nesting_level:    4
 
 #knp paginator fix
 knp_paginator:

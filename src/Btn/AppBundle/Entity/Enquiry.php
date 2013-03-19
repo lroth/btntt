@@ -2,6 +2,7 @@
 
 namespace Btn\AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,56 +25,56 @@ class Enquiry
 
     /**
      * @var integer $estimationTime
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="estimationTime", type="integer")
      */
     private $estimationTime;
 
     /**
      * @var string $budget
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="budget", type="string")
      */
     private $budget;
 
     /**
      * @var string $content
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="content", type="string", length=255)
      */
     private $content;
 
     /**
      * @var string $title
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var datetime $projectStartTime
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="projectStartTime", type="datetime")
      */
     private $projectStartTime;
 
     /**
      * @var datetime $projectEndTime
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="projectEndTime", type="datetime")
      */
     private $projectEndTime;
 
     /**
      * @var datetime $enquiryDeadline
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="enquiryDeadline", type="datetime")
      */
     private $enquiryDeadline;
 
     /**
      * @var string $status
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="status", type="string", length=255)
      */
     private $status;
@@ -98,11 +99,10 @@ class Enquiry
      */
     private $lead;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -124,7 +124,7 @@ class Enquiry
     /**
      * Get estimationTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getEstimationTime()
     {
@@ -146,7 +146,7 @@ class Enquiry
     /**
      * Get budget
      *
-     * @return integer 
+     * @return integer
      */
     public function getBudget()
     {
@@ -168,7 +168,7 @@ class Enquiry
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -190,7 +190,7 @@ class Enquiry
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -212,7 +212,7 @@ class Enquiry
     /**
      * Get projectStartTime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getProjectStartTime()
     {
@@ -234,7 +234,7 @@ class Enquiry
     /**
      * Get projectEndTime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getProjectEndTime()
     {
@@ -256,7 +256,7 @@ class Enquiry
     /**
      * Get enquiryDeadline
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getEnquiryDeadline()
     {
@@ -278,7 +278,7 @@ class Enquiry
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -300,7 +300,7 @@ class Enquiry
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -322,7 +322,7 @@ class Enquiry
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -335,7 +335,7 @@ class Enquiry
      * @param Btn\AppBundle\Entity\Lead $lead
      * @return Enquiry
      */
-    public function setLead(\Btn\AppBundle\Entity\Lead $lead = null)
+    public function setLead(\Btn\AppBundle\Entity\Lead $lead = NULL)
     {
         $this->lead = $lead;
         return $this;
@@ -344,7 +344,7 @@ class Enquiry
     /**
      * Get lead
      *
-     * @return Btn\AppBundle\Entity\Lead 
+     * @return Btn\AppBundle\Entity\Lead
      */
     public function getLead()
     {
@@ -352,12 +352,21 @@ class Enquiry
     }
 
     /**
-    * Set createdAt rePersist
-    *
-    * @ORM\PrePersist
-    */
+     * Set createdAt rePersist
+     *
+     * @ORM\PrePersist
+     */
     public function setCreatedAtValue()
     {
         $this->setCreatedAt(new \DateTime());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateValues()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 }

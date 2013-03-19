@@ -13,8 +13,10 @@ requirejs.config({
         //@TODO: move this to external module
         'jquery.reveal': 'foundation/jquery.foundation.reveal',
         'jquery.module': 'lib/jquery/jquery.module',
+        'parsley'      : 'lib/jquery/parsley',
 
-        'pikaday'   : 'lib/pikaday',
+        'pikaday': 'lib/pikaday',
+
         'underscore': 'lib/underscore',
         'moment'    : 'lib/moment.min',
 
@@ -29,7 +31,7 @@ requirejs.config({
             deps: ['backbone.marionette']
         },
         'backbone'           : {
-            deps   : ['underscore', 'jquery.module', 'handlebars.module', 'moment', 'pikaday'],
+            deps   : ['underscore', 'jquery.module', 'handlebars.module', 'moment', 'pikaday', 'parsley'],
             exports: 'Backbone'
         },
         'backbone.marionette': {
@@ -41,17 +43,19 @@ requirejs.config({
         'jquery.reveal'      : {
             deps: ['jquery']
         },
-
-        'jquery'    : {
+        'parsley'            : {
+            deps: ['jquery']
+        },
+        'jquery'             : {
             exports: '$'
         },
-        'pikaday'   : {
+        'pikaday'            : {
             deps: ['moment']
         },
-        'underscore': {
+        'underscore'         : {
             exports: '_'
         },
-        'handlebars': {
+        'handlebars'         : {
             exports: 'Handlebars'
         },
 

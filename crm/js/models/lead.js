@@ -1,12 +1,17 @@
-define([], function() {
-	var LeadModel = Backbone.Model.extend({
-		defaults: {
-			alert		: '',
-			description	: "",
-			email		: "",
-			name		: ""
-		},
-	});
+//global Backbone
+//global define
 
-	return LeadModel;
+define([], function () {
+    "use strict";
+
+    var LeadModel = Backbone.Model.extend({
+        defaults: {
+            alert      : '',
+            description: "",
+            email      : "",
+            name       : ""
+        }
+    });
+
+    return LeadModel;
 });

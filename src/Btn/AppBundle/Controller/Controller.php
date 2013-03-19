@@ -196,8 +196,8 @@ class Controller extends BaseController
     public function createJsonForm($form)
     {
         $jsonForm = array();
-
         foreach ($form->createView()->getChildren() as $key => $child) {
+
             $types  = $child->vars['block_prefixes'];
             $type   = ($types[2] == 'text' && isset($types[3]) && (strpos($types[3], '_') === FALSE)) ? $types[3] : $types[2];
             $format = '';
@@ -212,6 +212,17 @@ class Controller extends BaseController
                 'type'   => $type,
                 'format' => $format
             );
+
+            if ($type == 'choice') {
+                $choicesArr = array();
+                $choices    = $child->vars['choices'];
+
+                foreach ($choices as $choice) {
+                    $choicesArr[] = array('label' => $choice->label, 'value' => $choice->value);
+                }
+
+                $jsonForm[count($jsonForm) - 1]['choices'] = $choicesArr;
+            }
         }
 
         return $jsonForm;

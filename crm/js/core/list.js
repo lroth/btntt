@@ -27,7 +27,7 @@ define([
 
             this.events = {
                 'click .remove': 'onResourceRemove',
-                'click .edit'  : 'editResource'
+                'click .edit'  : 'onResourceEdit'
             };
 
             this.onResourceRemove = function (e) {
@@ -51,6 +51,8 @@ define([
                     $('#' + popupId).trigger('reveal:close');
                     this.removeResource(resource);
                 }, this));
+
+                return false;
             };
 
             this.removeResource = function (resource) {
@@ -73,8 +75,9 @@ define([
                 });
             };
 
-            this.editResource = function (e) {
+            this.onResourceEdit = function (e) {
                 App.vent.trigger(this.getEventName('edit'), this.getResourceData(e.target).model);
+                return false;
             };
 
             this.getResourceData = function (target) {

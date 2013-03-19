@@ -5,12 +5,12 @@
 define([
     'App',
     'core/form',
-    'text!templates/lead/form.html'
+    'text!templates/enquiry/form.html'
 ], function (App, BaseForm, tmpl) {
     "use strict";
 
     var View = {
-        resourceName: 'lead',
+        resourceName: 'enquiry',
         tmpl        : tmpl,
 
         initialize: function (options) {
@@ -21,8 +21,8 @@ define([
         }
     };
 
-    var LeadFormView = Backbone.View.extend(View);
-    _.extend(LeadFormView.prototype, new BaseForm());
+    var EnquiryFormView = Backbone.View.extend(View);
+    _.extend(EnquiryFormView.prototype, new BaseForm());
 
-    return LeadFormView;
+    return EnquiryFormView;
 });

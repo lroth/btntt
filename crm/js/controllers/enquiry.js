@@ -4,7 +4,7 @@
 define(['App'], function (App) {
     "use strict";
 
-    var LeadController = Marionette.Controller.extend({
+    var EnquiryController = Marionette.Controller.extend({
 
         initialize: function (options) {
         },
@@ -14,18 +14,17 @@ define(['App'], function (App) {
             var options = {
                 url      : {
                     api : App.getUrl('api', ''),
-                    rest: App.getUrl('rest', 'lead')
+                    rest: App.getUrl('rest', 'enquiry')
                 },
-                modelName: 'lead'
+                modelName: 'enquiry'
             };
 
             require(['views/enquiries/main'], function (EnquiryMainView) {
-                console.log('fooo!');
-//                App.content.show(new LeadsMainView(options));
+                App.content.show(new EnquiryMainView(options));
             });
         }
 
     });
 
-    return LeadController;
+    return EnquiryController;
 });

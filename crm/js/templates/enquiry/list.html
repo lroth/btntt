@@ -1,0 +1,27 @@
+<table class="twelve" id="enquiry-list">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Estimation time</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each data}}
+    <tr data-model-id="{{id}}">
+        <td>{{title}}</td>
+        <td>{{leadDateFormat project_start_time}}</td>
+        <td>{{leadDateFormat project_end_time}}</td>
+        <td>{{estimation_time}} hours</td>
+        <td>{{status}}</td>
+        <td>
+            <a class="tiny button edit" href="#">Edit</a>
+            <a class="tiny alert button remove" href="#">X</a>
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
