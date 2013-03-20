@@ -15,13 +15,13 @@ define([
         var LeadRouter = Marionette.AppRouter.extend({
             appRoutes: {
                 // 'route' : controllerMethodName
-                "leads": "leadsList"
+                'leads': 'show'
             }
         });
 
         var EnquiryRouter = Marionette.AppRouter.extend({
             appRoutes: {
-                "enquiries": "enquiryList"
+                'enquiries': 'show'
             }
         });
 
