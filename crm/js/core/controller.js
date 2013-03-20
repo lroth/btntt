@@ -5,24 +5,41 @@
 //global Handlebars
 
 define([
-    'App'
+    'App',
+    'views/paginator'
 ],
-    function (App) {
+    function (App, PaginatorView) {
         "use strict";
 
         var Controller = function () {
+
             this.initialize = function (options) {
+                this.setUrl();
+                this.setCollection();
+                this.setOptions();
+            };
+
+            this.setUrl = function () {
+                this.url = {
+                    api : App.getUrl('api', ''),
+                    rest: App.getUrl('rest', this.modelName)
+                };
+            };
+
+            this.setCollection = function () {
+                require(['collections/' + this.modelName], _.bind(this.onCollectionRequire, this));
+            };
+
+            this.onCollectionRequire = function (ResourceCollection) {
+                this.collection = new ResourceCollection({ url: this.url.rest });
                 this.setOptions();
             };
 
             this.setOptions = function () {
                 this.options = {
-                    url: {
-                        api : App.getUrl('api', ''),
-                        rest: App.getUrl('rest', this.modelName)
-                    },
-
-                    modelName: this.modelName
+                    url       : this.url,
+                    modelName : this.modelName,
+                    collection: this.collection
                 };
             };
 
@@ -31,7 +48,12 @@ define([
             };
 
             this.onShowRequire = function (ResourceMainView) {
-                App.content.show(new ResourceMainView(this.options));
+
+                //store view instance to
+                var resourceMainView = new ResourceMainView(this.options);
+
+                App.content.show(resourceMainView);
+                App.paginator.show(new PaginatorView(resourceMainView.collection));
             };
         };
 

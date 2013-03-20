@@ -2,13 +2,11 @@
 //global Backbone
 
 define([
-    'collections/lead',
-
     'views/lead/form',
     'views/lead/list',
     'views/lead/search'
 ],
-    function (LeadCollection, ViewForm, ViewList, ViewSearch) {
+    function (ViewForm, ViewList, ViewSearch) {
         "use strict";
 
         var LeadsMainView = Backbone.View.extend({
@@ -38,15 +36,9 @@ define([
             },
 
             initialize: function (options) {
-                this.collection = new LeadCollection(options);
-
-                // pass created collection to every subviews
-                options.collection = this.collection;
-
                 // subviews will be appened in same order as defined in `this.subViews` objects
                 this.subViews = {
                     form: new ViewForm(options),
-//                    search: new ViewSearch(options),
                     list: new ViewList(options)
                 };
             }

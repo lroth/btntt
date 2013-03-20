@@ -2,13 +2,11 @@
 //global Backbone
 
 define([
-    'collections/enquiry',
-
     'views/enquiry/form',
     'views/enquiry/list',
     'views/enquiry/search'
 ],
-    function (EnquiryCollection, ViewForm, ViewList, ViewSearch) {
+    function (ViewForm, ViewList, ViewSearch) {
         "use strict";
 
         var EnquiriesMainView = Backbone.View.extend({
@@ -38,10 +36,6 @@ define([
             },
 
             initialize: function (options) {
-                this.collection = new EnquiryCollection(options);
-
-                // pass created collection to every subviews
-                options.collection = this.collection;
 
                 // subviews will be appened in same order as defined in `this.subViews` objects
                 this.subViews = {
