@@ -29,7 +29,7 @@ define([], function () {
 
         server_api: {
             // the query field in the request
-            '$filter'     : '',
+            '$filter'     : true,
 
             // number of items to return per request/page
             '$top'        : function () {
@@ -47,18 +47,10 @@ define([], function () {
             'orderby'     : 'id',
 
             // what format would you like to request results in?
-            '$format'     : 'json',
-
-            // custom parameters
-            '$inlinecount': 'allpages',
-            '$callback'   : '?'
+            '$format'     : 'json'
         },
 
         parse: function (response) {
-            console.log(response);
-            // Be sure to change this based on how your results
-            // are structured
-//            var tags = response.d.results;
             return response;
         }
 

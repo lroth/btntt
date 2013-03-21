@@ -5,7 +5,7 @@ requirejs.config({
     urlArgs: "bust=" + (+new Date()),
 
     paths: {
-        'backbone'           : 'lib/backbone/backbone',
+        'backbone'           : 'lib/backbone/backbone.min',
         'backbone.marionette': 'lib/backbone/backbone.marionette',
         'backbone.paginator' : 'lib/backbone/backbone.paginator.min',
 
