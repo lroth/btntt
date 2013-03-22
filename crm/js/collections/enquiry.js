@@ -8,7 +8,7 @@ define(['models/enquiry'], function (EnquiryModel) {
         model: EnquiryModel,
 
         initialize: function (options) {
-            this.url = options.url.rest;
+            this.url = options.url;
         }
     });
 

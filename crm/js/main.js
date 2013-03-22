@@ -5,8 +5,9 @@ requirejs.config({
     urlArgs: "bust=" + (+new Date()),
 
     paths: {
-        'backbone'           : 'lib/backbone/backbone',
+        'backbone'           : 'lib/backbone/backbone.min',
         'backbone.marionette': 'lib/backbone/backbone.marionette',
+        'backbone.paginator' : 'lib/backbone/backbone.paginator.min',
 
         'jquery'       : 'lib/jquery/jquery',
 
@@ -27,13 +28,17 @@ requirejs.config({
     },
 
     shim: {
-        'app'                : {
-            deps: ['backbone.marionette']
+        'app'               : {
+            deps: ['backbone.marionette', 'backbone.paginator']
         },
-        'backbone'           : {
+        'backbone'          : {
             deps   : ['underscore', 'jquery.module', 'handlebars.module', 'moment', 'pikaday', 'parsley'],
             exports: 'Backbone'
         },
+        'backbone.paginator': {
+            deps: ['backbone']
+        },
+
         'backbone.marionette': {
             deps   : ['backbone'],
             exports: 'Marionette'

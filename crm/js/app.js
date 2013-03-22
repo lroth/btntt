@@ -59,7 +59,8 @@ define(['router'], function (router) {
 
     // Add layout regions here to controll views
     App.addRegions({
-        content: "#content"
+        content  : '#content',
+        paginator: '#paginator'
     });
 
     App.addInitializer(function () {

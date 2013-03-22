@@ -63,7 +63,7 @@ class RestController extends BaseController
     }
 
     /**
-     * @Route("/{resourceName}/", name="actionGetAll")
+     * @Route("/{resourceName}", name="actionGetAll")
      * @Method({"GET"})
      */
     public function getAllAction($resourceName)
@@ -76,7 +76,7 @@ class RestController extends BaseController
     }
 
     /**
-     * @Route("/{resourceName}/{id}/", name="actionGet")
+     * @Route("/{resourceName}/{id}", name="actionGet")
      * @Method({"GET"})
      */
     public function getAction($resourceName, $id)

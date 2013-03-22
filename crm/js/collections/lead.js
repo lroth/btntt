@@ -8,7 +8,7 @@ define(['models/lead'], function (LeadModel) {
         model: LeadModel,
 
         initialize: function (options) {
-            this.url = options.url.rest;
+            this.url = options.url;
         }
     });
 

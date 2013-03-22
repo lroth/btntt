@@ -1,30 +1,16 @@
 //global define
 //global Marionette
+//global _
 
-define(['App'], function (App) {
+define(['App', 'core/controller'], function (App, BaseController) {
     "use strict";
 
-    var EnquiryController = Marionette.Controller.extend({
+    var Controller = {
+        modelName: 'enquiry'
+    };
 
-        initialize: function (options) {
-        },
-
-        enquiryList: function () {
-
-            var options = {
-                url      : {
-                    api : App.getUrl('api', ''),
-                    rest: App.getUrl('rest', 'enquiry')
-                },
-                modelName: 'enquiry'
-            };
-
-            require(['views/enquiries/main'], function (EnquiryMainView) {
-                App.content.show(new EnquiryMainView(options));
-            });
-        }
-
-    });
+    var EnquiryController = Marionette.Controller.extend(Controller);
+    _.extend(EnquiryController.prototype, new BaseController());
 
     return EnquiryController;
 });

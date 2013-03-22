@@ -2,18 +2,16 @@
 //global Backbone
 
 define([
-    'collections/enquiry',
-
-    'views/enquiries/form',
-    'views/enquiries/list',
-    'views/enquiries/search'
+    'views/lead/form',
+    'views/lead/list',
+    'views/lead/search'
 ],
-    function (EnquiryCollection, ViewForm, ViewList, ViewSearch) {
+    function (ViewForm, ViewList, ViewSearch) {
         "use strict";
 
-        var EnquiriesMainView = Backbone.View.extend({
+        var LeadsMainView = Backbone.View.extend({
             tagName: 'div',
-            id     : 'enquiries',
+            id     : 'leads',
 
             // render main view
             render : function () {
@@ -38,19 +36,13 @@ define([
             },
 
             initialize: function (options) {
-                this.collection = new EnquiryCollection(options);
-
-                // pass created collection to every subviews
-                options.collection = this.collection;
-
                 // subviews will be appened in same order as defined in `this.subViews` objects
                 this.subViews = {
                     form: new ViewForm(options),
-//                    search: new ViewSearch(options),
                     list: new ViewList(options)
                 };
             }
         });
 
-        return EnquiriesMainView;
+        return LeadsMainView;
     });
