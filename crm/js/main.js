@@ -12,12 +12,13 @@ requirejs.config({
         'jquery'       : 'lib/jquery/jquery',
 
         //@TODO: move this to external module
-        'jquery.reveal': 'foundation/jquery.foundation.reveal',
+        'jquery.reveal': 'lib/foundation/jquery.foundation.reveal',
+
         'jquery.module': 'lib/jquery/jquery.module',
         'parsley'      : 'lib/jquery/parsley',
 
-        'pikaday': 'lib/pikaday',
-
+        'modernizr' : 'lib/foundation/modernizr.foundation',
+        'pikaday'   : 'lib/pikaday',
         'underscore': 'lib/underscore',
         'moment'    : 'lib/moment.min',
 
@@ -29,7 +30,7 @@ requirejs.config({
 
     shim: {
         'app'               : {
-            deps: ['backbone.marionette', 'backbone.paginator']
+            deps: ['backbone.marionette', 'backbone.paginator', 'modernizr']
         },
         'backbone'          : {
             deps   : ['underscore', 'jquery.module', 'handlebars.module', 'moment', 'pikaday', 'parsley'],
@@ -44,8 +45,10 @@ requirejs.config({
             exports: 'Marionette'
         },
 
-        //@TODO: as above: it should be in modal module
-        'jquery.reveal'      : {
+        'modernizr'      : {
+            exports: 'Modernizr'
+        },
+        'jquery.module'      : {
             deps: ['jquery']
         },
         'parsley'            : {
@@ -63,7 +66,6 @@ requirejs.config({
         'handlebars'         : {
             exports: 'Handlebars'
         },
-
         'moment': {
             exports: 'moment'
         }

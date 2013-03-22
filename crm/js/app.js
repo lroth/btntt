@@ -2,8 +2,9 @@
 // global Marionette
 // global define
 // global _
+// global Modernizr
 
-define(['router'], function (router) {
+define(['config', 'router'], function (config, router) {
     "use strict";
 
     var App = new Marionette.Application();
@@ -63,8 +64,22 @@ define(['router'], function (router) {
         paginator: '#paginator'
     });
 
+    App.scrollTop = function() {
+        if (Modernizr.touch && !window.location.hash) {
+            $(window).load(function () {
+                setTimeout(function () {
+                    // At load, if user hasn't scrolled more than 20px or so...
+                    if( $(window).scrollTop() < 20 ) {
+                        window.scrollTo(0, 1);
+                    }
+                }, 0);
+            });
+        }
+    };
+
     App.addInitializer(function () {
         this.initApp();
+        this.scrollTop();
     });
 
     return App;

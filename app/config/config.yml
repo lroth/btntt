@@ -64,7 +64,7 @@ assetic:
                 - js/require-init.js
         app_css:
             inputs:
-                - ../vendor/twitter/bootstrap/less/bootstrap.less
+                - ../vendor/twitter/bootstrap/twitter/bootstrap/less/bootstrap.less
                 - less/style.less
                 - js/vendors/datepicker/css/datepicker.css
 
