@@ -11,7 +11,7 @@ use JMS\SerializerBundle\Annotation\Expose;
  * Btn\AppBundle\Entity\Lead
  *
  * @ORM\Table(name="lead")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Btn\AppBundle\Repository\LeadRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ExclusionPolicy("all")
  */

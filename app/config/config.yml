@@ -64,7 +64,7 @@ assetic:
                 - js/require-init.js
         app_css:
             inputs:
-                - ../vendor/twitter/bootstrap/twitter/bootstrap/less/bootstrap.less
+                - ../vendor/twitter/bootstrap/less/bootstrap.less
                 - less/style.less
                 - js/vendors/datepicker/css/datepicker.css
 
@@ -103,6 +103,15 @@ swiftmailer:
     spool:     { type: memory }
 
 services:
+    btn.lead_manager:
+        class: Btn\AppBundle\Model\LeadManager
+        scope: request
+        arguments:
+            em:          '@doctrine.orm.entity_manager'
+            paginator:   '@knp_paginator'
+            request:     '@request'
+            twig:        '@twig'
+            formFactory: '@form.factory'
     btn.time_manager:
         class: Btn\AppBundle\Model\TimeManager
         scope: request
