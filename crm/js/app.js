@@ -9,8 +9,8 @@ define(['router'], function (router) {
     var App = new Marionette.Application();
 
     App.url = {
-        api : '/web/api/',
-        rest: '/web/rest/'
+        api : '/btntt/web/api/',
+        rest: '/btntt/web/rest/'
     };
 
     App.initializeLayout = function () {

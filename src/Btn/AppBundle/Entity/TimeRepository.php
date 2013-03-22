@@ -24,9 +24,10 @@ class TimeRepository extends EntityRepository
         $qb = $this->createQueryBuilder('t');
 
         $qb->add('select',  't')
-           ->add('where',   't.user = :user')
+           ->join('t.user', 'u')
+           ->add('where',   'u.id = :user')
            ->add('orderBy', 't.createdAt DESC')
-           ->setParameter(':user', $user)
+           ->setParameter('user', $user->getId())
         ;
 
         return $qb->getQuery();

@@ -4,11 +4,15 @@ namespace Btn\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\SerializerBundle\Annotation\ExclusionPolicy;
+use JMS\SerializerBundle\Annotation\Expose;
+
 
 /**
  * @ORM\Entity(repositoryClass="Btn\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @ORM\HasLifecycleCallbacks()
+ * @ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -231,7 +235,7 @@ class User extends BaseUser
     /**
      * Get projects
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getProjects()
     {
@@ -263,7 +267,7 @@ class User extends BaseUser
     /**
      * Get leads
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getLeads()
     {

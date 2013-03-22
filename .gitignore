@@ -17,4 +17,6 @@ app/config/parameters.ini
 
 #sass
 data/mockup/.sass/*
+data/mockup/.sass-cache/*
 .idea/
+

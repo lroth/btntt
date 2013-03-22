@@ -4,6 +4,8 @@ namespace Btn\AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\SerializerBundle\Annotation\ExclusionPolicy;
+use JMS\SerializerBundle\Annotation\Expose;
 
 /**
  * Btn\AppBundle\Entity\Lead
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="lead")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ * @ExclusionPolicy("all")
  */
 class Lead
 {
@@ -24,6 +27,7 @@ class Lead
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -31,6 +35,7 @@ class Lead
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Expose
      */
     private $createdAt;
 
@@ -45,6 +50,7 @@ class Lead
      * @var string $name
      * @Assert\NotNull()
      * @ORM\Column(name="name", type="string", length=255)
+     * @Expose
      */
     private $name;
 
@@ -57,6 +63,7 @@ class Lead
      * )
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Expose
      */
     private $email;
 
@@ -64,6 +71,7 @@ class Lead
      * @var string $description
      * @Assert\NotNull()
      * @ORM\Column(name="description", type="string", length=255)
+     * @Expose
      */
     private $description;
 
@@ -71,12 +79,14 @@ class Lead
      * @var datetime $alert
      * @Assert\NotBlank()
      * @ORM\Column(name="alert", type="datetime")
+     * @Expose
      */
     private $alert;
 
     /**
      *
      * @ORM\ManyToOne(targetEntity="Btn\UserBundle\Entity\User", inversedBy="leads")
+     * @Expose
      */
     private $user;
 
@@ -88,7 +98,7 @@ class Lead
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -110,7 +120,7 @@ class Lead
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -132,7 +142,7 @@ class Lead
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -154,7 +164,7 @@ class Lead
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -176,7 +186,7 @@ class Lead
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -198,7 +208,7 @@ class Lead
     /**
      * Get descrcription
      *
-     * @return string 
+     * @return string
      */
     public function getDescrcription()
     {
@@ -224,7 +234,7 @@ class Lead
     /**
      * Get alert
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getAlert()
     {
@@ -235,7 +245,7 @@ class Lead
     {
         $this->enquiries = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add enquiries
      *
@@ -262,7 +272,7 @@ class Lead
     /**
      * Get enquiries
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getEnquiries()
     {
@@ -294,7 +304,7 @@ class Lead
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -316,7 +326,7 @@ class Lead
     /**
      * Get user
      *
-     * @return Btn\UserBundle\Entity\User 
+     * @return Btn\UserBundle\Entity\User
      */
     public function getUser()
     {
