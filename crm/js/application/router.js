@@ -6,7 +6,7 @@
 // while keeping decomposited structure of controllers
 
 define([
-    'controllers/lead', 'controllers/enquiry'
+    '../controllers/lead', 'controllers/enquiry'
 ],
     function (LeadController, EnquiryController) {
         "use strict";

@@ -68,11 +68,15 @@ class RestController extends BaseController
      */
     public function getAllAction($resourceName)
     {
-        return new Response(
-            $this->serializer->serialize(
-                $this->getRepoByResource($resourceName)->findAll(), 'json'
-            )
-        );
+        $repo   = $this->getRepoByResource($resourceName);
+        $method = (method_exists($repo, 'findAllRest')) ? 'findAllRest' : 'findAll';
+        $leads  = call_user_func(array($repo, $method));
+
+        foreach ($leads as $lead) {
+            echo '<pre>'; print_r($lead); die();
+        }
+
+        return new Response($this->serializer->serialize($leads, 'json'));
     }
 
     /**

@@ -4,6 +4,8 @@ namespace Btn\AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\SerializerBundle\Annotation\ExclusionPolicy;
+use JMS\SerializerBundle\Annotation\Expose;
 
 /**
  * Btn\AppBundle\Entity\Enquiry
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="enquiry")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ * @ExclusionPolicy("all")
  */
 class Enquiry
 {
@@ -20,6 +23,7 @@ class Enquiry
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -27,6 +31,7 @@ class Enquiry
      * @var integer $estimationTime
      * @Assert\NotNull()
      * @ORM\Column(name="estimationTime", type="integer")
+     * @Expose
      */
     private $estimationTime;
 
@@ -34,6 +39,7 @@ class Enquiry
      * @var string $budget
      * @Assert\NotNull()
      * @ORM\Column(name="budget", type="string")
+     * @Expose
      */
     private $budget;
 
@@ -41,6 +47,7 @@ class Enquiry
      * @var string $content
      * @Assert\NotNull()
      * @ORM\Column(name="content", type="string", length=255)
+     * @Expose
      */
     private $content;
 
@@ -48,6 +55,7 @@ class Enquiry
      * @var string $title
      * @Assert\NotNull()
      * @ORM\Column(name="title", type="string", length=255)
+     * @Expose
      */
     private $title;
 
@@ -55,6 +63,7 @@ class Enquiry
      * @var datetime $projectStartTime
      * @Assert\NotNull()
      * @ORM\Column(name="projectStartTime", type="datetime")
+     * @Expose
      */
     private $projectStartTime;
 
@@ -62,6 +71,7 @@ class Enquiry
      * @var datetime $projectEndTime
      * @Assert\NotNull()
      * @ORM\Column(name="projectEndTime", type="datetime")
+     * @Expose
      */
     private $projectEndTime;
 
@@ -69,6 +79,7 @@ class Enquiry
      * @var datetime $enquiryDeadline
      * @Assert\NotNull()
      * @ORM\Column(name="enquiryDeadline", type="datetime")
+     * @Expose
      */
     private $enquiryDeadline;
 
@@ -76,6 +87,7 @@ class Enquiry
      * @var string $status
      * @Assert\NotNull()
      * @ORM\Column(name="status", type="string", length=255)
+     * @Expose
      */
     private $status;
 
@@ -83,6 +95,7 @@ class Enquiry
      * @var datetime $createdAt
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Expose
      */
     private $createdAt;
 
@@ -96,6 +109,7 @@ class Enquiry
     /**
      * @ORM\ManyToOne(targetEntity="Lead", inversedBy="enquiries")
      * @ORM\JoinColumn(name="lead_id", referencedColumnName="id")
+     * @Expose
      */
     private $lead;
 

@@ -1,4 +1,4 @@
-define(['config/custom'], function (customConfig) {
+define(['../config/custom'], function (customConfig) {
     "use strict";
 
     var config = {
