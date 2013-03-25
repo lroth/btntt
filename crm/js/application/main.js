@@ -66,9 +66,10 @@
     }
   });
 
-  require(["application/app"], function(app) {
+  require(["app"], function(app) {
     app.start();
-    return app.initializeLayout();
+    app.initializeLayout();
+    return this;
   });
 
 }).call(this);

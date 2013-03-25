@@ -1,7 +1,7 @@
 //global define
 //global Backbone
 
-define(['App'], function (App) {
+define(['app'], function (App) {
     "use strict";
 
     var LayoutMainView = Backbone.View.extend({

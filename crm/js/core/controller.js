@@ -5,7 +5,7 @@
 //global Handlebars
 
 define([
-    'application/app',
+    'app',
     'views/paginator'
 ],
     function (App, PaginatorView) {

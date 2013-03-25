@@ -72,10 +72,6 @@ class RestController extends BaseController
         $method = (method_exists($repo, 'findAllRest')) ? 'findAllRest' : 'findAll';
         $leads  = call_user_func(array($repo, $method));
 
-        foreach ($leads as $lead) {
-            echo '<pre>'; print_r($lead); die();
-        }
-
         return new Response($this->serializer->serialize($leads, 'json'));
     }
 

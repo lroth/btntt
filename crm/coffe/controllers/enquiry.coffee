@@ -1,6 +1,6 @@
 ### global define, Marionette, _ ###;
 
-define ["app", "core/controller"], (App, BaseController) ->
+define ["core/controller"], (BaseController) ->
   "use strict"
   Controller = modelName: "enquiry"
   EnquiryController = Marionette.Controller.extend(Controller)

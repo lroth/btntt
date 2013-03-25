@@ -3,7 +3,7 @@
 //global Backbone
 
 define([
-    'App',
+    'app',
     'core/form',
     'text!templates/lead/form.html'
 ], function (App, BaseForm, tmpl) {

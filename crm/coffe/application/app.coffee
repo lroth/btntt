@@ -1,10 +1,10 @@
 ### global Backbone, Marionette, define, _, Moderniz ###
 "use strict"
 
-define ["application/config", "application/router"], (config, router) ->
+define ["application/config"], (config) ->
   App = new Marionette.Application()
   App.url =
-    api: "/btntt/web/api/"
+    api : "/btntt/web/api/"
     rest: "/btntt/web/rest/"
 
   App.initializeLayout = ->
@@ -19,17 +19,17 @@ define ["application/config", "application/router"], (config, router) ->
 
   # prepend host to every url from `App.url`
   App.setUrls = ->
-    origin = Backbone.history.location.origin
-    _.each @url, ((value, key) ->
-      @url[key] = origin + value
-      return @
-    ), this
+    @updateUrl url for url of @url
+    return @
+
+  App.updateUrl = (url) ->
+    @url[url] = Backbone.history.location.origin + @url[url]
+    return url
 
 
   # helper for accessing url's
   App.getUrl = (type, route) ->
     @url[type] + route
-    return @
 
   App.initApp = ->
 
@@ -50,14 +50,17 @@ define ["application/config", "application/router"], (config, router) ->
 
       # update defined urls with root
       @setUrls()
+      require ["application/router"], (router) ->
+        # Initialize whole routing here
+        router.initialize()
+        return router
 
-      # Initialize whole routing here
-      router.initialize()
+      return @
 
 
   # Add layout regions here to controll views
   App.addRegions
-    content: "#content"
+    content  : "#content"
     paginator: "#paginator"
 
   App.scrollTop = ->
@@ -67,11 +70,11 @@ define ["application/config", "application/router"], (config, router) ->
 
           # At load, if user hasn't scrolled more than 20px or so...
           window.scrollTo 0, 1  if $(window).scrollTop() < 20
-        ), 0
+                   ), 0
 
 
   App.addInitializer ->
     @initApp()
     @scrollTop()
-
+    return @
   App

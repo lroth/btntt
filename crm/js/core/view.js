@@ -2,7 +2,7 @@
 //global Handlebars
 //global _
 
-define(['App'], function (App) {
+define(['app'], function (App) {
     "use strict";
 
     var View = function () {

@@ -5,7 +5,7 @@
 //global Handlebars
 
 define([
-    'App',
+    'app',
     'core/view',
 
     //Oh, god, it should be component

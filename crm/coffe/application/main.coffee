@@ -6,10 +6,10 @@ requirejs.config
   urlArgs: "bust=" + (+new Date())
   paths  :
     'app'                : 'application/app'
-    'backbone'             : 'lib/backbone/backbone.min'
+    'backbone'           : 'lib/backbone/backbone.min'
     'backbone.marionette': 'lib/backbone/backbone.marionette'
     'backbone.paginator' : 'lib/backbone/backbone.paginator.min'
-    'jquery'               : 'lib/jquery/jquery'
+    'jquery'             : 'lib/jquery/jquery'
 
     #@TODO: move this to external module
     "jquery.reveal"      : "lib/foundation/jquery.foundation.reveal"
@@ -62,6 +62,7 @@ requirejs.config
     moment:
       exports: "moment"
 
-require ["application/app"], (app) ->
+require ["app"], (app) ->
   app.start()
   app.initializeLayout()
+  return @

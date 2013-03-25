@@ -2,7 +2,7 @@
 #global Marionette
 #global _
 
-define ["app", "core/controller"], (App, BaseController) ->
+define ["core/controller"], (BaseController) ->
   "use strict"
   Controller = modelName: "lead"
   LeadController = Marionette.Controller.extend(Controller)
