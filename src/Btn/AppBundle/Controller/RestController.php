@@ -62,6 +62,27 @@ class RestController extends BaseController
         ), 'json'));
     }
 
+    private function getPaginator($resourceName, $phrase = '')
+    {
+        //get manager
+        $manager = $this->container->get('btn.' . $resourceName . '_manager');
+
+        if (!empty($phrase)) {
+            //set custom condition
+            $conditions = array(
+                $manager->getQueryBuilder()->expr()->like('l.name', $manager->getQueryBuilder()->expr()->literal('%' . $phrase . '%'))
+            );
+
+            $manager->setCustomConditions($conditions);
+        }
+
+        //paginate 2 items per page
+        $manager->paginate(2);
+
+        //we have a sliding pagination here with iterator interface
+        $paginator = $manager->getPagination();
+    }
+
     /**
      * @Route("/{resourceName}", name="actionGetAll")
      * @Method({"GET"})

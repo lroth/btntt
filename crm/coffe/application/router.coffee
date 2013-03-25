@@ -8,13 +8,16 @@ define ["controllers/lead", "controllers/enquiry"], (LeadController, EnquiryCont
   "use strict"
 
   # Define routes for leads/
-  LeadRouter = Marionette.AppRouter.extend(appRoutes:
-                                           # 'route' : controllerMethodName
-                                             leads: "show"
-                                          )
-  EnquiryRouter = Marionette.AppRouter.extend(appRoutes:
-                                                enquiries: "show"
-                                             )
+  leadRoutes =
+    appRoutes:
+      leads: "show"
+
+  enquiryRoutes =
+    appRoutes:
+      enquiries: "show"
+
+  LeadRouter = Marionette.AppRouter.extend(leadRoutes)
+  EnquiryRouter = Marionette.AppRouter.extend(enquiryRoutes)
 
   # Initialize all routes.
   # We will add some magic here when project will grow up
@@ -24,5 +27,6 @@ define ["controllers/lead", "controllers/enquiry"], (LeadController, EnquiryCont
     leadRouter = new LeadRouter(controller: new LeadController())
     enquiryRouter = new EnquiryRouter(controller: new EnquiryController())
     Backbone.history.start()
+    return @
 
-  initialize: initialize
+  return initialize: initialize

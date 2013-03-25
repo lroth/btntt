@@ -60,15 +60,6 @@
             paginator: "#paginator"
         });
         App.scrollTop = function () {
-            if (Modernizr.touch && !window.location.hash) {
-                return $(window).load(function () {
-                    return setTimeout((function () {
-                        if ($(window).scrollTop() < 20) {
-                            return window.scrollTo(0, 1);
-                        }
-                    }), 0);
-                });
-            }
         };
         App.addInitializer(function () {
             this.initApp();
