@@ -1,16 +1,15 @@
 //global define
 //global Backbone
 
-define(['models/enquiry'], function (EnquiryModel) {
+define(['core/collection', 'models/enquiry'], function (BaseCollection, EnquiryModel) {
     "use strict";
 
-    var EnquiryCollection = Backbone.Collection.extend({
-        model: EnquiryModel,
+    var collection = {
+        model: EnquiryModel
+    };
 
-        initialize: function (options) {
-            this.url = options.url;
-        }
-    });
+    var EnquiryCollection = Backbone.Collection.extend(collection);
+    _.extend(EnquiryCollection.prototype, new BaseCollection());
 
     return EnquiryCollection;
 });

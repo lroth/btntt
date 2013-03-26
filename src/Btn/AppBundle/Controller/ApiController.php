@@ -25,6 +25,21 @@ class ApiController extends BaseController
     }
 
     /**
+     * @Route("/paginate/{resourceName}/", name="actionPaginate")
+     * @Method({"GET"})
+     */
+    public function paginate($resourceName)
+    {
+        $paginator = $this->getPaginator($resourceName);
+
+        return new Response(json_encode(array(
+            'current'      => $paginator->getCurrentPageNumber(),
+            'totalRecords' => $paginator->getTotalItemCount(),
+            'perPage'      => $paginator->getItemNumberPerPage()
+        )));
+    }
+
+    /**
      * @Route("/get/form/{resourceName}", name="actionGetForm")
      * @Method({"GET"})
      */

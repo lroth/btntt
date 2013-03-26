@@ -1,4 +1,4 @@
-//global define
+170//global define
 //global _
 //global Pikaday
 //global moment
@@ -167,7 +167,6 @@ define(['app', 'core/view'], function (App, BaseView) {
 
         // actually unused
         this.getCsfrToken = function () {
-            console.log(this.options);
             $.get(this.options.url.api + 'get/token/', function (response) {
                 this.token = response.token;
             });

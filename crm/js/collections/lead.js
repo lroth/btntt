@@ -1,16 +1,15 @@
 //global define
 //global Backbone
 
-define(['models/lead'], function (LeadModel) {
+define(['core/collection', 'models/lead'], function (BaseCollection, LeadModel) {
     "use strict";
 
-    var LeadCollection = Backbone.Collection.extend({
-        model: LeadModel,
+    var collection = {
+        model: LeadModel
+    };
 
-        initialize: function (options) {
-            this.url = options.url;
-        }
-    });
+    var LeadCollection = Backbone.Collection.extend(collection);
+    _.extend(LeadCollection.prototype, new BaseCollection());
 
     return LeadCollection;
 });

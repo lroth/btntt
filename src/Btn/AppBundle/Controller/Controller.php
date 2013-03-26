@@ -307,4 +307,36 @@ class Controller extends BaseController
 
         return $response;
     }
+
+    protected function getPaginator($resourceName, $phrase = '')
+    {
+        //get manager
+        $manager = $this->container->get('btn.' . $resourceName . '_manager');
+
+        if (!empty($phrase)) {
+            //set custom condition
+            $conditions = array(
+                $manager->getQueryBuilder()->expr()->like('l.name', $manager->getQueryBuilder()->expr()->literal('%' . $phrase . '%'))
+            );
+
+            $manager->setCustomConditions($conditions);
+        }
+
+        //paginate 2 items per page
+        $manager->paginate(1);
+
+        //we have a sliding pagination here with iterator interface
+        return $manager->getPagination();
+    }
+
+    public function getPaginatorResources($paginator)
+    {
+        $resources = array();
+
+        foreach ($paginator as $resource) {
+            $resources[] = $resource;
+        }
+
+        return $resources;
+    }
 }

@@ -5,9 +5,9 @@ define [], ->
   Collection =
     options   : null
     model     : null
-    initialize: (collection) ->
-      @model = collection.model
-      @paginator_core.url = collection.url
+    initialize: (options) ->
+      @model = options.collection.model
+      @paginator_core.url = options.url.api + 'paginate/' + options.modelName
       return @
 
     paginator_core:
@@ -18,9 +18,13 @@ define [], ->
     paginator_ui:
       firstPage   : 1
       currentPage : 1
-      perPage     : 3
-      totalPages  : 10
-      pagesInRange: 3
+      pagesInRange: 1
+
+      #to change - same as at server should be
+      perPage     : 1
+
+      #from server
+      totalPages  : 1
 
     server_api:
     # the query field in the request
@@ -45,6 +49,9 @@ define [], ->
       $format: "json"
 
     parse: (response) ->
+      console.log(response)
+      @totalPages = response.total
+      @perPage = response.perPage
       response
 
   PaginatedCollection = Backbone.Paginator.requestPager.extend(Collection)

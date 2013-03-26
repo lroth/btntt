@@ -25,7 +25,8 @@ define([
             },
 
             render: function () {
-                var html = this.template({ data: this.collection.info() });
+                var info = this.collection.info();
+                var html = this.template({ data: info });
                 this.$el.html(html);
             },
 

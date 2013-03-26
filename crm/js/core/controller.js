@@ -48,12 +48,12 @@ define([
             };
 
             this.onShowRequire = function (ResourceMainView) {
-
                 //store view instance to
+                var paginatorView = new PaginatorView(this.options);
                 var resourceMainView = new ResourceMainView(this.options);
 
                 App.content.show(resourceMainView);
-                App.paginator.show(new PaginatorView(resourceMainView.collection));
+                App.paginator.show(paginatorView);
             };
         };
 
