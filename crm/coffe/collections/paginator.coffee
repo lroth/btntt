@@ -6,8 +6,11 @@ define [], ->
     options   : null
     model     : null
     initialize: (options) ->
+      console.log('initialized paginator collection with options: ', options)
       @model = options.collection.model
-      @paginator_core.url = options.url.api + 'paginate/' + options.modelName
+      #@paginator_core.url = options.url.api + 'paginate/' + options.modelName
+      #      @paginator_core.url = options.url.rest + options.modelName
+      @paginator_core.url = options.url.rest
       return @
 
     paginator_core:
@@ -49,10 +52,11 @@ define [], ->
       $format: "json"
 
     parse: (response) ->
-      console.log(response)
-      @totalPages = response.total
-      @perPage = response.perPage
-      response
+      console.log('parse paginator collection response', response)
+
+      @totalPages = response.details.totalRecords
+      @perPage = response.details.perPage
+      response.resources
 
   PaginatedCollection = Backbone.Paginator.requestPager.extend(Collection)
   PaginatedCollection

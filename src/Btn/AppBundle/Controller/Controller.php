@@ -312,6 +312,7 @@ class Controller extends BaseController
     {
         //get manager
         $manager = $this->container->get('btn.' . $resourceName . '_manager');
+        $manager->setNs($resourceName);
 
         if (!empty($phrase)) {
             //set custom condition
@@ -338,5 +339,14 @@ class Controller extends BaseController
         }
 
         return $resources;
+    }
+
+    public function getPaginatorDetails($paginator)
+    {
+        return array(
+            'current'      => $paginator->getCurrentPageNumber(),
+            'totalRecords' => $paginator->getTotalItemCount(),
+            'perPage'      => $paginator->getItemNumberPerPage()
+        );
     }
 }

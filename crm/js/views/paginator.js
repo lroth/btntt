@@ -26,7 +26,9 @@ define([
 
             render: function () {
                 var info = this.collection.info();
-                var html = this.template({ data: info });
+                console.log('render paginator view with ', info);
+
+                var html = this.template(info);
                 this.$el.html(html);
             },
 
@@ -72,14 +74,13 @@ define([
             id     : 'paginator-content',
 
             initialize: function (options) {
+                console.log('initialize pa//ginator view');
                 this.collection = new PaginatedCollection(options);
 
                 this.collection.on('reset', this.render, this);
                 this.collection.on('change', this.render, this);
 
                 this.$el.appendTo('#pagination');
-
-                this.collection.goTo(1);
             }
         });
 

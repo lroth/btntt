@@ -48,12 +48,15 @@ define([
             };
 
             this.onShowRequire = function (ResourceMainView) {
-                //store view instance to
-                var paginatorView = new PaginatorView(this.options);
-                var resourceMainView = new ResourceMainView(this.options);
+                this.collection.fetch({
+                    success: _.bind(function (collection, response) {
+                        var paginatorView = new PaginatorView(this.options);
+                        var resourceMainView = new ResourceMainView(this.options);
 
-                App.content.show(resourceMainView);
-                App.paginator.show(paginatorView);
+                        App.paginator.show(paginatorView);
+                        App.content.show(resourceMainView);
+                    }, this)
+                });
             };
         };
 

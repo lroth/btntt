@@ -73,9 +73,13 @@ class RestController extends BaseController
 //        $leads  = call_user_func(array($repo, $method));
 
         $paginator = $this->getPaginator($resourceName);
+        $details   = $this->getPaginatorDetails($paginator);
         $resources = $this->getPaginatorResources($paginator);
 
-        return new Response($this->serializer->serialize($resources, 'json'));
+        return new Response($this->serializer->serialize(array(
+            'results' => $resources,
+            'details' => $details
+        ), 'json'));
     }
 
     /**

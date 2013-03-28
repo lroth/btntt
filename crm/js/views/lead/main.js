@@ -15,6 +15,7 @@ define([
 
             // render main view
             render : function () {
+                console.log('render lead main view');
 
                 // remove html content from main view
                 this.$el.empty();
@@ -36,6 +37,7 @@ define([
             },
 
             initialize: function (options) {
+                console.log('initialize lead main view');
                 // subviews will be appened in same order as defined in `this.subViews` objects
                 this.subViews = {
                     form: new ViewForm(options),

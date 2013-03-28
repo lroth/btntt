@@ -32,11 +32,7 @@ class ApiController extends BaseController
     {
         $paginator = $this->getPaginator($resourceName);
 
-        return new Response(json_encode(array(
-            'current'      => $paginator->getCurrentPageNumber(),
-            'totalRecords' => $paginator->getTotalItemCount(),
-            'perPage'      => $paginator->getItemNumberPerPage()
-        )));
+        return new Response(json_encode($this->getPaginatorDetails($paginator)));
     }
 
     /**

@@ -29,12 +29,10 @@ define(['app'], function (App) {
             else {
                 // fetch data and add new element to DOM
                 if (this.isFirstRender) {
-                    this.collection.fetch({
-                        success: _.bind(function (collection, response) {
-                            this.isFirstRender = false;
-                            this.$el.html(this.getHtml(response));
-                        }, this)
-                    });
+                    var jsons = this.collection.toJSON();
+                    console.log('View first render response is: ', jsons);
+                    this.isFirstRender = false;
+                    this.$el.html(this.getHtml(jsons));
                 }
                 else {
                     // change only `this.$el` html content

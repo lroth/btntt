@@ -5,7 +5,6 @@ define(['handlebars', 'moment'], function (handlebars, moment) {
     "use strict";
 
     Handlebars.registerHelper('renderPages', function (data) {
-        console.log(data);
     });
 
     Handlebars.registerHelper('leadDateFormat', function (date) {
