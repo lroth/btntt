@@ -33,6 +33,7 @@ class ReportController extends BaseController
         //get time reports for current user
         $manager = $this->container->get('btn.time_manager')
             ->setNs('reports')
+            ->setRequest($request)
             ->createForm(new TimeFilterType())
             ->setQueryMethod('getReportQuery')
             ->enablePageSession()
@@ -43,6 +44,7 @@ class ReportController extends BaseController
         //@TODO: refactor this one - lame code just for fast results of sum in view
        $query = $this->container->get('btn.time_manager')
             ->setNs('reports')
+            ->setRequest($request)
             ->createForm(new TimeFilterType())
             ->setQueryMethod('getReportQuery')
             ->enablePageSession()
@@ -71,6 +73,7 @@ class ReportController extends BaseController
     {
        $query = $this->container->get('btn.time_manager')
             ->setNs('reports')
+            ->setRequest($request)
             ->createForm(new TimeFilterType())
             ->setQueryMethod('getReportQuery')
             ->enablePageSession()

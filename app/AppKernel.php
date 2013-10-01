@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Btn\AppBundle\BtnAppBundle(),
             new Btn\CrudBundle\BtnCrudBundle(),
+            new Btn\BaseBundle\BtnBaseBundle(),
             new Btn\UserBundle\BtnUserBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),

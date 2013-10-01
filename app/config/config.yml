@@ -14,9 +14,9 @@ framework:
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
-    trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
+    trusted_proxies: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
     session:
-        lifetime:   3600
+        cookie_lifetime:   3600
     translator:      { fallback: en }
 
 
@@ -64,7 +64,7 @@ assetic:
                 - js/require-init.js
         app_css:
             inputs:
-                - ../vendor/twitter/bootstrap/twitter/bootstrap/less/bootstrap.less
+                - ../vendor/twbs/bootstrap/less/bootstrap.less
                 - less/style.less
                 - js/vendors/datepicker/css/datepicker.css
 
@@ -83,11 +83,11 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
 
-raul_fraile_ladybug:
-    general:
-        expanded:             false
-    object:
-        max_nesting_level:    4
+# raul_fraile_ladybug:
+#     general:
+#         expanded:             false
+#     object:
+#         max_nesting_level:    4
 
 #knp paginator fix
 knp_paginator:
@@ -109,7 +109,6 @@ services:
         arguments:
             em:          '@doctrine.orm.entity_manager'
             paginator:   '@knp_paginator'
-            request:     '@request'
             twig:        '@twig'
             formFactory: '@form.factory'
     btn.time_manager:
@@ -118,7 +117,6 @@ services:
         arguments:
             em:          '@doctrine.orm.entity_manager'
             paginator:   '@knp_paginator'
-            request:     '@request'
             twig:        '@twig'
             formFactory: '@form.factory'
     btn.listener.preexecute:
@@ -134,6 +132,5 @@ services:
         arguments:
             em:          '@doctrine.orm.entity_manager'
             paginator:   '@knp_paginator'
-            request:     '@request'
             twig:        '@twig'
             formFactory: '@form.factory'

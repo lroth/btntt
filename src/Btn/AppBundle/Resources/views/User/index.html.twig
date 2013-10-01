@@ -32,6 +32,6 @@
 
     <a href="{{ path('user_new') }}" class="btn btn-primary">{% trans %}crud.create_new{% endtrans %}</a>
 
-    {{ pagination.render()|raw }}
+    {{ knp_pagination_render(pagination) }}
 
 {% endblock %}

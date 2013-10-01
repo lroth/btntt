@@ -4,8 +4,6 @@ namespace Btn\AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\SerializerBundle\Annotation\ExclusionPolicy;
-use JMS\SerializerBundle\Annotation\Expose;
 
 /**
  * Btn\AppBundle\Entity\Lead
@@ -13,7 +11,6 @@ use JMS\SerializerBundle\Annotation\Expose;
  * @ORM\Table(name="lead")
  * @ORM\Entity(repositoryClass="Btn\AppBundle\Repository\LeadRepository")
  * @ORM\HasLifecycleCallbacks()
- * @ExclusionPolicy("all")
  */
 class Lead
 {
@@ -27,7 +24,6 @@ class Lead
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Expose
      */
     private $id;
 
@@ -35,7 +31,6 @@ class Lead
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Expose
      */
     private $createdAt;
 
@@ -50,7 +45,6 @@ class Lead
      * @var string $name
      * @Assert\NotNull()
      * @ORM\Column(name="name", type="string", length=255)
-     * @Expose
      */
     private $name;
 
@@ -63,7 +57,6 @@ class Lead
      * )
      *
      * @ORM\Column(name="email", type="string", length=255)
-     * @Expose
      */
     private $email;
 
@@ -71,7 +64,6 @@ class Lead
      * @var string $description
      * @Assert\NotNull()
      * @ORM\Column(name="description", type="string", length=255)
-     * @Expose
      */
     private $description;
 
@@ -79,14 +71,12 @@ class Lead
      * @var datetime $alert
      * @Assert\NotBlank()
      * @ORM\Column(name="alert", type="datetime")
-     * @Expose
      */
     private $alert;
 
     /**
      *
      * @ORM\ManyToOne(targetEntity="Btn\UserBundle\Entity\User", inversedBy="leads", fetch="EAGER")
-     * @Expose
      */
     private $user;
 

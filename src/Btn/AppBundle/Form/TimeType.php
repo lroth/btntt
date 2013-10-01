@@ -33,7 +33,7 @@ class TimeType extends AbstractType
                         'class'       => 'timeContainer',
                     )
                 ))
-                ->prependNormTransformer($dateTransformer)
+                ->addModelTransformer($dateTransformer)
             )
             ->add('time', 'number', array('attr' =>
                 array(
@@ -54,7 +54,7 @@ class TimeType extends AbstractType
                     'placeholder' => 'Project',
                     'data-widget' => 'autocomplete'
                 )))
-                ->prependNormTransformer($transformer)
+                ->addModelTransformer($transformer)
             )
         ;
     }

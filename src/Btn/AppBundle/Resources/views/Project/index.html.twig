@@ -26,7 +26,7 @@
         </tbody>
     </table>
 
-    {{ pagination.render()|raw }}
+    {{ knp_pagination_render(pagination) }}
 
             <a href="{{ path('project_new') }}" class="btn btn-primary">{% trans %}crud.create_new{% endtrans %}</a>
 

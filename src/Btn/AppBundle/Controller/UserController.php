@@ -41,11 +41,12 @@ class UserController extends BaseController
      * @Route("/", name="user")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->container->get('btn.user_manager')
             ->setNs('user_control')
             ->createForm(new UserFilterType())
+            ->setRequest($request)
             ->enablePageSession()
             ->filter()
             ->paginate()
